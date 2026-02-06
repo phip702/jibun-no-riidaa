@@ -26,7 +26,73 @@ struct VolumeListView: View {
     @State private var editVolume: MangaVolumeModel? = nil
     @State private var editVolumeNumber: String = ""
     
+    @State private var showMissingFileAlert = false
+    @State private var missingFileInfo: (volumeNumber: Int64, fileName: String, pageNumber: Int)? = nil
+    @State private var pendingProcessingTask: Task<Void, Never>? = nil
+    @State private var skipMissingFiles = false
+    
+    private var missingFileAlertMessage: Text {
+        if let info = missingFileInfo {
+            let volumeText = "Volume \(info.volumeNumber), Page \(info.pageNumber):"
+            let fileText = "\"\(info.fileName)\" not found in the folder."
+            let questionText = "Do you want to skip missing files and continue?"
+            return Text("\(volumeText)\n\(fileText)\n\n\(questionText)")
+        } else {
+            return Text("")
+        }
+    }
+    
     var body: some View {
+        mainContent
+            .fullScreenCover(item: $readingVolume) { v in
+                MangaReader(volume: .constant(v), currentPage: Int(v.lastReadPage))
+            }
+            .alert("Edit volume", isPresented: editVolumeAlertBinding, actions: editVolumeActions)
+            .alert("Missing Image File", isPresented: $showMissingFileAlert, actions: missingFileActions, message: {
+                missingFileAlertMessage
+            })
+    }
+    
+    private var editVolumeAlertBinding: Binding<Bool> {
+        .init(get: { editVolume != nil }, set: { v in
+            if !v {
+                editVolume = nil
+            }
+        })
+    }
+    
+    @ViewBuilder
+    private func editVolumeActions() -> some View {
+        TextField("New Volume Number", text: $editVolumeNumber)
+            .keyboardType(.numberPad)
+        Button("Cancel", role: .cancel) {
+            editVolume = nil
+        }
+        Button("OK") {
+            if let newNumber = Int64(editVolumeNumber.trimmingCharacters(in: .whitespacesAndNewlines)),
+               newNumber > 0 {
+                editVolume?.changeVolumeNumber(newNumber: newNumber)
+                CoreDataManager.shared.saveContext()
+            }
+            editVolume = nil
+        }
+    }
+    
+    @ViewBuilder
+    private func missingFileActions() -> some View {
+        Button("Cancel Import", role: .cancel) {
+            pendingProcessingTask?.cancel()
+            processingModel.status = .ERROR
+            processingModel.message = "Import cancelled by user"
+            missingFileInfo = nil
+        }
+        Button("Skip & Continue") {
+            skipMissingFiles = true
+            showMissingFileAlert = false
+        }
+    }
+    
+    private var mainContent: some View {
         ScrollView {
             // TODO: word tracker
             ForEach((manga.volumes.array as! [MangaVolumeModel]).sorted()) { volume in
@@ -69,7 +135,8 @@ struct VolumeListView: View {
             self.processingModel.progressMaxValue = 0
             switch result {
             case .success(let file):
-                Task {
+                skipMissingFiles = false
+                pendingProcessingTask = Task {
                     await processZipFile(path: file)
                 }
             case .failure(let error):
@@ -78,7 +145,7 @@ struct VolumeListView: View {
         }
         .sheet(
             isPresented: .init(get: {
-                return self.processingModel.status != ProcessingStatus.NOTHING
+                return self.processingModel.status != ProcessingStatus.NOTHING && !showMissingFileAlert
             }, set: { _ in }),
             onDismiss: {
                 if self.processingModel.status != ProcessingStatus.STARTED {
@@ -90,28 +157,6 @@ struct VolumeListView: View {
             VolumeProcessing(processingModel: processingModel)
                 .interactiveDismissDisabled(dismissDisabled)
         }
-        .fullScreenCover(item: $readingVolume) { v in
-            MangaReader(volume: .constant(v), currentPage: Int(v.lastReadPage))
-        }
-        .alert("Edit volume", isPresented: .init(get: {editVolume != nil}, set: { v in
-            if !v {
-                editVolume = nil
-            }
-        }), actions: {
-            TextField("New Volume Number", text: $editVolumeNumber)
-                .keyboardType(.numberPad)
-            Button("Cancel", role: .cancel) {
-                editVolume = nil
-            }
-            Button("OK") {
-                if let newNumber = Int64(editVolumeNumber.trimmingCharacters(in: .whitespacesAndNewlines)),
-                   newNumber > 0 {
-                    editVolume?.changeVolumeNumber(newNumber: newNumber)
-                    CoreDataManager.shared.saveContext()
-                }
-                editVolume = nil
-            }
-        })
     }
 }
 
@@ -239,6 +284,47 @@ extension VolumeListView {
                     }
                     let img = imagesFolder.appendingPathComponent(img_path)
                     let destImg = volumeDirectory.appendingPathComponent(img_path)
+                    
+                    // Check if source image exists before trying to move it
+                    if !fileManager.fileExists(atPath: img.path) {
+                        print("Warning: Image file not found - Volume \(volumeNumber), Page \(i + 1): \(img_path)")
+                        
+                        // Check if user has chosen to skip missing files
+                        let shouldSkip = await MainActor.run { self.skipMissingFiles }
+                        
+                        // If user hasn't chosen to skip missing files yet, prompt them
+                        if !shouldSkip {
+                            await MainActor.run {
+                                self.missingFileInfo = (volumeNumber: volumeNumber, fileName: img_path, pageNumber: i + 1)
+                                self.showMissingFileAlert = true
+                            }
+                            
+                            // Wait for user decision
+                            while true {
+                                try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                                
+                                let skip = await MainActor.run { self.skipMissingFiles }
+                                let alertStillShowing = await MainActor.run { self.showMissingFileAlert }
+                                
+                                // User tapped Skip & Continue
+                                if skip {
+                                    break
+                                }
+                                
+                                // User tapped Cancel (alert dismissed without setting skip)
+                                if !alertStillShowing {
+                                    throw NSError(domain: "VolumeProcessing", code: 7, userInfo: [NSLocalizedDescriptionKey: "Import cancelled by user"])
+                                }
+                            }
+                        }
+                        
+                        // Skip this page and continue
+                        await MainActor.run {
+                            self.processingModel.progressValue = i + 1
+                        }
+                        continue
+                    }
+                    
                     try? fileManager.removeItem(at: destImg)
                     print("Source image path: \(img.path), exists: \(fileManager.fileExists(atPath: img.path))")
                     print("image path: \(imagesFolder.path), exists: \(fileManager.fileExists(atPath: imagesFolder.path))")
