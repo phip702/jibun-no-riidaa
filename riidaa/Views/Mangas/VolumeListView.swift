@@ -35,7 +35,7 @@ struct VolumeListView: View {
         if let info = missingFileInfo {
             let volumeText = "Volume \(info.volumeNumber), Page \(info.pageNumber):"
             let fileText = "\"\(info.fileName)\" not found in the folder."
-            let questionText = "Do you want to skip missing files and continue?"
+            let questionText = "A placeholder image will be created for missing files.\n\nDo you want to continue?"
             return Text("\(volumeText)\n\(fileText)\n\n\(questionText)")
         } else {
             return Text("")
@@ -86,7 +86,7 @@ struct VolumeListView: View {
             processingModel.message = "Import cancelled by user"
             missingFileInfo = nil
         }
-        Button("Skip & Continue") {
+        Button("Continue with Placeholders") {
             skipMissingFiles = true
             showMissingFileAlert = false
         }
@@ -161,6 +161,53 @@ struct VolumeListView: View {
 }
 
 extension VolumeListView {
+    
+    // Create a placeholder image with "Missing" text
+    nonisolated func createMissingPlaceholder(width: Int32, height: Int32, fileName: String) -> UIImage {
+        let size = CGSize(width: Int(width), height: Int(height))
+        let renderer = UIGraphicsImageRenderer(size: size)
+        
+        let image = renderer.image { context in
+            // Background
+            UIColor.systemGray5.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+            
+            // Border
+            UIColor.systemGray3.setStroke()
+            context.cgContext.setLineWidth(4)
+            context.cgContext.stroke(CGRect(origin: .zero, size: size).insetBy(dx: 2, dy: 2))
+            
+            // Text
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            
+            let mainText = "Missing Image"
+            let fileText = fileName
+            
+            let mainAttrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.boldSystemFont(ofSize: min(CGFloat(width) / 15, 60)),
+                .foregroundColor: UIColor.systemGray,
+                .paragraphStyle: paragraphStyle
+            ]
+            
+            let fileAttrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: min(CGFloat(width) / 25, 40)),
+                .foregroundColor: UIColor.systemGray2,
+                .paragraphStyle: paragraphStyle
+            ]
+            
+            let mainTextSize = mainText.size(withAttributes: mainAttrs)
+            let fileTextSize = fileText.size(withAttributes: fileAttrs)
+            
+            let mainY = (size.height - mainTextSize.height - fileTextSize.height - 20) / 2
+            let fileY = mainY + mainTextSize.height + 20
+            
+            mainText.draw(in: CGRect(x: 0, y: mainY, width: size.width, height: mainTextSize.height), withAttributes: mainAttrs)
+            fileText.draw(in: CGRect(x: 0, y: fileY, width: size.width, height: fileTextSize.height), withAttributes: fileAttrs)
+        }
+        
+        return image
+    }
     
     nonisolated func processZipFile(path: URL) async {
         let mangaId = await manga.id
@@ -318,18 +365,23 @@ extension VolumeListView {
                             }
                         }
                         
-                        // Skip this page and continue
-                        await MainActor.run {
-                            self.processingModel.progressValue = i + 1
+                        // Create placeholder image for missing file
+                        let placeholder = createMissingPlaceholder(width: img_width, height: img_height, fileName: img_path)
+                        guard let pngData = placeholder.pngData() else {
+                            throw NSError(domain: "VolumeProcessing", code: 8, userInfo: [NSLocalizedDescriptionKey: "Failed to create placeholder image"])
                         }
-                        continue
+                        
+                        try? fileManager.removeItem(at: destImg)
+                        try pngData.write(to: destImg)
+                        print("Created placeholder image for: \(img_path)")
+                    } else {
+                        // Move actual image file
+                        try? fileManager.removeItem(at: destImg)
+                        print("Source image path: \(img.path), exists: \(fileManager.fileExists(atPath: img.path))")
+                        print("image path: \(imagesFolder.path), exists: \(fileManager.fileExists(atPath: imagesFolder.path))")
+                        print("Destination image path: \(destImg.path), exists: \(fileManager.fileExists(atPath: destImg.path))")
+                        try fileManager.moveItem(at: img, to: destImg)
                     }
-                    
-                    try? fileManager.removeItem(at: destImg)
-                    print("Source image path: \(img.path), exists: \(fileManager.fileExists(atPath: img.path))")
-                    print("image path: \(imagesFolder.path), exists: \(fileManager.fileExists(atPath: imagesFolder.path))")
-                    print("Destination image path: \(destImg.path), exists: \(fileManager.fileExists(atPath: destImg.path))")
-                    try fileManager.moveItem(at: img, to: destImg)
                     
                     var newPage: MangaPageModel? = nil
                     await backgroundContext.perform {
