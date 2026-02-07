@@ -26,6 +26,10 @@ struct VolumeListView: View {
     @State private var editVolume: MangaVolumeModel? = nil
     @State private var editVolumeNumber: String = ""
     
+    @State private var reuploadVolume: MangaVolumeModel? = nil
+    
+    @State private var refreshID = UUID()
+    
     @State private var showMissingFileAlert = false
     @State private var missingFileInfo: (volumeNumber: Int64, fileName: String, pageNumber: Int)? = nil
     @State private var pendingProcessingTask: Task<Void, Never>? = nil
@@ -99,17 +103,25 @@ struct VolumeListView: View {
                 Button {
                     readingVolume = volume
                 } label: {
-                    VolumeComponent(volume: volume)
+                    VolumeComponent(volume: volume, refreshTrigger: refreshID)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal)
                 .padding(.vertical, 5)
                 .contextMenu {
-                    Button(role: .destructive) {
-                        moc.delete(volume)
-                        CoreDataManager.shared.saveContext()
-                    } label: {
-                        Label("Delete volume", systemImage: "trash")
+                    if volumeHasImages(volume) {
+                        Button(role: .destructive) {
+                            deleteVolume(volume)
+                        } label: {
+                            Label("Delete volume", systemImage: "trash")
+                        }
+                    } else {
+                        Button {
+                            reuploadVolume = volume
+                            isPickingVolume = true
+                        } label: {
+                            Label("Reupload volume", systemImage: "arrow.clockwise")
+                        }
                     }
                     Button {
                         editVolume = volume
@@ -136,8 +148,10 @@ struct VolumeListView: View {
             switch result {
             case .success(let file):
                 skipMissingFiles = false
+                let volumeToReupload = reuploadVolume
+                reuploadVolume = nil  // Clear the reupload state
                 pendingProcessingTask = Task {
-                    await processZipFile(path: file)
+                    await processZipFile(path: file, reuploadingVolume: volumeToReupload)
                 }
             case .failure(let error):
                 print("error while picking volume file: \(error)")
@@ -157,6 +171,35 @@ struct VolumeListView: View {
             VolumeProcessing(processingModel: processingModel)
                 .interactiveDismissDisabled(dismissDisabled)
         }
+    }
+    
+    func volumeHasImages(_ volume: MangaVolumeModel) -> Bool {
+        let fileManager = FileManager.default
+        let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
+        let volumeFolder = documents.appendingPathComponent(manga.id.uuidString).appendingPathComponent(String(volume.number))
+        return fileManager.fileExists(atPath: volumeFolder.path)
+    }
+    
+    func deleteVolume(_ volume: MangaVolumeModel) {
+        // Only delete image files from disk, keep metadata for reading history
+        let fileManager = FileManager.default
+        let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
+        let volumeFolder = documents.appendingPathComponent(manga.id.uuidString).appendingPathComponent(String(volume.number))
+        
+        do {
+            if fileManager.fileExists(atPath: volumeFolder.path) {
+                try fileManager.removeItem(at: volumeFolder)
+                print("Deleted volume images: \(volumeFolder.path)")
+            }
+        } catch {
+            print("Error deleting volume files: \(error)")
+        }
+        
+        // Trigger UI refresh to show "No Images" state
+        refreshID = UUID()
+        
+        // Keep CoreData metadata (reading history, progress, etc.)
+        // If user re-uploads, images will be restored to existing structure
     }
 }
 
@@ -209,8 +252,9 @@ extension VolumeListView {
         return image
     }
     
-    nonisolated func processZipFile(path: URL) async {
+    nonisolated func processZipFile(path: URL, reuploadingVolume: MangaVolumeModel? = nil) async {
         let mangaId = await manga.id
+        let reuploadVolumeNumber: Int64? = await reuploadingVolume?.number
         let fileManager = FileManager.default
         let tempDirectory = fileManager.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let backgroundContext = CoreDataManager.shared.container.newBackgroundContext()
@@ -290,22 +334,64 @@ extension VolumeListView {
                 }
                 print("volume \(volumeNumber)")
                 
-                try await backgroundContext.perform {
+                // Check if volume already exists (for re-upload scenario)
+                var existingVolume: MangaVolumeModel? = nil
+                await backgroundContext.perform {
                     for vol in mangaInContext.volumes.array as! [MangaVolumeModel] {
                         if vol.number == volumeNumber {
-                            throw NSError(domain: "VolumeProcessing", code: 5, userInfo: [NSLocalizedDescriptionKey: "A volume with the same number (\(volumeNumber)) already exists"])
+                            existingVolume = vol
+                            break
                         }
                     }
                 }
                 
+                // If reuploading a specific volume, force use of that volume
+                if let reuploadNum = reuploadVolumeNumber, reuploadNum == volumeNumber {
+                    if existingVolume == nil {
+                        throw NSError(domain: "VolumeProcessing", code: 5, userInfo: [NSLocalizedDescriptionKey: "Cannot find volume \(volumeNumber) to reupload"])
+                    }
+                    print("Forcing reupload of volume \(volumeNumber)")
+                }
+                // If volume exists and NOT explicitly reuploading, check if images are present
+                else if let existing = existingVolume {
+                    let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
+                    let existingVolumeFolder = documents.appendingPathComponent(mangaInContext.id.uuidString).appendingPathComponent(String(volumeNumber))
+                    
+                    if fileManager.fileExists(atPath: existingVolumeFolder.path) {
+                        // Images exist, don't allow re-upload
+                        throw NSError(domain: "VolumeProcessing", code: 5, userInfo: [NSLocalizedDescriptionKey: "Volume \(volumeNumber) already exists with images. Delete it first to re-upload."])
+                    } else {
+                        // Images were deleted, allow re-upload
+                        print("Re-uploading images for existing volume \(volumeNumber)")
+                    }
+                }
+                
                 var newVolume: MangaVolumeModel? = nil
-                await backgroundContext.perform {
-                    newVolume = MangaVolumeModel(context: backgroundContext)
-                    newVolume!.number = volumeNumber
-                    mangaInContext.addToVolumes(newVolume!)
+                if let existing = existingVolume {
+                    // Re-use existing volume (re-upload scenario)
+                    newVolume = existing
+                    print("Re-using existing volume \(volumeNumber) metadata")
+                } else {
+                    // Create new volume
+                    await backgroundContext.perform {
+                        newVolume = MangaVolumeModel(context: backgroundContext)
+                        newVolume!.number = volumeNumber
+                        mangaInContext.addToVolumes(newVolume!)
+                    }
                 }
                 guard let newVolume = newVolume else {
-                    throw NSError(domain: "VolumeProcessing", code: 0, userInfo: [NSLocalizedDescriptionKey: "newVolume is nil"])
+                    throw NSError(domain: "VolumeProcessing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Volume is nil"])
+                }
+                
+                // If re-uploading, clear old pages first
+                if existingVolume != nil {
+                    await backgroundContext.perform {
+                        // Remove all existing pages
+                        let pagesToRemove = newVolume.pages.array as! [MangaPageModel]
+                        for page in pagesToRemove {
+                            backgroundContext.delete(page)
+                        }
+                    }
                 }
                 
                 // pages
@@ -320,6 +406,12 @@ extension VolumeListView {
                 
                 let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
                 let volumeDirectory = documents.appendingPathComponent(mangaInContext.id.uuidString).appendingPathComponent(String(newVolume.number))
+                
+                // If reuploading, delete old images first
+                if existingVolume != nil && fileManager.fileExists(atPath: volumeDirectory.path) {
+                    try? fileManager.removeItem(at: volumeDirectory)
+                    print("Removed old volume images for reupload")
+                }
                 
                 try fileManager.createDirectory(at: volumeDirectory, withIntermediateDirectories: true)
                 
@@ -437,6 +529,8 @@ extension VolumeListView {
         await MainActor.run {
             if self.processingModel.status != ProcessingStatus.ERROR {
                 self.processingModel.status = ProcessingStatus.FINISHED
+                // Refresh UI to update volume indicators
+                self.refreshID = UUID()
             }
         }
     }

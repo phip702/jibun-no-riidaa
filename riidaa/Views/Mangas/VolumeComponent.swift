@@ -10,6 +10,14 @@ import SwiftUI
 struct VolumeComponent: View {
     
     @ObservedObject var volume: MangaVolumeModel
+    let refreshTrigger: UUID
+    
+    private var imagesExist: Bool {
+        let fileManager = FileManager.default
+        let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
+        let volumeFolder = documents.appendingPathComponent(volume.manga.id.uuidString).appendingPathComponent(String(volume.number))
+        return fileManager.fileExists(atPath: volumeFolder.path)
+    }
     
     var body: some View {
         let totalPages = volume.pages.count
@@ -17,16 +25,27 @@ struct VolumeComponent: View {
         let progress = totalPages > 0 ? Double(currentPage) / Double(totalPages) : 0
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Volume \(volume.number)")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                HStack {
+                    Text("Volume \(volume.number)")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                    
+                    if !imagesExist {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                            .font(.caption)
+                        Text("No Images")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                    }
+                }
                 
                 Text("\(currentPage) / \(totalPages)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
                 ProgressView(value: progress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: .blue))
+                    .progressViewStyle(LinearProgressViewStyle(tint: imagesExist ? .blue : .orange))
                     .frame(maxWidth: .infinity, maxHeight: 4)
                     .background(Color.gray.opacity(0.3))
                     .cornerRadius(2)
