@@ -116,6 +116,24 @@ class SettingsModel: ObservableObject {
         print("  WaniKani color enabled: \(self.wanikaniUnderlineEnabled)")
     }
     
+    func syncWaniKaniInBackground() async {
+        guard let apiToken = wanikaniInfo?.apiToken, !apiToken.isEmpty else {
+            print("⏭️ Skipping WaniKani background sync - no API token")
+            return
+        }
+        
+        print("🔄 Starting background WaniKani sync...")
+        do {
+            let info = try await WaniKaniService.shared.syncWaniKani(apiToken: apiToken)
+            await MainActor.run {
+                self.wanikaniInfo = info
+                print("✅ Background WaniKani sync complete!")
+            }
+        } catch {
+            print("❌ Background WaniKani sync failed: \(error)")
+        }
+    }
+    
     private func load<T: Codable>(forKey key: String) -> T? {
         guard let data = UserDefaults.standard.data(forKey: key) else {
             print("⚠️ No data found for key: \(key)")

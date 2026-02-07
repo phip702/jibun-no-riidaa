@@ -28,6 +28,11 @@ struct riidaaApp: App {
                     .environment(\.managedObjectContext, CoreController.context)
                     .environmentObject(appManager)
                     .environmentObject(settings)
+                    .onAppear {
+                        Task.detached {
+                            await settings.syncWaniKaniInBackground()
+                        }
+                    }
             }
         }
     }
