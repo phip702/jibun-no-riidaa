@@ -29,7 +29,7 @@ struct SettingsView: View {
                         Text("WaniKani Settings")
                     }
                     #if !APPSTORE
-                        Toggle("Enable adult content", isOn: settings.$adult)
+                        Toggle("Enable adult manga search", isOn: settings.$adult)
                     #endif
                 }
                 .listRowBackground(Color(.systemGray6))

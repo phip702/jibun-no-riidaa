@@ -16,13 +16,14 @@ struct MangaAddView: View {
     @State var isSearching = false
     @FocusState private var isTextFieldFocused: Bool
     @Environment(\.managedObjectContext) var moc
+    @State private var debounceTimer: Timer?
     
     @EnvironmentObject var settings: SettingsModel
     
     
     var body: some View {
         VStack {
-            TextField("Manga title...", text: $mangaTitle, onCommit: searchMangas)
+            TextField("Manga title...", text: $mangaTitle)
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
                 .cornerRadius(10)
@@ -31,6 +32,8 @@ struct MangaAddView: View {
                         Spacer()
                         Button(action: {
                             mangaTitle = ""
+                            debounceTimer?.invalidate()
+                            searchMangasList = []
                         }) {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.gray)
@@ -44,6 +47,18 @@ struct MangaAddView: View {
                 )
                 .padding(.horizontal)
                 .focused($isTextFieldFocused)
+                .onChange(of: mangaTitle) { newValue in
+                    debounceTimer?.invalidate()
+                    
+                    if newValue.isEmpty {
+                        searchMangasList = []
+                        isSearching = false
+                    } else {
+                        debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                            searchMangas(newValue)
+                        }
+                    }
+                }
             
             ScrollView {
                 if isSearching {
@@ -79,14 +94,17 @@ struct MangaAddView: View {
         .onAppear {
             isTextFieldFocused = true
         }
+        .onDisappear {
+            debounceTimer?.invalidate()
+        }
         .background(Color(.systemBackground))
     }
     
-    func searchMangas() {
+    func searchMangas(_ query: String) {
         self.isSearching = true
 
         if settings.adult {
-            Network.shared.apollo.fetch(query: MangaSearchQueryAdultQuery(page: 1, search: .some(mangaTitle))) { result in
+            Network.shared.apollo.fetch(query: MangaSearchQueryAdultQuery(page: 1, search: .some(query))) { result in
                 switch result {
                 case .success(let data):
                     if let medias = data.data?.page?.media {
@@ -109,7 +127,7 @@ struct MangaAddView: View {
                 self.isSearching = false
             }
         } else {
-            Network.shared.apollo.fetch(query: MangaSearchQuery(page: 1, search: .some(mangaTitle))) { result in
+            Network.shared.apollo.fetch(query: MangaSearchQuery(page: 1, search: .some(query))) { result in
                 switch result {
                 case .success(let data):
                     if let medias = data.data?.page?.media {
