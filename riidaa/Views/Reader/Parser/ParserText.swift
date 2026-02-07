@@ -13,8 +13,6 @@ struct ParserText: View {
     @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
-        let _ = print("🔍 ParserText render - enabled: \(settings.wanikaniUnderlineEnabled), hasInfo: \(settings.wanikaniInfo != nil), text: '\(text.prefix(10))...'")
-        
         if settings.wanikaniUnderlineEnabled, let wanikani = settings.wanikaniInfo {
             Text(attributedText(for: text, wanikani: wanikani))
         } else {
@@ -25,11 +23,6 @@ struct ParserText: View {
     private func attributedText(for text: String, wanikani: WaniKaniInfo) -> AttributedString {
         var result = AttributedString(text)
         
-        print("🔍 WaniKani Debug:")
-        print("  Level: \(wanikani.level)")
-        print("  Total known kanji: \(wanikani.kanjiBySrsStage.count)")
-        print("  Text to process: \(text)")
-        
         // Process each character
         for (index, character) in text.enumerated() {
             let characterStr = String(character)
@@ -37,8 +30,6 @@ struct ParserText: View {
             // Check if this character has a WaniKani SRS stage
             if let srsStage = wanikani.kanjiBySrsStage[characterStr],
                let stage = WaniKaniSrsStage(rawValue: srsStage) {
-                print("  ✓ Found \(stage.category) kanji: \(characterStr)")
-                
                 // Calculate the range for this character in the AttributedString
                 let stringIndex = text.index(text.startIndex, offsetBy: index)
                 let nextIndex = text.index(after: stringIndex)
