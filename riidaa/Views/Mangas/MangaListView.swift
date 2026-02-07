@@ -108,8 +108,7 @@ struct MangaCover : View {
             .frame(height: 226)
             .contextMenu {
                 Button(role: .destructive) {
-                    moc.delete(manga)
-                    CoreDataManager.shared.saveContext()
+                    deleteManga(manga)
                 } label: {
                     Label("Delete manga", systemImage: "trash")
                 }
@@ -122,6 +121,25 @@ struct MangaCover : View {
                 }
             }
         }
+    }
+    
+    func deleteManga(_ manga: MangaModel) {
+        // Only delete image files from disk, keep metadata for reading history
+        let fileManager = FileManager.default
+        let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("mangas")
+        let mangaFolder = documents.appendingPathComponent(manga.id.uuidString)
+        
+        do {
+            if fileManager.fileExists(atPath: mangaFolder.path) {
+                try fileManager.removeItem(at: mangaFolder)
+                print("Deleted manga images: \(mangaFolder.path)")
+            }
+        } catch {
+            print("Error deleting manga files: \(error)")
+        }
+        
+        // Keep CoreData metadata (reading history, progress, etc.)
+        // If user re-uploads, images will be restored to existing structure
     }
     
 }
