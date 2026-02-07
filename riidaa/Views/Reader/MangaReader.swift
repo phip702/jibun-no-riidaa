@@ -178,6 +178,11 @@ public struct MangaReader: View {
                 .transaction { txn in
                     txn.disablesAnimations = true
                 }
+                .onTapGesture {
+                    if parserOffset > 0 {
+                        parserOffset = 0
+                    }
+                }
                 .onChange(of: currentPage) { newPage in
                     self.currentLine = nil
                     if pages[currentPage].read_at == nil {
