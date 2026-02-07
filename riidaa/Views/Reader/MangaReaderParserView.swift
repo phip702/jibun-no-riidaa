@@ -148,7 +148,7 @@ extension MangaReaderParserView {
             DispatchQueue.main.async {
                 if results.count > 0 {
                     self.parsedText = results
-                    self.selectedElement = 0
+                    self.selectedElement = nil
                 }
                 self.loading = false
             }

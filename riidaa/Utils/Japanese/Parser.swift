@@ -88,11 +88,7 @@ public struct Parser {
                 l += bestPos.original.count
             } else {
                 let c = text[text.index(text.startIndex, offsetBy: l)]
-                if !parts.isEmpty && parts[parts.count - 1].results.isEmpty {
-                    parts[parts.count - 1].original += String(c)
-                } else {
-                    parts.append(ParsingResult(original: String(c), results: []))
-                }
+                parts.append(ParsingResult(original: String(c), results: []))
                 l += 1
             }
         }
