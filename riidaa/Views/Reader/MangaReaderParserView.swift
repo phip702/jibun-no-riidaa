@@ -10,6 +10,7 @@ import SwiftUI
 struct MangaReaderParserView: View {
     
     let line: String
+    var onWordSelected: (() -> Void)? = nil
     @State var parsedText: [ParsingResult] = []
     @State var selectedElement: Int?
     @State var loading = false
@@ -60,6 +61,7 @@ struct MangaReaderParserView: View {
                                         .cornerRadius(10)
                                         .onTapGesture {
                                             selectedElement = index
+                                            onWordSelected?()
                                         }
                                 }
                             }

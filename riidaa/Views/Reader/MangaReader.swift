@@ -196,7 +196,9 @@ public struct MangaReader: View {
                         .padding(.top, 5)
                         .padding(.bottom, 5)
                     
-                    MangaReaderParserView(line: currentLine ?? "")
+                    MangaReaderParserView(line: currentLine ?? "", onWordSelected: {
+                        parserOffset = maxHeight - minHeight
+                    })
                         .frame(maxWidth: .infinity)
                 }
                 .frame(height: parserHeight(minHeight: minHeight, maxHeight: maxHeight), alignment: .bottom)
