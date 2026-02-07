@@ -108,8 +108,8 @@ struct MangaReaderParserView: View {
 extension MangaReaderParserView {
     
     func parseLine(line: String) {
+        self.loading = true
         DispatchQueue.global(qos: .userInteractive).async {
-            self.loading = true
             
             var results: [ParsingResult] = []
             
@@ -145,11 +145,13 @@ extension MangaReaderParserView {
                 }
             }
             
-            if results.count > 0 {
-                self.parsedText = results
-                self.selectedElement = 0
+            DispatchQueue.main.async {
+                if results.count > 0 {
+                    self.parsedText = results
+                    self.selectedElement = 0
+                }
+                self.loading = false
             }
-            self.loading = false
         }
     }
     

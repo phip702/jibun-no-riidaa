@@ -31,9 +31,7 @@ public struct Parser {
         var l = 0
         var parts: [ParsingResult] = []
         
-        var endText = text.count - 1
-        
-        while l < endText {
+        while l < text.count {
             var possibilities: [ParsingResult] = []
             
             for i in (l...text.count - 1) {
@@ -88,18 +86,12 @@ public struct Parser {
                 }) else { break }
                 parts.append(bestPos)
                 l += bestPos.original.count
-                if l == text.count-1 {
-                    endText += 1
-                }
             } else {
                 let c = text[text.index(text.startIndex, offsetBy: l)]
-                if var lastPart = parts.last, lastPart.results.isEmpty {
-                    lastPart.original += String(c)
+                if !parts.isEmpty && parts[parts.count - 1].results.isEmpty {
+                    parts[parts.count - 1].original += String(c)
                 } else {
                     parts.append(ParsingResult(original: String(c), results: []))
-                }
-                if l >= text.count-1 {
-                    break
                 }
                 l += 1
             }
