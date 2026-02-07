@@ -10,6 +10,7 @@ import SwiftUI
 struct ParserLink: View {
     
     @State var link: LinkContent
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         switch link.data {

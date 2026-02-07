@@ -10,6 +10,7 @@ import SwiftUI
 struct ParserInlineContainer: View {
     
     @State var element: StructuredContentContainer
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         switch element.data {

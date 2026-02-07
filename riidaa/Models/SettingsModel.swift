@@ -51,6 +51,11 @@ class SettingsModel: ObservableObject {
         didSet { save(ankiFieldExample, forKey: "ankiFieldExample") }
     }
     
+    @Published var wanikaniInfo: WaniKaniInfo? {
+        didSet { save(wanikaniInfo, forKey: "wanikaniInfo") }
+    }
+    @AppStorage("wanikaniUnderlineEnabled") var wanikaniUnderlineEnabled = false
+    
 #if APPSTORE
     var adult = false
 #else
@@ -100,18 +105,44 @@ class SettingsModel: ObservableObject {
         self.ankiFieldReading = load(forKey: "ankiFieldReading")
         self.ankiFieldMeaning = load(forKey: "ankiFieldMeaning")
         self.ankiFieldExample = load(forKey: "ankiFieldExample")
+        self.wanikaniInfo = load(forKey: "wanikaniInfo")
+        
+        print("🚀 SettingsModel initialized")
+        print("  WaniKani loaded: \(self.wanikaniInfo != nil)")
+        if let wk = self.wanikaniInfo {
+            print("  WaniKani level: \(wk.level)")
+            print("  WaniKani kanji count: \(wk.kanjiBySrsStage.count)")
+        }
+        print("  WaniKani color enabled: \(self.wanikaniUnderlineEnabled)")
     }
     
     private func load<T: Codable>(forKey key: String) -> T? {
-        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(T.self, from: data)
+        guard let data = UserDefaults.standard.data(forKey: key) else {
+            print("⚠️ No data found for key: \(key)")
+            return nil
+        }
+        do {
+            let decoded = try JSONDecoder().decode(T.self, from: data)
+            print("✅ Loaded \(key): \(String(describing: type(of: decoded)))")
+            return decoded
+        } catch {
+            print("❌ Failed to decode \(key): \(error)")
+            return nil
+        }
     }
     
     private func save<T: Codable>(_ value: T?, forKey key: String) {
-        if let value = value, let data = try? JSONEncoder().encode(value) {
-            UserDefaults.standard.set(data, forKey: key)
+        if let value = value {
+            do {
+                let data = try JSONEncoder().encode(value)
+                UserDefaults.standard.set(data, forKey: key)
+                print("✅ Saved \(key): \(data.count) bytes")
+            } catch {
+                print("❌ Failed to encode \(key): \(error)")
+            }
         } else {
             UserDefaults.standard.removeObject(forKey: key)
+            print("🗑️ Removed \(key)")
         }
     }
     

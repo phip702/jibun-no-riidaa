@@ -10,6 +10,7 @@ import SwiftUI
 struct ParserNumberedList: View {
     
     @State var array: [[StructuredContent]]
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         if array.isEmpty {

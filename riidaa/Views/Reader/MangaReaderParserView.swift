@@ -51,7 +51,7 @@ struct MangaReaderParserView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 0) {
                                 ForEach(Array(parsedText.enumerated()), id: \.offset) { index, element in
-                                    Text(element.original)
+                                    ParserText(text: element.original)
                                         .font(.largeTitle)
                                         .padding([.horizontal], 4)
                                         .padding([.vertical], 7)
@@ -342,6 +342,7 @@ struct DetailedView: View, Identifiable {
     var id: UUID = UUID()
     
     @State var structuredContent: StructuredContent
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         switch structuredContent {

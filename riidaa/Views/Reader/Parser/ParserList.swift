@@ -11,6 +11,7 @@ struct ParserList: View {
     
     @State var array: [[StructuredContent]]
     @State var prefix: String?
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         if array.isEmpty {
@@ -34,6 +35,7 @@ struct ParserList: View {
 struct ListElement: View {
     
     @State var array: [StructuredContent]
+    @EnvironmentObject var settings: SettingsModel
     
     var body: some View {
         switch array.first {
