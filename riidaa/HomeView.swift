@@ -16,6 +16,10 @@ struct HomeView: View {
                 .tabItem {
                     Label("List", systemImage: "book")
                 }
+            LookupsView()
+                .tabItem {
+                    Label("Lookups", systemImage: "magnifyingglass")
+                }
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
