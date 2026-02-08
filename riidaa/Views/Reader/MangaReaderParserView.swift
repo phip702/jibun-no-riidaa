@@ -63,6 +63,12 @@ struct MangaReaderParserView: View {
                                             selectedElement = index
                                             onWordSelected?()
                                             print("User clicked parsed text: \(element.original)")
+                                            // Show dictionary form if available
+                                            if let firstResult = element.results.first {
+                                                let dictForm = firstResult.term.term
+                                                print("Dictionary form: \(dictForm)")
+                                                // Optionally, you could display this in the UI, e.g. with a sheet, alert, or by updating a @State property
+                                            }
                                         }
                                 }
                             }
