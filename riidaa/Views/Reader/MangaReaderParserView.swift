@@ -62,6 +62,7 @@ struct MangaReaderParserView: View {
                                         .onTapGesture {
                                             selectedElement = index
                                             onWordSelected?()
+                                            print("User clicked parsed text: \(element.original)")
                                         }
                                 }
                             }
@@ -88,10 +89,9 @@ struct MangaReaderParserView: View {
                 }
                 .padding([.leading, .trailing])
                 .onChange(of: line) { newLine in
-                    if newLine == "" {
-                        self.selectedElement = nil
-                        parsedText = []
-                    } else {
+                    self.selectedElement = nil
+                    parsedText = []
+                    if newLine != "" {
                         parseLine(line: newLine)
                     }
                 }
@@ -279,6 +279,7 @@ struct ResultView: View {
                         Button {
                             withAnimation {
                                 definition = rule.description
+                                print("ResultView tapped: term=\(result.term.term), reading=\(result.term.reading)") //! DELETE LATER
                             }
                         } label: {
                             Text(rule.description.short)
