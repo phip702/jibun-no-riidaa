@@ -63,11 +63,23 @@ struct MangaReaderParserView: View {
                                             selectedElement = index
                                             onWordSelected?()
                                             print("User clicked parsed text: \(element.original)")
-                                            // Show dictionary form if available
+                                            // Show dictionary form if available and print what we'd store in the DB
                                             if let firstResult = element.results.first {
                                                 let dictForm = firstResult.term.term
-                                                print("Dictionary form: \(dictForm)")
-                                                // Optionally, you could display this in the UI, e.g. with a sheet, alert, or by updating a @State property
+                                                let reading = firstResult.term.reading
+                                                let now = Date()
+                                                let iso = ISO8601DateFormatter().string(from: now)
+                                                let isSingleKanji: Bool = {
+                                                    guard dictForm.count == 1, let scalar = dictForm.unicodeScalars.first else { return false }
+                                                    let val = scalar.value
+                                                    return (0x4E00...0x9FFF).contains(val) || (0x3400...0x4DBF).contains(val) || (0x20000...0x2A6DF).contains(val)
+                                                }()
+
+                                                // This is the debug print showing the object we would insert/update in the database
+                                                print("lookupWord DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(reading)\", lookupCount: 1, isSingleKanji: \(isSingleKanji), firstLookedUp: \"\(iso)\", lastLookedUp: \"\(iso)\"}")
+
+                                                // Persist lookup immediately
+                                                SQLiteManager.shared.upsertWordLookup(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, isSingleKanji: isSingleKanji)
                                             }
                                         }
                                 }

@@ -16,6 +16,7 @@ class SQLiteManager {
     // Table Definitions
     let dictionaries = Table("dictionaries")
     let terms = Table("terms")
+    let wordLookups = Table("word_lookups")
 
     // Dictionary
     let id = Expression<Int64>("id")
@@ -45,6 +46,14 @@ class SQLiteManager {
     let termTags = SQLite.Expression<String>("termTags")
     let dictionaryId = SQLite.Expression<Int64>("dictionaryId")
     let exportedToAnki = SQLite.Expression<Bool>("exportedToAnki")
+
+    // WordLookup
+    let lookupDictionaryForm = SQLite.Expression<String>("dictionaryForm")
+    let lookupReading = SQLite.Expression<String?>("reading")
+    let lookupCount = SQLite.Expression<Int64>("lookupCount")
+    let lookupIsSingleKanji = SQLite.Expression<Bool>("isSingleKanji")
+    let lookupFirstLookedUp = SQLite.Expression<String>("firstLookedUp")
+    let lookupLastLookedUp = SQLite.Expression<String>("lastLookedUp")
 
     private init() {
         do {
@@ -82,6 +91,14 @@ class SQLiteManager {
                 t.column(exportedToAnki, defaultValue: false)
                 t.foreignKey(dictionaryId, references: dictionaries, id, delete: .cascade)
                 t.primaryKey(term, reading, definitions, dictionaryId)
+            })
+            try db?.run(wordLookups.create(ifNotExists: true) { t in
+                t.column(lookupDictionaryForm, primaryKey: true)
+                t.column(lookupReading)
+                t.column(lookupCount, defaultValue: 0)
+                t.column(lookupIsSingleKanji, defaultValue: false)
+                t.column(lookupFirstLookedUp)
+                t.column(lookupLastLookedUp)
             })
             try db?.run(terms.createIndex(term, ifNotExists: true))
             try db?.run(terms.createIndex(reading, ifNotExists: true))
@@ -193,6 +210,53 @@ class SQLiteManager {
         }
         
         return result
+    }
+
+    // Insert or update a word lookup: increments lookupCount and updates timestamps
+    func upsertWordLookup(dictionaryForm: String, reading: String?, isSingleKanji: Bool) {
+        guard let db = db else { return }
+        let now = Date()
+        let iso = ISO8601DateFormatter().string(from: now)
+
+        let query = wordLookups.filter(lookupDictionaryForm == dictionaryForm)
+        do {
+            var found = false
+            for row in try db.prepare(query) {
+                let currentCount = row[lookupCount]
+                let newCount = currentCount + 1
+                let update = query.update(
+                    lookupCount <- newCount,
+                    lookupLastLookedUp <- iso
+                )
+                try db.run(update)
+                found = true
+            }
+            if !found {
+                let insert = wordLookups.insert(
+                    lookupDictionaryForm <- dictionaryForm,
+                    lookupReading <- reading,
+                    lookupCount <- 1,
+                    lookupIsSingleKanji <- isSingleKanji,
+                    lookupFirstLookedUp <- iso,
+                    lookupLastLookedUp <- iso
+                )
+                try db.run(insert)
+            }
+            // Read back the row and print all values to verify the upsert
+            if let r = try db.pluck(wordLookups.filter(lookupDictionaryForm == dictionaryForm)) {
+                let df = r[lookupDictionaryForm]
+                let rd = r[lookupReading] ?? ""
+                let cnt = r[lookupCount]
+                let isk = r[lookupIsSingleKanji]
+                let first = r[lookupFirstLookedUp]
+                let last = r[lookupLastLookedUp]
+                print("upsertWordLookup: row -> {dictionaryForm: \"\(df)\", reading: \"\(rd)\", lookupCount: \(cnt), isSingleKanji: \(isk), firstLookedUp: \"\(first)\", lastLookedUp: \"\(last)\"}")
+            } else {
+                print("upsertWordLookup: row not found after upsert for \(dictionaryForm)")
+            }
+        } catch {
+            print("upsertWordLookup error: \(error)")
+        }
     }
 }
 
