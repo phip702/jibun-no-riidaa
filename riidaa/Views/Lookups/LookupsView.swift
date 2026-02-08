@@ -114,17 +114,25 @@ struct LookupsView: View {
         let mgr = SQLiteManager.shared
         guard let db = mgr.getDatabase() else { return }
 
-        let table = mgr.wordLookups
-        let df = mgr.lookupDictionaryForm
-        let rd = mgr.lookupReading
-        let cnt = mgr.lookupCount
-
+        // Aggregate lookup_events by form and reading, returning counts
         do {
-            let query = table.select(cnt, df, rd).order(cnt.desc)
-            for row in try db.prepare(query) {
-                let dictionaryForm = row[df]
-                let reading = row[rd]
-                let lookupCount = row[cnt]
+            let sql = """
+            SELECT dictionaryForm, reading, COUNT(date) as lookupCount
+            FROM lookup_events
+            GROUP BY dictionaryForm, reading
+            ORDER BY lookupCount DESC;
+            """
+            for row in try db.prepare(sql) {
+                // row columns: 0: dictionaryForm, 1: reading, 2: lookupCount
+                let dictionaryForm = row[0] as? String ?? ""
+                let reading = row[1] as? String
+                let lookupCountAny = row[2]
+                var lookupCount: Int64 = 0
+                if let v = lookupCountAny as? Int64 {
+                    lookupCount = v
+                } else if let v = lookupCountAny as? Int {
+                    lookupCount = Int64(v)
+                }
                 newRows.append(LookupRow(dictionaryForm: dictionaryForm, reading: reading, lookupCount: lookupCount))
             }
         } catch {

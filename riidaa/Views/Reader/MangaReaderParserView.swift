@@ -75,11 +75,12 @@ struct MangaReaderParserView: View {
                                                     return (0x4E00...0x9FFF).contains(val) || (0x3400...0x4DBF).contains(val) || (0x20000...0x2A6DF).contains(val)
                                                 }()
 
-                                                // This is the debug print showing the object we would insert/update in the database
-                                                print("lookupWord DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(reading)\", lookupCount: 1, isSingleKanji: \(isSingleKanji), firstLookedUp: \"\(iso)\", lastLookedUp: \"\(iso)\"}")
+                                                // Debug: object to be inserted into `lookup_events`
+                                                let readingDesc = reading.isEmpty ? "nil" : reading
+                                                print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\"}")
 
-                                                // Persist lookup immediately
-                                                SQLiteManager.shared.upsertWordLookup(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, isSingleKanji: isSingleKanji)
+                                                // Persist lookup event immediately
+                                                SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
                                             }
                                         }
                                 }

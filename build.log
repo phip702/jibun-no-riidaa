@@ -1,0 +1,712 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace riidaa.xcodeproj/project.xcworkspace -scheme riidaa clean build
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  Apollo: https://github.com/apollographql/apollo-ios.git @ 1.17.0
+  Anilist: /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa 2/Anilist @ local
+  SQLite.swift: https://github.com/stephencelis/SQLite.swift.git @ 0.15.3
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  LazyPager: https://github.com/gh123man/LazyPager @ 1.1.7
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (19 targets)
+    Target 'riidaa' in project 'riidaa'
+        ➜ Explicit dependency on target 'SQLite' in project 'SQLite.swift'
+        ➜ Explicit dependency on target 'Anilist' in project 'Anilist'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'LazyPager' in project 'LazyPager'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+    Target 'LazyPager' in project 'LazyPager'
+        ➜ Explicit dependency on target 'LazyPager' in project 'LazyPager'
+    Target 'LazyPager' in project 'LazyPager' (no dependencies)
+    Target 'ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'SQLite' in project 'SQLite.swift'
+    Target 'ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_ApolloSQLite' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'SQLite' in project 'SQLite.swift'
+    Target 'Apollo_ApolloSQLite' in project 'Apollo' (no dependencies)
+    Target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+    Target 'Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_Apollo' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+    Target 'Apollo_Apollo' in project 'Apollo' (no dependencies)
+    Target 'Anilist' in project 'Anilist'
+        ➜ Explicit dependency on target 'Anilist' in project 'Anilist'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+    Target 'Anilist' in project 'Anilist'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+    Target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_ApolloAPI' in project 'Apollo'
+    Target 'ApolloAPI' in project 'Apollo'
+        ➜ Explicit dependency on target 'Apollo_ApolloAPI' in project 'Apollo'
+    Target 'Apollo_ApolloAPI' in project 'Apollo' (no dependencies)
+    Target 'SQLite' in project 'SQLite.swift'
+        ➜ Explicit dependency on target 'SQLite' in project 'SQLite.swift'
+    Target 'SQLite' in project 'SQLite.swift' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/momc --dry-run --action generate --swift-version 5.0 --sdkroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk --macosx-deployment-target 14.0 --module riidaa /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa 2/riidaa/CoreModel.xcdatamodeld /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/DerivedSources/CoreDataGenerated/CoreModel
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 788bebe2963cfb52efc31760ee32a2d1
+Build description path: /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/XCBuildData/788bebe2963cfb52efc31760ee32a2d1.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -o /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa-2d39a3ec4656068474927aec7b50e559-VFS/all-product-headers.yaml
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa-2d39a3ec4656068474927aec7b50e559-VFS/all-product-headers.yaml
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+
+CreateBuildDirectory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/PackageFrameworks
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-create-build-directory /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/PackageFrameworks
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.modulemap (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.DependencyMetadataFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.DependencyStaticMetadataFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.DependencyStaticMetadataFileList (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation_const_extract_protocols.json (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.DependencyMetadataFileList (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-project-headers.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-project-headers.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-own-target-headers.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-generated-files.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-generated-files.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-all-non-framework-target-headers.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-all-target-headers.hmap (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-DebugDylibPath-normal-arm64.txt (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-DebugDylibInstallName-normal-arm64.txt (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/riidaa-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa_const_extract_protocols.json (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.SwiftFileList (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.SwiftConstValuesFileList (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.LinkFileList (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa-OutputFileMap.json (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/Objects-normal/arm64/riidaa-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/DerivedSources/Entitlements.plist (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/riidaa.build/Debug/riidaa.build/DerivedSources/Entitlements.plist
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/ZIPFoundation_ZIPFoundation.DependencyStaticMetadataFileList (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/ZIPFoundation_ZIPFoundation.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/ZIPFoundation_ZIPFoundation.DependencyMetadataFileList (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/ZIPFoundation_ZIPFoundation.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.SwiftConstValuesFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-OutputFileMap.json (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.LinkFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/DerivedSources/resource_bundle_accessor.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/DerivedSources/resource_bundle_accessor.swift
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.modulemap (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/ZIPFoundation.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.DependencyStaticMetadataFileList (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.modulemap (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.DependencyMetadataFileList (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite_const_extract_protocols.json (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.SwiftFileList (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.SwiftConstValuesFileList (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.LinkFileList (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite-OutputFileMap.json (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite-OutputFileMap.json
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/SQLite.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.modulemap (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/SQLite.swift
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/SQLite.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.SwiftFileList (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager_const_extract_protocols.json (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.SwiftConstValuesFileList (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.LinkFileList (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager-OutputFileMap.json (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.modulemap (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.DependencyStaticMetadataFileList (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.DependencyMetadataFileList (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.SwiftConstValuesFileList (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.SwiftFileList (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite_const_extract_protocols.json (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.LinkFileList (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite-OutputFileMap.json (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/Objects-normal/arm64/ApolloSQLite-OutputFileMap.json
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/LazyPager.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.modulemap (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/LazyPager.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/DerivedSources/resource_bundle_accessor.swift (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/DerivedSources/resource_bundle_accessor.swift
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.modulemap (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.DependencyStaticMetadataFileList (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.DependencyMetadataFileList (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.SwiftFileList (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI_const_extract_protocols.json (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.SwiftConstValuesFileList (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.LinkFileList (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.LinkFileList
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/ApolloSQLite.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.modulemap (in target 'ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloSQLite.build/ApolloSQLite.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-OutputFileMap.json (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/DerivedSources/resource_bundle_accessor.swift (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/DerivedSources/resource_bundle_accessor.swift
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.modulemap (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.DependencyStaticMetadataFileList (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.DependencyMetadataFileList (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.DependencyMetadataFileList
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents/MacOS (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents/MacOS
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents/Resources (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents/Resources
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app/Contents
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app (in target 'riidaa' from project 'riidaa')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/riidaa.app
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/ApolloAPI.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.modulemap (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/ApolloAPI.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/empty-Apollo_ApolloSQLite.plist (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/empty-Apollo_ApolloSQLite.plist
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/Apollo_ApolloSQLite.DependencyStaticMetadataFileList (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/Apollo_ApolloSQLite.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/Apollo_ApolloSQLite.DependencyMetadataFileList (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/Apollo_ApolloSQLite.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/empty-Apollo_ApolloAPI.plist (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/empty-Apollo_ApolloAPI.plist
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/Apollo_ApolloAPI.DependencyStaticMetadataFileList (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/Apollo_ApolloAPI.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/Apollo_ApolloAPI.DependencyMetadataFileList (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/Apollo_ApolloAPI.DependencyMetadataFileList
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Resources (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Resources
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Resources (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Resources
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/Apollo_Apollo.DependencyStaticMetadataFileList (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/Apollo_Apollo.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/empty-Apollo_Apollo.plist (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/empty-Apollo_Apollo.plist
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/Apollo_Apollo.DependencyMetadataFileList (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/Apollo_Apollo.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.SwiftFileList (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo_const_extract_protocols.json (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.SwiftConstValuesFileList (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.LinkFileList (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo-OutputFileMap.json (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Objects-normal/arm64/Apollo-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.modulemap (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/DerivedSources/resource_bundle_accessor.swift (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/DerivedSources/resource_bundle_accessor.swift
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.DependencyStaticMetadataFileList (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.DependencyMetadataFileList (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.SwiftFileList (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.SwiftFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist_const_extract_protocols.json (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.SwiftConstValuesFileList (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.LinkFileList (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist.LinkFileList
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist-OutputFileMap.json (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Objects-normal/arm64/Anilist-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.modulemap (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.modulemap
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.DependencyStaticMetadataFileList (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.DependencyStaticMetadataFileList
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/Apollo.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.modulemap (in target 'Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo.build/Apollo.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+WriteAuxiliaryFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.DependencyMetadataFileList (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    write-file /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.DependencyMetadataFileList
+
+Copy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps/Anilist.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.modulemap (in target 'Anilist' from project 'Anilist')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/Anilist
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Anilist.build/Debug/Anilist.build/Anilist.modulemap /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/GeneratedModuleMaps
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Resources (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Resources
+
+MkDir /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /bin/mkdir -p /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle
+
+ProcessInfoPlistFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+CpResource /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources
+
+ProcessInfoPlistFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Info.plist /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/empty-Apollo_ApolloAPI.plist (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-infoPlistUtility /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloAPI.build/empty-Apollo_ApolloAPI.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Info.plist
+
+CpResource /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/ApolloAPI/Resources/PrivacyInfo.xcprivacy (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/ApolloAPI/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle/Contents/Resources
+
+ProcessInfoPlistFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Info.plist /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/empty-Apollo_ApolloSQLite.plist (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-infoPlistUtility /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_ApolloSQLite.build/empty-Apollo_ApolloSQLite.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Info.plist
+
+CpResource /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/ApolloSQLite/Resources/PrivacyInfo.xcprivacy (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/ApolloSQLite/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle/Contents/Resources
+
+ProcessInfoPlistFile /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Info.plist /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/empty-Apollo_Apollo.plist (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-infoPlistUtility /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/Apollo_Apollo.build/empty-Apollo_Apollo.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Info.plist
+
+CpResource /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/Apollo/Resources/PrivacyInfo.xcprivacy (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios/Sources/Apollo/Resources/PrivacyInfo.xcprivacy /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle/Contents/Resources
+
+RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    builtin-RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle
+
+RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle
+
+RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle
+
+RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    builtin-RegisterExecutionPolicyException /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle
+
+Touch /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/ZIPFoundation
+    /usr/bin/touch -c /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle
+
+Touch /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle (in target 'Apollo_ApolloSQLite' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /usr/bin/touch -c /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloSQLite.bundle
+
+Touch /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle (in target 'Apollo_ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /usr/bin/touch -c /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_ApolloAPI.bundle
+
+Touch /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle (in target 'Apollo_Apollo' from project 'Apollo')
+    cd /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/apollo-ios
+    /usr/bin/touch -c /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/Apollo_Apollo.bundle
+
+SwiftDriver ZIPFoundation normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZIPFoundation -Onone -enforce-exclusivity\=checked @/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-macos10.13 -g -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -suppress-warnings -index-store-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -output-file-map /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -package-name zipfoundation -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation_const_extract_protocols.json -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/include -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/DerivedSources-normal/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/DerivedSources/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-Swift.h -working-directory /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver LazyPager normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LazyPager' from project 'LazyPager')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LazyPager -Onone -enforce-exclusivity\=checked @/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -DXcode -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-macos10.13 -g -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -suppress-warnings -index-store-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -output-file-map /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager_const_extract_protocols.json -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/include -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/DerivedSources-normal/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/DerivedSources/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/LazyPager.build/Debug/LazyPager.build/Objects-normal/arm64/LazyPager-Swift.h -working-directory /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj -experimental-emit-module-separately -disable-cmo
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/ClearFullScreenBackground.swift:10:8: error: Unable to find module dependency: 'UIKit'
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/ClearFullScreenBackground.swift:10:8: note: A dependency of main module 'LazyPager'
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/LazyPager.swift:9:8: note: Also imported here
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/PagerView.swift:9:8: note: Also imported here
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/ViewDataProvider.swift:10:8: note: Also imported here
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/SourcePackages/checkouts/LazyPager/Sources/LazyPager/ZoomableView.swift:9:8: note: Also imported here
+import UIKit
+       ^ (in target 'LazyPager' from project 'LazyPager')
+
+SwiftDriver SQLite normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SQLite' from project 'SQLite.swift')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SQLite -Onone -enforce-exclusivity\=checked @/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -DXcode -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-macos10.13 -g -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -suppress-warnings -index-store-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -output-file-map /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -package-name sqlite_swift -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite_const_extract_protocols.json -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/include -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/DerivedSources-normal/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/DerivedSources/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SQLite.swift.build/Debug/SQLite.build/Objects-normal/arm64/SQLite-Swift.h -working-directory /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver ApolloAPI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ApolloAPI' from project 'Apollo')
+    cd /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ApolloAPI -Onone -enforce-exclusivity\=checked @/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -enable-upcoming-feature ExistentialAny -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-macos10.14 -g -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -suppress-warnings -index-store-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/philipranney/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.2-25C57-00fa09913b459cbbc988d1f6730289ae.sdkstatcache -output-file-map /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -package-name apollo_ios -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI_const_extract_protocols.json -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Products/Debug/include -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/DerivedSources-normal/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/DerivedSources/arm64 -Xcc -I/Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/philipranney/Library/Developer/Xcode/DerivedData/riidaa-hemrglmntnmqeuapdzwrtwtpvtvl/Build/Intermediates.noindex/Apollo.build/Debug/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-Swift.h -working-directory /Users/philipranney/Documents/riidaa_plus/jibun-no-riidaa\ 2/riidaa.xcodeproj -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrauth-5Z9FGWIVPEOFKYETIIROL56MZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdbool-6DKPOW84QQ5O14KWK69V5YFLF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftShims-6K13ZTKV21HSJ7NK0XMT8F5PZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-9291DO8T2HEL6P7A7NWC5KCEY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stddef-7JCUNKW826YMLOQ97T2G0EVVG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_float-8FUPET6ARQC8UR55PYUIC7O6L.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrcheck-EMNEMZU39FIOTTJBQQTU6IQ4K.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_AvailabilityInternal-AH64WUG1DD71ZZX9ZO2RRNACN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdarg-7727CBO2OI7XVKEA6LKASDE4C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation1-7OO0WUXBZH1XUSU5MSLHSTRM1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_limits-A6OO9MGHYQ6SR5OR0K0WNWHF9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation2-DQ93RAV9WRGF1U11JLIWQNFOL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SQLite3-2ZE4BFAW0JFEELI31DG07CR7T.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdint-WGTBESSM005FVMJVNLPNJ39G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/philipranney/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/sys_types-6ZCLQTM2I9MUXUF99ISTRC2OM.pcm
+
