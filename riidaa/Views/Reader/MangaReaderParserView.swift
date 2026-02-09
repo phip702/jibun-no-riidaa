@@ -79,8 +79,25 @@ struct MangaReaderParserView: View {
                                                 let readingDesc = reading.isEmpty ? "nil" : reading
                                                 print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\"}")
 
-                                                // Persist lookup event immediately
-                                                SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
+                                                // Persist lookup event and kanji lookups atomically using one timestamp
+                                                if let db = SQLiteManager.shared.getDatabase() {
+                                                    do {
+                                                        try db.transaction {
+                                                            try SQLiteManager.shared.insertLookupEventThrowing(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, dateISO: iso)
+                                                            try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
+                                                        }
+                                                    } catch {
+                                                        print("Lookup transaction error: \(error)")
+                                                    }
+                                                } else {
+                                                    // Fallback: non-transactional insert
+                                                    SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
+                                                    do {
+                                                        try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
+                                                    } catch {
+                                                        print("Kanji insert error: \(error)")
+                                                    }
+                                                }
                                             }
                                         }
                                 }

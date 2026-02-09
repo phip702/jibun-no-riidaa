@@ -12,6 +12,7 @@ typealias Expression = SQLite.Expression
 class SQLiteManager {
     static let shared = SQLiteManager()
     private var db: Connection?
+    private let isoFormatter = ISO8601DateFormatter()
 
     // Table Definitions
     let dictionaries = Table("dictionaries")
@@ -52,6 +53,12 @@ class SQLiteManager {
     let eventForm = SQLite.Expression<String>("dictionaryForm")
     let eventReading = SQLite.Expression<String?>("reading")
     let eventDate = SQLite.Expression<String>("date")
+    
+    // Kanji lookups
+    let kanjiLookups = Table("kanji_lookups")
+    let kanjiId = Expression<Int64>("id")
+    let kanjiText = Expression<String>("kanji")
+    let kanjiDate = Expression<String>("date")
 
     private init() {
         do {
@@ -96,6 +103,12 @@ class SQLiteManager {
                 t.column(eventReading)
                 t.column(eventDate)
             })
+            try db?.run(kanjiLookups.create(ifNotExists: true) { t in
+                t.column(kanjiId, primaryKey: .autoincrement)
+                t.column(kanjiText)
+                t.column(kanjiDate)
+            })
+            try db?.run(kanjiLookups.createIndex(kanjiText, kanjiDate, ifNotExists: true))
             try db?.run(lookupEvents.createIndex(eventDate, ifNotExists: true))
             try db?.run(lookupEvents.createIndex(eventForm, eventDate, ifNotExists: true))
             try db?.run(terms.createIndex(term, ifNotExists: true))
@@ -210,19 +223,89 @@ class SQLiteManager {
         return result
     }
 
-    // Insert a lookup event: one row per lookup with timestamp
-    func insertLookupEvent(dictionaryForm: String, reading: String?, dateISO: String = ISO8601DateFormatter().string(from: Date())) {
+    // Insert a lookup event: throwing variant for use in transactions
+    func insertLookupEventThrowing(dictionaryForm: String, reading: String?, dateISO: String) throws {
         guard let db = db else { return }
         let insert = lookupEvents.insert(
             eventForm <- dictionaryForm,
             eventReading <- reading,
             eventDate <- dateISO
         )
+        try db.run(insert)
+    }
+
+    // Non-throwing wrapper used by existing callers
+    func insertLookupEvent(dictionaryForm: String, reading: String?, dateISO: String = ISO8601DateFormatter().string(from: Date())) {
         do {
-            try db.run(insert)
+            try insertLookupEventThrowing(dictionaryForm: dictionaryForm, reading: reading, dateISO: dateISO)
         } catch {
             print("insertLookupEvent error: \(error)")
         }
+    }
+
+    // Insert kanji lookup rows if `form` contains kanji scalars. Inserts one row per kanji scalar occurrence.
+    func insertKanjiLookupIfKanji(_ form: String, date: Date) throws {
+        guard let db = db else { return }
+        let dateISO = isoFormatter.string(from: date)
+
+        var insertedAny = false
+        for scalar in form.unicodeScalars {
+            let v = scalar.value
+            let isKanji =
+                (v >= 0x4E00 && v <= 0x9FFF) ||
+                (v >= 0x3400 && v <= 0x4DBF) ||
+                (v >= 0xF900 && v <= 0xFAFF) ||
+                (v >= 0x20000 && v <= 0x2A6DF) ||
+                (v >= 0x2A700 && v <= 0x2B73F) ||
+                (v >= 0x2B740 && v <= 0x2B81F) ||
+                (v >= 0x2B820 && v <= 0x2CEAF)
+
+            if isKanji {
+                let k = String(scalar)
+                let insert = kanjiLookups.insert(
+                    kanjiText <- k,
+                    kanjiDate <- dateISO
+                )
+                try db.run(insert)
+                print("Kanji lookup inserted: \(k) @ \(dateISO)")
+                insertedAny = true
+            }
+        }
+
+        if !insertedAny {
+            // Nothing to do — not an error in this design
+            return
+        }
+    }
+
+    // Aggregation helper: returns list of (kanji, count) ordered desc
+    func kanjiLookupCounts(start: Date? = nil, end: Date? = nil) -> [(kanji: String, count: Int)] {
+        guard let db = db else { return [] }
+        var sql = "SELECT kanji, COUNT(*) as c FROM kanji_lookups"
+        var clauses: [String] = []
+        if let s = start {
+            clauses.append("date >= '\(isoFormatter.string(from: s))'")
+        }
+        if let e = end {
+            clauses.append("date <= '\(isoFormatter.string(from: e))'")
+        }
+        if !clauses.isEmpty {
+            sql += " WHERE " + clauses.joined(separator: " AND ")
+        }
+        sql += " GROUP BY kanji ORDER BY c DESC;"
+
+        var out: [(kanji: String, count: Int)] = []
+        do {
+            for row in try db.prepare(sql) {
+                let k = row[0] as? String ?? ""
+                let c = row[1] as? Int64 ?? 0
+                out.append((kanji: k, count: Int(c)))
+            }
+        } catch {
+            print("kanjiLookupCounts error: \(error)")
+        }
+
+        return out
     }
 }
 
