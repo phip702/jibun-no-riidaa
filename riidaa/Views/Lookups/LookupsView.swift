@@ -66,6 +66,7 @@ struct LookupsView: View {
     // Base font sizes for scaling with Dynamic Type
     @ScaledMetric private var baseHeaderSize: CGFloat = 12
     @ScaledMetric private var baseRowSize: CGFloat = 12
+    private var wordRowSize: CGFloat { baseRowSize * 1.2 }  // 20% larger than kanji rows
 
     @State private var rows: [LookupRow] = []
     @EnvironmentObject var settings: SettingsModel
@@ -253,17 +254,17 @@ struct LookupsView: View {
                                 } else {
                                     VStack(alignment: .leading) {
                                         Text(row.dictionaryForm)
-                                            .font(.system(size: baseRowSize))
+                                            .font(.system(size: wordRowSize))
                                             .bold()
                                     }
                                     Spacer()
                                     Text(row.reading ?? "")
-                                        .font(.system(size: baseRowSize))
+                                        .font(.system(size: wordRowSize))
                                         .frame(width: 120, alignment: .leading)
                                         .foregroundColor(.secondary)
                                         .bold()
                                     Text(String(row.lookupCount))
-                                        .font(.system(size: baseRowSize))
+                                        .font(.system(size: wordRowSize))
                                         .monospacedDigit()
                                         .frame(width: 60, alignment: .trailing)
                                         .bold()
