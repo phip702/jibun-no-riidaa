@@ -61,6 +61,9 @@ struct LookupRow: Identifiable {
 
 struct LookupsView: View {
 
+    // Minimum width for Kanji and Cnt columns
+    private let colMinWidth: CGFloat = 40
+
     @State private var rows: [LookupRow] = []
     @EnvironmentObject var settings: SettingsModel
     @State private var showCopied: Bool = false
@@ -143,35 +146,32 @@ struct LookupsView: View {
                                 }
                                 .padding(.vertical, 6)
                             } else {
-                                HStack(alignment: .center, spacing: 12) {
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        Text("Kanji")
-                                            .font(.body)
-                                            .bold()
-                                            .foregroundColor(.primary)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        Text("WK Meaning")
-                                            .font(.body)
-                                            .bold()
-                                            .foregroundColor(.primary)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        Text("Reading")
-                                            .font(.body)
-                                            .bold()
-                                            .foregroundColor(.primary)
-                                    }
-                                    .frame(minWidth: 60, alignment: .leading)
-                                    VStack(alignment: .trailing, spacing: 0) {
-                                        Text("Cnt")
-                                            .font(.body)
-                                            .bold()
-                                            .foregroundColor(.primary)
-                                    }
-                                    .frame(minWidth: 40, maxWidth: 60, alignment: .trailing)
+                                HStack {
+                                    Text("Kanji")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
+                                    Text("Lvl")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
+                                    Text("WK Meaning")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("WK Reading")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(minWidth: 60, alignment: .leading)
+                                    Text("Cnt")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
                                 }
                                 .padding(.vertical, 6)
                             }
@@ -198,13 +198,21 @@ struct LookupsView: View {
                             HStack {
                                 if selectedMode == .kanji {
                                     HStack(alignment: .center, spacing: 12) {
-                                        // Kanji column: kanji itself with level & srs underneath
+                                        // Kanji column: kanji itself
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(row.dictionaryForm)
                                                 .font(.title3)
                                                 .bold()
+                                        }
+                                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
 
-                                            HStack(spacing: 10) {
+                                        // Lvl column (level & SRS)
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            if row.wanikaniLevel == nil && row.wanikaniSrsStage == nil {
+                                                Text("n/a")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.secondary)
+                                            } else {
                                                 if let level = row.wanikaniLevel {
                                                     Text("Lvl \(level)")
                                                         .font(.subheadline)
@@ -217,26 +225,25 @@ struct LookupsView: View {
                                                 }
                                             }
                                         }
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
 
+                                        // Meaning column (separate)
+                                        Text(row.wanikaniMeaning ?? "")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                                            // Meaning column (separate)
-                                            Text(row.wanikaniMeaning ?? "")
-                                                .font(.subheadline)
-                                                .foregroundColor(.secondary)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-
-                                            // Reading column
-                                            Text(row.wanikaniReading ?? "")
-                                                .font(.body)
-                                                .foregroundColor(.secondary)
-                                                .frame(minWidth: 60, alignment: .leading)
+                                        // Reading column
+                                        Text(row.wanikaniReading ?? "")
+                                            .font(.body)
+                                            .foregroundColor(.secondary)
+                                            .frame(minWidth: 60, alignment: .leading)
 
                                         // Count
                                         Text(String(row.lookupCount))
                                             .font(.body)
                                             .monospacedDigit()
-                                            .frame(minWidth: 40, maxWidth: 60, alignment: .trailing)
+                                            .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
                                             .bold()
                                     }
                                 } else {
