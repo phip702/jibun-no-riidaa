@@ -339,11 +339,11 @@ struct LookupsView: View {
                             if let s = wanikani.kanjiBySrsStage[kanji] {
                                 wkSrsStage = s
                             }
-                            let displayLevel = wkLevel.map { String($0) } ?? "nil"
-                            // ...existing code...
-                        } else {
-                            // ...existing code...
+
+
+
                         }
+
 
                         // Try to find a local dictionary entry (WaniKani dictionary) for reading/meaning
                         // Use the higher-level API which returns TermDB objects and includes the dictionary metadata,
@@ -380,15 +380,14 @@ struct LookupsView: View {
                                         }
                                     }
                                 }
-                                let wkReadingDisplay = wkReading ?? "nil"
-                                let meaningExists = wkMeaning != nil
-                                // ...existing code...
-                            } else {
-                                // ...existing code...
+
+
+
                             }
-                        } else {
-                            // ...existing code...
+
+
                         }
+
 
                         newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count), wanikaniReading: wkReading ?? "n/a", wanikaniMeaning: wkMeaning ?? "n/a", wanikaniLevel: wkLevel, wanikaniSrsStage: wkSrsStage))
                 }
