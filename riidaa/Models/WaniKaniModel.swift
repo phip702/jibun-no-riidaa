@@ -102,17 +102,19 @@ struct WaniKaniInfo: Codable {
     let username: String
     let lastSync: Date
     let kanjiBySrsStage: [String: Int] // kanji character -> SRS stage
-    
+    let kanjiLevels: [String: Int]? // kanji character -> WaniKani level (optional)
+
     enum CodingKeys: String, CodingKey {
-        case apiToken, level, username, lastSync, kanjiBySrsStage
+        case apiToken, level, username, lastSync, kanjiBySrsStage, kanjiLevels
     }
     
-    init(apiToken: String, level: Int, username: String, lastSync: Date, kanjiBySrsStage: [String: Int]) {
+    init(apiToken: String, level: Int, username: String, lastSync: Date, kanjiBySrsStage: [String: Int], kanjiLevels: [String: Int]?) {
         self.apiToken = apiToken
         self.level = level
         self.username = username
         self.lastSync = lastSync
         self.kanjiBySrsStage = kanjiBySrsStage
+        self.kanjiLevels = kanjiLevels
     }
 }
 
@@ -138,8 +140,9 @@ class WaniKaniService {
         return (user.data.level, user.data.username)
     }
     
-    func fetchKanjiByLevel(apiToken: String) async throws -> [Int: String] {
-        var kanjiById: [Int: String] = [:]
+    func fetchKanjiByLevel(apiToken: String) async throws -> [String: Int] {
+        // Return mapping of kanji character -> level
+        var kanjiLevels: [String: Int] = [:]
         var nextURL: String? = "\(baseURL)/subjects?types=kanji"
         
         while let urlString = nextURL {
@@ -159,7 +162,7 @@ class WaniKaniService {
             // Process kanji from this page - map ID to character
             for subjectData in subjects.data {
                 if subjectData.object == "kanji", let character = subjectData.data.characters {
-                    kanjiById[subjectData.id] = character
+                    kanjiLevels[character] = subjectData.data.level
                 }
             }
             
@@ -173,7 +176,7 @@ class WaniKaniService {
             }
         }
         
-        return kanjiById
+        return kanjiLevels
     }
     
     func fetchAssignments(apiToken: String) async throws -> [Int: Int] {
@@ -216,9 +219,37 @@ class WaniKaniService {
     
     func syncWaniKani(apiToken: String) async throws -> WaniKaniInfo {
         let (level, username) = try await fetchUserInfo(apiToken: apiToken)
-        let kanjiById = try await fetchKanjiByLevel(apiToken: apiToken)
+        let kanjiLevels = try await fetchKanjiByLevel(apiToken: apiToken)
+        // fetchAssignments returns mapping subjectId -> srsStage; we need kanji characters for that mapping
+        // Re-fetch subjects mapping id->character to map assignments -> character
+        var kanjiById: [Int: String] = [:]
+        var nextURL: String? = "\(baseURL)/subjects?types=kanji"
+        while let urlString = nextURL {
+            guard let url = URL(string: urlString) else { break }
+            var request = URLRequest(url: url)
+            request.setValue("Bearer \(apiToken)", forHTTPHeaderField: "Authorization")
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                throw URLError(.badServerResponse)
+            }
+            let decoder = JSONDecoder()
+            let subjects = try decoder.decode(WaniKaniSubjects.self, from: data)
+            for subjectData in subjects.data {
+                if subjectData.object == "kanji", let character = subjectData.data.characters {
+                    kanjiById[subjectData.id] = character
+                }
+            }
+            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let pages = json["pages"] as? [String: Any],
+               let next = pages["next_url"] as? String {
+                nextURL = next
+            } else {
+                nextURL = nil
+            }
+        }
+
         let assignmentsBySubjectId = try await fetchAssignments(apiToken: apiToken)
-        
+
         // Map kanji characters to their SRS stages
         var kanjiBySrsStage: [String: Int] = [:]
         for (subjectId, character) in kanjiById {
@@ -251,7 +282,8 @@ class WaniKaniService {
             level: level,
             username: username,
             lastSync: Date(),
-            kanjiBySrsStage: kanjiBySrsStage
+            kanjiBySrsStage: kanjiBySrsStage,
+            kanjiLevels: kanjiLevels
         )
     }
 }

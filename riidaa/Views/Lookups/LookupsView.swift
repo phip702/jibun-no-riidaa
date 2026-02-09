@@ -313,11 +313,15 @@ struct LookupsView: View {
                         var wkSrsStage: Int? = nil
 
                         if let wanikani = settings.wanikaniInfo {
-                            wkLevel = wanikani.level
+                            // Prefer per-kanji level if available, otherwise leave nil
+                            if let lvl = wanikani.kanjiLevels?[kanji] {
+                                wkLevel = lvl
+                            }
                             if let s = wanikani.kanjiBySrsStage[kanji] {
                                 wkSrsStage = s
                             }
-                            print("Lookups: WaniKani info present; user level=\(wanikani.level), kanjiSRSExists=\(wanikani.kanjiBySrsStage[kanji] != nil)")
+                            let displayLevel = wkLevel.map { String($0) } ?? "nil"
+                            print("Lookups: WaniKani info present; user level=\(wanikani.level), kanjiLevel=\(displayLevel), kanjiSRSExists=\(wanikani.kanjiBySrsStage[kanji] != nil)")
                         } else {
                             print("Lookups: no WaniKani info in SettingsModel")
                         }
