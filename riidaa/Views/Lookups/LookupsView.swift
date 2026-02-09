@@ -93,7 +93,7 @@ struct LookupsView: View {
                 }
             } label: {
                 Text(selectedMode.label)
-                    .font(.largeTitle)
+                    .font(.title)
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
