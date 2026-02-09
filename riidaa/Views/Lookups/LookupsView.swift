@@ -63,9 +63,9 @@ struct LookupsView: View {
 
     // Minimum width for Kanji and Cnt columns
     private let colMinWidth: CGFloat = 40
-    // Base font sizes for scaling
-    private let baseHeaderSize: CGFloat = 12
-    private let baseRowSize: CGFloat = 12
+    // Base font sizes for scaling with Dynamic Type
+    @ScaledMetric private var baseHeaderSize: CGFloat = 12
+    @ScaledMetric private var baseRowSize: CGFloat = 12
 
     @State private var rows: [LookupRow] = []
     @EnvironmentObject var settings: SettingsModel
@@ -148,11 +148,13 @@ struct LookupsView: View {
                     Text("Kanji")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
-                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .frame(width: 30, alignment: .leading)
                     Text("Lvl")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
-                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text("WK Meaning")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
@@ -160,11 +162,13 @@ struct LookupsView: View {
                     Text("WK Reading")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
-                        .frame(minWidth: 60, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text("Cnt")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
-                        .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .frame(width: 20, alignment: .trailing)
                 }
                 .padding(.vertical, 6)
             }
@@ -196,13 +200,13 @@ struct LookupsView: View {
                         ForEach(rows) { row in
                             HStack {
                                 if selectedMode == .kanji {
-                                    HStack(alignment: .center, spacing: 12) {
+                                    HStack(alignment: .center, spacing: 6) {
                                         // Kanji column: kanji itself (much bigger font)
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(row.dictionaryForm)
                                                 .font(.system(size: 32, weight: .bold))
                                         }
-                                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
+                                        .frame(width: 30, alignment: .leading) // Kanji column width
 
                                         // Lvl column (dynamic font)
                                         VStack(alignment: .leading, spacing: 2) {
@@ -223,7 +227,7 @@ struct LookupsView: View {
                                                 }
                                             }
                                         }
-                                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
 
                                         // Meaning column (dynamic font)
                                         Text(row.wanikaniMeaning ?? "")
@@ -235,13 +239,15 @@ struct LookupsView: View {
                                         Text(row.wanikaniReading ?? "")
                                             .font(.system(size: baseRowSize))
                                             .foregroundColor(.secondary)
-                                            .frame(minWidth: 60, alignment: .leading)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
 
                                         // Count (dynamic font)
                                         Text(String(row.lookupCount))
                                             .font(.system(size: baseRowSize))
                                             .monospacedDigit()
-                                            .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
+                                            .frame(width: 20, alignment: .trailing) //count column width
                                             .bold()
                                     }
                                 } else {
@@ -263,7 +269,8 @@ struct LookupsView: View {
                                         .bold()
                                 }
                             }
-                            .padding(.vertical, 6)
+                            .padding(.vertical, 0)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 // Copy dictionary form to clipboard
@@ -453,9 +460,4 @@ struct LookupsView: View {
         }
     }
 
-}
-
-#Preview {
-    LookupsView()
-        .environmentObject(SettingsModel())
 }
