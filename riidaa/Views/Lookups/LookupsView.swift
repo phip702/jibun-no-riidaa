@@ -6,6 +6,7 @@ import AppKit
 #endif
 
 enum DateRangeOption: String, CaseIterable, Identifiable {
+    case lastHour = "last_1h"
     case last24h = "last_24h"
     case last7d = "last_7d"
     case last30d = "last_30d"
@@ -15,6 +16,7 @@ enum DateRangeOption: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var label: String {
         switch self {
+        case .lastHour: return "Last Hour"
         case .last24h: return "Last 24 Hours"
         case .last7d: return "Last 7 Days"
         case .last30d: return "Last 30 Days"
@@ -25,6 +27,7 @@ enum DateRangeOption: String, CaseIterable, Identifiable {
     func cutoffDate() -> Date? {
         let now = Date()
         switch self {
+        case .lastHour: return Calendar.current.date(byAdding: .hour, value: -1, to: now)
         case .last24h: return Calendar.current.date(byAdding: .hour, value: -24, to: now)
         case .last7d: return Calendar.current.date(byAdding: .day, value: -7, to: now)
         case .last30d: return Calendar.current.date(byAdding: .day, value: -30, to: now)
@@ -66,7 +69,6 @@ struct LookupsView: View {
     // Base font sizes for scaling with Dynamic Type
     @ScaledMetric private var baseHeaderSize: CGFloat = 12
     @ScaledMetric private var baseRowSize: CGFloat = 12
-    private var wordRowSize: CGFloat { baseRowSize * 1.2 }  // 20% larger than kanji rows
 
     @State private var rows: [LookupRow] = []
     @EnvironmentObject var settings: SettingsModel
@@ -138,7 +140,7 @@ struct LookupsView: View {
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(width: 120, alignment: .leading)
-                    Text("Count")
+                    Text("Cnt")
                         .font(.system(size: baseHeaderSize, weight: .bold))
                         .foregroundColor(.primary)
                         .frame(width: 60, alignment: .trailing)
@@ -254,17 +256,17 @@ struct LookupsView: View {
                                 } else {
                                     VStack(alignment: .leading) {
                                         Text(row.dictionaryForm)
-                                            .font(.system(size: wordRowSize))
+                                            .font(.system(size: baseRowSize))
                                             .bold()
                                     }
                                     Spacer()
                                     Text(row.reading ?? "")
-                                        .font(.system(size: wordRowSize))
+                                        .font(.system(size: baseRowSize))
                                         .frame(width: 120, alignment: .leading)
                                         .foregroundColor(.secondary)
                                         .bold()
                                     Text(String(row.lookupCount))
-                                        .font(.system(size: wordRowSize))
+                                        .font(.system(size: baseRowSize))
                                         .monospacedDigit()
                                         .frame(width: 60, alignment: .trailing)
                                         .bold()
