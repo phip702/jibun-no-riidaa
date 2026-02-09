@@ -52,11 +52,17 @@ struct LookupRow: Identifiable {
     let dictionaryForm: String
     let reading: String?
     let lookupCount: Int64
+    // Optional WaniKani info (kanji-only rows)
+    let wanikaniReading: String?
+    let wanikaniMeaning: String?
+    let wanikaniLevel: Int?
+    let wanikaniSrsStage: Int?
 }
 
 struct LookupsView: View {
 
     @State private var rows: [LookupRow] = []
+    @EnvironmentObject var settings: SettingsModel
     @State private var showCopied: Bool = false
     @State private var copiedText: String = ""
     @AppStorage("lookups_date_range") private var lookupsDateRangeRaw: String = DateRangeOption.last30d.rawValue
@@ -172,24 +178,61 @@ struct LookupsView: View {
                     ) {
                         ForEach(rows) { row in
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text(row.dictionaryForm)
+                        if selectedMode == .kanji {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(row.dictionaryForm)
+                                    .font(.title3)
+                                    .bold()
+
+                                // Show any available WaniKani info beneath the kanji
+                                HStack(spacing: 10) {
+                                    if let meaning = row.wanikaniMeaning {
+                                        Text(meaning)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                    }
+                                    if let reading = row.wanikaniReading {
+                                        Text(reading)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    if let level = row.wanikaniLevel {
+                                        Text("Lvl \(level)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    if let s = row.wanikaniSrsStage, let stage = WaniKaniSrsStage(rawValue: s) {
+                                        Text(stage.category)
+                                            .font(.subheadline)
+                                            .foregroundColor(srsTextColor(row.wanikaniSrsStage))
+                                    }
+                                }
+                            }
+                            Spacer()
+                            Text(String(row.lookupCount))
                                 .font(.body)
+                                .monospacedDigit()
+                                .frame(width: 60, alignment: .trailing)
                                 .bold()
-                        }
-                        Spacer()
-                        if selectedMode == .word {
+                        } else {
+                            VStack(alignment: .leading) {
+                                Text(row.dictionaryForm)
+                                    .font(.body)
+                                    .bold()
+                            }
+                            Spacer()
                             Text(row.reading ?? "")
                                 .font(.body)
                                 .frame(width: 120, alignment: .leading)
                                 .foregroundColor(.secondary)
                                 .bold()
+                            Text(String(row.lookupCount))
+                                .font(.body)
+                                .monospacedDigit()
+                                .frame(width: 60, alignment: .trailing)
+                                .bold()
                         }
-                        Text(String(row.lookupCount))
-                            .font(.body)
-                            .monospacedDigit()
-                            .frame(width: 60, alignment: .trailing)
-                            .bold()
                     }
                     .padding(.vertical, 6)
                     .contentShape(Rectangle())
@@ -263,7 +306,53 @@ struct LookupsView: View {
                 let startDate = selectedRange.cutoffDate()
                 let kanjiCounts = mgr.kanjiLookupCounts(start: startDate, end: nil)
                 for (kanji, count) in kanjiCounts {
-                    newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count)))
+                        // Pull any available WaniKani info from settings (do not trigger a sync)
+                        var wkReading: String? = nil
+                        var wkMeaning: String? = nil
+                        var wkLevel: Int? = nil
+                        var wkSrsStage: Int? = nil
+
+                        if let wanikani = settings.wanikaniInfo {
+                            wkLevel = wanikani.level
+                            if let s = wanikani.kanjiBySrsStage[kanji] {
+                                wkSrsStage = s
+                            }
+                            print("Lookups: WaniKani info present; user level=\(wanikani.level), kanjiSRSExists=\(wanikani.kanjiBySrsStage[kanji] != nil)")
+                        } else {
+                            print("Lookups: no WaniKani info in SettingsModel")
+                        }
+
+                        // Try to find a local dictionary entry (WaniKani dictionary) for reading/meaning
+                        if let db = mgr.getDatabase() {
+                            let sql = "SELECT term, reading, definitions FROM terms WHERE term = '" + kanji + "' AND (dictionaryId IN (SELECT id FROM dictionaries WHERE lower(title) LIKE '%wanikani%' OR lower(attribution) LIKE '%wanikani%')) LIMIT 1;"
+                            do {
+                                var found = false
+                                for row in try db.prepare(sql) {
+                                    let termStr = row[0] as? String ?? ""
+                                    let readingStr = row[1] as? String
+                                    wkReading = readingStr
+                                    if let defData = row[2] as? Data {
+                                        if let decoded = try? JSONSerialization.jsonObject(with: defData) as? [Any], let first = decoded.first {
+                                            if let s = first as? String {
+                                                wkMeaning = s
+                                            } else if let dict = first as? [String: Any], let text = dict["text"] as? String {
+                                                wkMeaning = text
+                                            }
+                                        }
+                                    }
+                                    print("Lookups: found WaniKani dict row for \(termStr): reading=\(wkReading ?? "nil") meaningExists=\(wkMeaning != nil)")
+                                    found = true
+                                    break
+                                }
+                                if !found {
+                                    print("Lookups: no local WaniKani dictionary row for \(kanji)")
+                                }
+                            } catch {
+                                print("Lookups: error querying terms for \(kanji): \(error)")
+                            }
+                        }
+
+                        newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count), wanikaniReading: wkReading, wanikaniMeaning: wkMeaning, wanikaniLevel: wkLevel, wanikaniSrsStage: wkSrsStage))
                 }
             } else {
                 // Compute cutoff ISO if the selected range has one
@@ -295,7 +384,7 @@ struct LookupsView: View {
                     } else if let v = lookupCountAny as? Int {
                         lookupCount = Int64(v)
                     }
-                    newRows.append(LookupRow(dictionaryForm: dictionaryForm, reading: reading, lookupCount: lookupCount))
+                    newRows.append(LookupRow(dictionaryForm: dictionaryForm, reading: reading, lookupCount: lookupCount, wanikaniReading: nil, wanikaniMeaning: nil, wanikaniLevel: nil, wanikaniSrsStage: nil))
                 }
             }
         } catch {
@@ -307,8 +396,27 @@ struct LookupsView: View {
         }
     }
 
+    private func srsTextColor(_ srsStage: Int?) -> Color {
+        guard let s = srsStage, let stage = WaniKaniSrsStage(rawValue: s) else {
+            return Color.primary
+        }
+        switch stage {
+        case .apprentice1, .apprentice2, .apprentice3, .apprentice4:
+            return Color(red: 0.867, green: 0, blue: 0.576)
+        case .guru1, .guru2:
+            return Color(red: 0.533, green: 0.176, blue: 0.62)
+        case .master:
+            return Color(red: 0.161, green: 0.302, blue: 0.859)
+        case .enlightened:
+            return Color(red: 0, green: 0.576, blue: 0.867)
+        case .burned:
+            return Color(red: 0.263, green: 0.263, blue: 0.263)
+        }
+    }
+
 }
 
 #Preview {
     LookupsView()
+        .environmentObject(SettingsModel())
 }
