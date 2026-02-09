@@ -340,9 +340,9 @@ struct LookupsView: View {
                                 wkSrsStage = s
                             }
                             let displayLevel = wkLevel.map { String($0) } ?? "nil"
-                            print("Lookups: WaniKani info present; user level=\(wanikani.level), kanjiLevel=\(displayLevel), kanjiSRSExists=\(wanikani.kanjiBySrsStage[kanji] != nil)")
+                            // ...existing code...
                         } else {
-                            print("Lookups: no WaniKani info in SettingsModel")
+                            // ...existing code...
                         }
 
                         // Try to find a local dictionary entry (WaniKani dictionary) for reading/meaning
@@ -382,12 +382,12 @@ struct LookupsView: View {
                                 }
                                 let wkReadingDisplay = wkReading ?? "nil"
                                 let meaningExists = wkMeaning != nil
-                                print("Lookups: found WaniKani dict row for \(kanji): reading=\(wkReadingDisplay) meaningExists=\(meaningExists)")
+                                // ...existing code...
                             } else {
-                                print("Lookups: no local WaniKani dictionary row for \(kanji)")
+                                // ...existing code...
                             }
                         } else {
-                            print("Lookups: no dictionary terms found for \(kanji)")
+                            // ...existing code...
                         }
 
                         newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count), wanikaniReading: wkReading ?? "n/a", wanikaniMeaning: wkMeaning ?? "n/a", wanikaniLevel: wkLevel, wanikaniSrsStage: wkSrsStage))
