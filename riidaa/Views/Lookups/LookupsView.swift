@@ -63,6 +63,9 @@ struct LookupsView: View {
 
     // Minimum width for Kanji and Cnt columns
     private let colMinWidth: CGFloat = 40
+    // Base font sizes for scaling
+    private let baseHeaderSize: CGFloat = 12
+    private let baseRowSize: CGFloat = 12
 
     @State private var rows: [LookupRow] = []
     @EnvironmentObject var settings: SettingsModel
@@ -79,104 +82,94 @@ struct LookupsView: View {
         set { lookupsModeRaw = newValue.rawValue }
     }
 
-    var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottom) {
-                List {
-                    Section(header:
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack(spacing: 12) {
-                                Menu {
-                                    ForEach(LookupMode.allCases) { m in
-                                        Button(m.label) {
-                                            lookupsModeRaw = m.rawValue
-                                            Task { await loadLookups() }
-                                        }
-                                    }
-                                } label: {
-                                    Text(selectedMode.label)
-                                        .font(.largeTitle)
-                                        .bold()
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
-                                }
+    private var sectionHeader: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            let modeMenu = Menu {
+                ForEach(LookupMode.allCases) { m in
+                    Button(m.label) {
+                        lookupsModeRaw = m.rawValue
+                        Task { await loadLookups() }
+                    }
+                }
+            } label: {
+                Text(selectedMode.label)
+                    .font(.largeTitle)
+                    .bold()
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
 
-                                Text("Lookups")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
+            let lookupsTitle = Text("Lookups")
+                                .font(.title)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+            let dateMenu = Menu {
+                ForEach(DateRangeOption.allCases) { opt in
+                    Button(opt.label) {
+                        lookupsDateRangeRaw = opt.rawValue
+                        Task { await loadLookups() }
+                    }
+                }
+            } label: {
+                Text(selectedRange.label)
+                    .font(.body)
+                    .bold()
+                    .frame(height: 40)
+            }
 
-                                Spacer()
+            HStack(spacing: 8) {
+                modeMenu
+                lookupsTitle
+                Spacer()
+                dateMenu
+            }
 
-                                Menu {
-                                    ForEach(DateRangeOption.allCases) { opt in
-                                        Button(opt.label) {
-                                            lookupsDateRangeRaw = opt.rawValue
-                                            Task { await loadLookups() }
-                                        }
-                                    }
-                                } label: {
-                                    Text(selectedRange.label)
-                                        .font(.body)
-                                        .bold()
-                                        .frame(height: 40)
-                                }
-                            }
-
-                            // Header labels (switch for Word vs Kanji view)
-                            if selectedMode == .word {
-                                HStack {
-                                    Text("Dictionary Form")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("Reading")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(width: 120, alignment: .leading)
-                                    Text("Count")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(width: 60, alignment: .trailing)
-                                }
-                                .padding(.vertical, 6)
-                            } else {
-                                HStack {
-                                    Text("Kanji")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
-                                    Text("Lvl")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
-                                    Text("WK Meaning")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("WK Reading")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(minWidth: 60, alignment: .leading)
-                                    Text("Cnt")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
-                                }
-                                .padding(.vertical, 6)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
+            // Header labels (switch for Word vs Kanji view)
+            if selectedMode == .word {
+                HStack {
+                    Text("Dictionary Form")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Reading")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(width: 120, alignment: .leading)
+                    Text("Count")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(width: 60, alignment: .trailing)
+                }
+                .padding(.vertical, 6)
+            } else {
+                HStack {
+                    Text("Kanji")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
+                    Text("Lvl")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
+                    Text("WK Meaning")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("WK Reading")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(minWidth: 60, alignment: .leading)
+                    Text("Cnt")
+                        .font(.system(size: baseHeaderSize, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
+                }
+                .padding(.vertical, 6)
+            }
+        }
+        .frame(maxWidth: .infinity)
                         .background(
                             Group {
                                 #if canImport(UIKit)
@@ -193,55 +186,60 @@ struct LookupsView: View {
                             alignment: .bottom
                         )
                         .padding(.horizontal, 0)
-                    ) {
+    }
+
+    var body: some View {
+        NavigationStack {
+            ZStack(alignment: .bottom) {
+                List {
+                    Section(header: sectionHeader) {
                         ForEach(rows) { row in
                             HStack {
                                 if selectedMode == .kanji {
                                     HStack(alignment: .center, spacing: 12) {
-                                        // Kanji column: kanji itself
+                                        // Kanji column: kanji itself (much bigger font)
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(row.dictionaryForm)
-                                                .font(.title3)
-                                                .bold()
+                                                .font(.system(size: 32, weight: .bold))
                                         }
                                         .frame(minWidth: colMinWidth, maxWidth: .infinity, alignment: .leading)
 
-                                        // Lvl column (level & SRS)
+                                        // Lvl column (dynamic font)
                                         VStack(alignment: .leading, spacing: 2) {
                                             if row.wanikaniLevel == nil && row.wanikaniSrsStage == nil {
                                                 Text("n/a")
-                                                    .font(.subheadline)
+                                                    .font(.system(size: baseRowSize))
                                                     .foregroundColor(.secondary)
                                             } else {
                                                 if let level = row.wanikaniLevel {
                                                     Text("Lvl \(level)")
-                                                        .font(.subheadline)
+                                                        .font(.system(size: baseRowSize))
                                                         .foregroundColor(.secondary)
                                                 }
                                                 if let s = row.wanikaniSrsStage, let stage = WaniKaniSrsStage(rawValue: s) {
                                                     Text(stage.category)
-                                                        .font(.subheadline)
+                                                        .font(.system(size: baseRowSize))
                                                         .foregroundColor(srsTextColor(row.wanikaniSrsStage))
                                                 }
                                             }
                                         }
                                         .frame(minWidth: 60, maxWidth: 80, alignment: .leading)
 
-                                        // Meaning column (separate)
+                                        // Meaning column (dynamic font)
                                         Text(row.wanikaniMeaning ?? "")
-                                            .font(.subheadline)
+                                            .font(.system(size: baseRowSize))
                                             .foregroundColor(.secondary)
                                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        // Reading column
+                                        // Reading column (dynamic font)
                                         Text(row.wanikaniReading ?? "")
-                                            .font(.body)
+                                            .font(.system(size: baseRowSize))
                                             .foregroundColor(.secondary)
                                             .frame(minWidth: 60, alignment: .leading)
 
-                                        // Count
+                                        // Count (dynamic font)
                                         Text(String(row.lookupCount))
-                                            .font(.body)
+                                            .font(.system(size: baseRowSize))
                                             .monospacedDigit()
                                             .frame(minWidth: colMinWidth, maxWidth: 60, alignment: .trailing)
                                             .bold()
@@ -249,17 +247,17 @@ struct LookupsView: View {
                                 } else {
                                     VStack(alignment: .leading) {
                                         Text(row.dictionaryForm)
-                                            .font(.body)
+                                            .font(.system(size: baseRowSize))
                                             .bold()
                                     }
                                     Spacer()
                                     Text(row.reading ?? "")
-                                        .font(.body)
+                                        .font(.system(size: baseRowSize))
                                         .frame(width: 120, alignment: .leading)
                                         .foregroundColor(.secondary)
                                         .bold()
                                     Text(String(row.lookupCount))
-                                        .font(.body)
+                                        .font(.system(size: baseRowSize))
                                         .monospacedDigit()
                                         .frame(width: 60, alignment: .trailing)
                                         .bold()
@@ -337,71 +335,63 @@ struct LookupsView: View {
                 let startDate = selectedRange.cutoffDate()
                 let kanjiCounts = mgr.kanjiLookupCounts(start: startDate, end: nil)
                 for (kanji, count) in kanjiCounts {
-                        // Pull any available WaniKani info from settings (do not trigger a sync)
-                        var wkReading: String? = nil
-                        var wkMeaning: String? = nil
-                        var wkLevel: Int? = nil
-                        var wkSrsStage: Int? = nil
+                    // Pull any available WaniKani info from settings (do not trigger a sync)
+                    var wkReading: String? = nil
+                    var wkMeaning: String? = nil
+                    var wkLevel: Int? = nil
+                    var wkSrsStage: Int? = nil
 
-                        if let wanikani = settings.wanikaniInfo {
-                            // Prefer per-kanji level if available, otherwise leave nil
-                            if let lvl = wanikani.kanjiLevels?[kanji] {
-                                wkLevel = lvl
-                            }
-                            if let s = wanikani.kanjiBySrsStage[kanji] {
-                                wkSrsStage = s
-                            }
-
-
-
+                    if let wanikani = settings.wanikaniInfo {
+                        // Prefer per-kanji level if available, otherwise leave nil
+                        if let lvl = wanikani.kanjiLevels?[kanji] {
+                            wkLevel = lvl
                         }
+                        if let s = wanikani.kanjiBySrsStage[kanji] {
+                            wkSrsStage = s
+                        }
+                    }
 
+                    // Try to find a local dictionary entry (WaniKani dictionary) for reading/meaning
+                    // Use the higher-level API which returns TermDB objects and includes the dictionary metadata,
+                    // then filter by dictionary title/attribution containing 'wanikani'. This is more robust
+                    // than raw SQL and avoids issues with column types.
+                    let candidatesArray = mgr.findTerms(texts: [kanji])
+                    let candidates = candidatesArray as? [TermDB] ?? []
+                    if !candidates.isEmpty {
+                        if let match = candidates.first(where: { dic in
+                            let titleLower = dic.dictionary.title.lowercased()
+                            let attrLower = (dic.dictionary.attribution ?? "").lowercased()
+                            return titleLower.contains("wanikani") || attrLower.contains("wanikani")
+                        }) {
+                            // importer maps the second field to `reading` (which for WaniKani is the English meaning)
+                            wkMeaning = match.reading
 
-                        // Try to find a local dictionary entry (WaniKani dictionary) for reading/meaning
-                        // Use the higher-level API which returns TermDB objects and includes the dictionary metadata,
-                        // then filter by dictionary title/attribution containing 'wanikani'. This is more robust
-                        // than raw SQL and avoids issues with column types.
-                        let candidates = mgr.findTerms(texts: [kanji])
-                        if !candidates.isEmpty {
-                            if let match = candidates.first(where: { dic in
-                                let titleLower = dic.dictionary.title.lowercased()
-                                let attrLower = (dic.dictionary.attribution ?? "").lowercased()
-                                return titleLower.contains("wanikani") || attrLower.contains("wanikani")
-                            }) {
-                                // importer maps the second field to `reading` (which for WaniKani is the English meaning)
-                                wkMeaning = match.reading
-
-                                // definitions is stored as Data; attempt to parse the stored JSON and extract any
-                                // entry that looks like a Reading (e.g. "Reading: しち") or objects with `text`.
-                                if let defData = match.definitions as Data? {
-                                    if let decoded = (try? JSONSerialization.jsonObject(with: defData)) as? [Any] {
-                                        for entry in decoded {
-                                            if let s = entry as? String {
-                                                let lowered = s.lowercased()
-                                                if lowered.hasPrefix("reading:") {
-                                                    if let idx = s.firstIndex(of: ":") {
-                                                        let after = s[s.index(after: idx)...].trimmingCharacters(in: .whitespacesAndNewlines)
-                                                        wkReading = String(after)
-                                                        break
-                                                    }
+                            // definitions is stored as Data; attempt to parse the stored JSON and extract any
+                            // entry that looks like a Reading (e.g. "Reading: しち") or objects with `text`.
+                            if let defData = match.definitions as Data? {
+                                if let decoded = (try? JSONSerialization.jsonObject(with: defData)) as? [Any] {
+                                    for entry in decoded {
+                                        if let s = entry as? String {
+                                            let lowered = s.lowercased()
+                                            if lowered.hasPrefix("reading:") {
+                                                if let idx = s.firstIndex(of: ":") {
+                                                    let after = s[s.index(after: idx)...]
+                                                    let trimmed = String(after).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                                    wkReading = trimmed
+                                                    break
                                                 }
-                                            } else if let dict = entry as? [String: Any], let text = dict["text"] as? String {
-                                                wkReading = text
-                                                break
                                             }
+                                        } else if let dict = entry as? [String: Any], let text = dict["text"] as? String {
+                                            wkReading = text
+                                            break
                                         }
                                     }
                                 }
-
-
-
                             }
-
-
                         }
+                    }
 
-
-                        newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count), wanikaniReading: wkReading ?? "n/a", wanikaniMeaning: wkMeaning ?? "n/a", wanikaniLevel: wkLevel, wanikaniSrsStage: wkSrsStage))
+                    newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count), wanikaniReading: wkReading ?? "n/a", wanikaniMeaning: wkMeaning ?? "n/a", wanikaniLevel: wkLevel, wanikaniSrsStage: wkSrsStage))
                 }
             } else {
                 // Compute cutoff ISO if the selected range has one
