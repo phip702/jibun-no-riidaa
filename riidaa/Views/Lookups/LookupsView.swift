@@ -34,6 +34,19 @@ enum DateRangeOption: String, CaseIterable, Identifiable {
     }
 }
 
+enum LookupMode: String, CaseIterable, Identifiable {
+    case word = "word"
+    case kanji = "kanji"
+
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .word: return "Word"
+        case .kanji: return "Kanji"
+        }
+    }
+}
+
 struct LookupRow: Identifiable {
     let id = UUID()
     let dictionaryForm: String
@@ -47,9 +60,14 @@ struct LookupsView: View {
     @State private var showCopied: Bool = false
     @State private var copiedText: String = ""
     @AppStorage("lookups_date_range") private var lookupsDateRangeRaw: String = DateRangeOption.last30d.rawValue
+    @AppStorage("lookups_mode") private var lookupsModeRaw: String = LookupMode.word.rawValue
     private var selectedRange: DateRangeOption {
         get { DateRangeOption(rawValue: lookupsDateRangeRaw) ?? .last30d }
         set { lookupsDateRangeRaw = newValue.rawValue }
+    }
+    private var selectedMode: LookupMode {
+        get { LookupMode(rawValue: lookupsModeRaw) ?? .word }
+        set { lookupsModeRaw = newValue.rawValue }
     }
 
     var body: some View {
@@ -58,15 +76,31 @@ struct LookupsView: View {
                 List {
                     Section(header:
                         VStack(alignment: .leading, spacing: 8) {
-                            HStack {
+                            HStack(spacing: 12) {
+                                Menu {
+                                    ForEach(LookupMode.allCases) { m in
+                                        Button(m.label) {
+                                            lookupsModeRaw = m.rawValue
+                                            Task { await loadLookups() }
+                                        }
+                                    }
+                                } label: {
+                                    Text(selectedMode.label)
+                                        .font(.largeTitle)
+                                        .bold()
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                }
+
                                 Text("Lookups")
                                     .font(.largeTitle)
                                     .bold()
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
                                     .truncationMode(.tail)
-                                    
+
                                 Spacer()
+
                                 Menu {
                                     ForEach(DateRangeOption.allCases) { opt in
                                         Button(opt.label) {
@@ -82,25 +116,41 @@ struct LookupsView: View {
                                 }
                             }
 
-                            // Header labels
-                            HStack {
-                                Text("Dictionary Form")
-                                    .font(.body)
-                                    .bold()
-                                    .foregroundColor(.primary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Reading")
-                                    .font(.body)
-                                    .bold()
-                                    .foregroundColor(.primary)
-                                    .frame(width: 120, alignment: .leading)
-                                Text("Count")
-                                    .font(.body)
-                                    .bold()
-                                    .foregroundColor(.primary)
-                                    .frame(width: 60, alignment: .trailing)
+                            // Header labels (switch for Word vs Kanji view)
+                            if selectedMode == .word {
+                                HStack {
+                                    Text("Dictionary Form")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("Reading")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(width: 120, alignment: .leading)
+                                    Text("Count")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(width: 60, alignment: .trailing)
+                                }
+                                .padding(.vertical, 6)
+                            } else {
+                                HStack {
+                                    Text("Kanji")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("Count")
+                                        .font(.body)
+                                        .bold()
+                                        .foregroundColor(.primary)
+                                        .frame(width: 60, alignment: .trailing)
+                                }
+                                .padding(.vertical, 6)
                             }
-                            .padding(.vertical, 6)
                         }
                         .frame(maxWidth: .infinity)
                         .background(
@@ -128,11 +178,13 @@ struct LookupsView: View {
                                 .bold()
                         }
                         Spacer()
-                        Text(row.reading ?? "")
-                            .font(.body)
-                            .frame(width: 120, alignment: .leading)
-                            .foregroundColor(.secondary)
-                            .bold()
+                        if selectedMode == .word {
+                            Text(row.reading ?? "")
+                                .font(.body)
+                                .frame(width: 120, alignment: .leading)
+                                .foregroundColor(.secondary)
+                                .bold()
+                        }
                         Text(String(row.lookupCount))
                             .font(.body)
                             .monospacedDigit()
@@ -206,36 +258,45 @@ struct LookupsView: View {
 
         // Aggregate lookup_events by form and reading, returning counts
         do {
-            // Compute cutoff ISO if the selected range has one
-            let cutoffISO: String? = {
-                if let cutoff = selectedRange.cutoffDate() {
-                    return ISO8601DateFormatter().string(from: cutoff)
-                } else {
-                    return nil
+            if selectedMode == .kanji {
+                // Use the manager helper to get kanji counts filtered by the selected date range
+                let startDate = selectedRange.cutoffDate()
+                let kanjiCounts = mgr.kanjiLookupCounts(start: startDate, end: nil)
+                for (kanji, count) in kanjiCounts {
+                    newRows.append(LookupRow(dictionaryForm: kanji, reading: nil, lookupCount: Int64(count)))
                 }
-            }()
+            } else {
+                // Compute cutoff ISO if the selected range has one
+                let cutoffISO: String? = {
+                    if let cutoff = selectedRange.cutoffDate() {
+                        return ISO8601DateFormatter().string(from: cutoff)
+                    } else {
+                        return nil
+                    }
+                }()
 
-            var sql = """
-            SELECT dictionaryForm, reading, COUNT(date) as lookupCount
-            FROM lookup_events
-            """
-            if let cutoffISO = cutoffISO {
-                sql += " WHERE date >= '\(cutoffISO)'"
-            }
-            sql += " GROUP BY dictionaryForm, reading ORDER BY lookupCount DESC;"
-
-            for row in try db.prepare(sql) {
-                // row columns: 0: dictionaryForm, 1: reading, 2: lookupCount
-                let dictionaryForm = row[0] as? String ?? ""
-                let reading = row[1] as? String
-                let lookupCountAny = row[2]
-                var lookupCount: Int64 = 0
-                if let v = lookupCountAny as? Int64 {
-                    lookupCount = v
-                } else if let v = lookupCountAny as? Int {
-                    lookupCount = Int64(v)
+                var sql = """
+                SELECT dictionaryForm, reading, COUNT(date) as lookupCount
+                FROM lookup_events
+                """
+                if let cutoffISO = cutoffISO {
+                    sql += " WHERE date >= '\(cutoffISO)'"
                 }
-                newRows.append(LookupRow(dictionaryForm: dictionaryForm, reading: reading, lookupCount: lookupCount))
+                sql += " GROUP BY dictionaryForm, reading ORDER BY lookupCount DESC;"
+
+                for row in try db.prepare(sql) {
+                    // row columns: 0: dictionaryForm, 1: reading, 2: lookupCount
+                    let dictionaryForm = row[0] as? String ?? ""
+                    let reading = row[1] as? String
+                    let lookupCountAny = row[2]
+                    var lookupCount: Int64 = 0
+                    if let v = lookupCountAny as? Int64 {
+                        lookupCount = v
+                    } else if let v = lookupCountAny as? Int {
+                        lookupCount = Int64(v)
+                    }
+                    newRows.append(LookupRow(dictionaryForm: dictionaryForm, reading: reading, lookupCount: lookupCount))
+                }
             }
         } catch {
             print("Lookups load error: \(error)")
