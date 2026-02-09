@@ -143,30 +143,35 @@ struct LookupsView: View {
                                 }
                                 .padding(.vertical, 6)
                             } else {
-                                HStack {
-                                    Text("Kanji")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                                    Text("WK Meaning")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(width: 200, alignment: .leading)
-
-                                    Text("WK Reading")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(width: 120, alignment: .leading)
-
-                                    Text("Count")
-                                        .font(.body)
-                                        .bold()
-                                        .foregroundColor(.primary)
-                                        .frame(width: 60, alignment: .trailing)
+                                HStack(alignment: .center, spacing: 12) {
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Text("Kanji")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(.primary)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Text("WK Meaning")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(.primary)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Text("Reading")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(.primary)
+                                    }
+                                    .frame(minWidth: 60, alignment: .leading)
+                                    VStack(alignment: .trailing, spacing: 0) {
+                                        Text("Cnt")
+                                            .font(.body)
+                                            .bold()
+                                            .foregroundColor(.primary)
+                                    }
+                                    .frame(minWidth: 40, maxWidth: 60, alignment: .trailing)
                                 }
                                 .padding(.vertical, 6)
                             }
@@ -214,24 +219,24 @@ struct LookupsView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        // Meaning column (separate)
-                                        Text(row.wanikaniMeaning ?? "")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                            .frame(width: 200, alignment: .leading)
 
-                                        // Reading column
-                                        Text(row.wanikaniReading ?? "")
-                                            .font(.body)
-                                            .foregroundColor(.secondary)
-                                            .frame(width: 120, alignment: .leading)
+                                            // Meaning column (separate)
+                                            Text(row.wanikaniMeaning ?? "")
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                                            // Reading column
+                                            Text(row.wanikaniReading ?? "")
+                                                .font(.body)
+                                                .foregroundColor(.secondary)
+                                                .frame(minWidth: 60, alignment: .leading)
 
                                         // Count
                                         Text(String(row.lookupCount))
                                             .font(.body)
                                             .monospacedDigit()
-                                            .frame(width: 60, alignment: .trailing)
+                                            .frame(minWidth: 40, maxWidth: 60, alignment: .trailing)
                                             .bold()
                                     }
                                 } else {
