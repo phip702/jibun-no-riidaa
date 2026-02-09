@@ -1,0 +1,2080 @@
+kanji,readings,meaning
+一,いち,One
+二,に,Two
+九,く,Nine
+七,しち,Seven
+人,にん,Person
+入,にゅう,Enter
+八,はち,Eight
+力,りょく,"Power, Strength, Ability"
+十,じゅう,Ten
+三,さん,Three
+上,じょう,"Above, Up, Over"
+下,か,"Below, Down, Under, Beneath"
+口,こう,Mouth
+大,たい,"Big, Large"
+女,じょ,Woman
+山,さん,Mountain
+川,かわ,River
+工,こう,"Construction, Industry"
+刀,とう,"Sword, Katana"
+土,ど,"Dirt, Soil, Earth, Ground"
+千,せん,Thousand
+夕,ゆう,Evening
+子,し,"Child, Kid"
+小,しょう,"Small, Little"
+丁,ちょう,Street
+了,りょう,"Finish, Complete, End"
+又,また,Again
+丸,まる,"Circle, Circular, Round"
+才,さい,Genius
+中,ちゅう,"Middle, In, Inside, Center"
+五,ご,Five
+六,ろく,Six
+円,えん,"Yen, Round, Circle"
+天,てん,Heaven
+手,て,"Hand, Doer"
+文,ぶん,"Writing, Sentence"
+日,にち,"Sun, Day"
+月,げつ,"Moon, Month"
+木,もく,"Tree, Wood"
+水,すい,Water
+火,か,Fire
+犬,いぬ,Dog
+王,おう,King
+出,しゅつ,Exit
+右,ゆう,Right
+四,し,Four
+左,さ,Left
+本,ほん,"Book, Origin, Real, Main"
+正,せい,Correct
+玉,たま,Ball
+田,た,"Rice Paddy, Rice Field, Field"
+白,はく,White
+目,め,Eye
+石,せき,Stone
+立,りつ,Stand
+万,まん,Ten Thousand
+久,きゅう,Long Time
+今,こん,Now
+元,げん,Origin
+公,こう,Public
+内,ない,"Inside, Within"
+分,ぶん,"Part, Minute"
+切,せつ,Cut
+午,ご,Noon
+友,ゆう,Friend
+太,たい,Fat
+少,しょう,"Few, A Little"
+引,ひ,Pull
+心,しん,Heart
+戸,と,Door
+方,ほう,"Direction, Way"
+牛,ぎゅう,Cow
+父,ちち,"Father, Dad"
+毛,もう,"Fur, Hair"
+止,し,Stop
+兄,きょう,"Older Brother, Big Brother, Elder Brother"
+冬,ふゆ,Winter
+北,ほく,North
+半,はん,Half
+古,こ,Old
+台,だい,Machine
+外,がい,Outside
+市,し,City
+広,ひろ,Wide
+母,はは,"Mother, Mom"
+用,よう,"Task, Use"
+矢,や,Arrow
+世,せい,"World, Generation"
+主,しゅ,"Master, Main"
+他,た,Other
+代,だい,"Substitute, Replace, Period, Age"
+写,しゃ,Copy
+去,きょ,Past
+号,ごう,Number
+央,おう,"Center, Centre"
+平,へい,"Flat, Peace"
+打,だ,Hit
+氷,こおり,Ice
+申,もう,Say Humbly
+皮,ひ,Skin
+皿,さら,"Plate, Dish"
+礼,れい,"Thanks, Etiquette"
+休,きゅう,Rest
+先,せん,"Previous, Ahead, Past, Former"
+名,めい,"Name, Famous"
+字,じ,"Letter, Character, Symbol"
+年,ねん,Year
+早,そう,"Early, Fast, Quick"
+気,き,"Energy, Spirit"
+百,ひゃく,Hundred
+竹,たけ,Bamboo
+糸,いと,Thread
+耳,みみ,"Ear, Ears"
+虫,むし,"Insect, Bug"
+村,むら,Village
+男,だん,Man
+町,ちょう,Town
+花,はな,Flower
+見,み,See
+貝,かい,"Shellfish, Shell"
+赤,あか,Red
+足,そく,"Foot, Leg, Sufficient"
+車,しゃ,Car
+不,ふ,Not
+仕,し,"Doing, Do"
+交,こう,"Mix, Mingle"
+会,かい,"Meet, Meeting"
+光,こう,"Sunlight, Light"
+同,どう,Same
+回,かい,"Times, Revolve"
+多,た,"Many, Much, Lots Of"
+当,とう,"Correct, Right, Success"
+毎,まい,"Every, Each"
+池,ち,Pond
+米,べい,"Rice, America"
+羽,はね,"Feather, Feathers, Wing, Wings"
+考,こう,"Think, Consider"
+肉,にく,Meat
+自,じ,"Self, Oneself"
+色,いろ,Color
+行,こう,Go
+西,せい,West
+何,なに,What
+体,たい,Body
+作,さく,Make
+図,ず,Diagram
+声,こえ,Voice
+売,ばい,Sell
+弟,だい,"Younger Brother, Little Brother"
+形,けい,"Shape, Form, Appearance"
+来,らい,"Come, Next"
+社,しゃ,Company
+角,かく,"Angle, Corner, Antler"
+言,げん,Say
+谷,たに,Valley
+走,そう,Run
+近,きん,"Near, Close"
+里,さと,"Hometown, Village"
+麦,むぎ,"Wheat, Barley, Oats"
+学,がく,"Study, Learn, Learning"
+林,はやし,"Forest, Grove"
+空,くう,"Sky, Empty"
+金,きん,Gold
+雨,あめ,Rain
+青,せい,"Blue, Young"
+草,くさ,"Grass, Weed"
+音,おん,Sound
+化,か,Change
+地,ち,"Earth, Ground, Land"
+両,りょう,Both
+全,ぜん,"All, Whole"
+向,こう,"Yonder, Facing"
+安,あん,"Relax, Cheap"
+州,しゅう,"State, Province, County"
+曲,きょく,"Music, Bend"
+有,ゆう,Have
+次,じ,Next
+死,し,Death
+羊,よう,Sheep
+血,けつ,Blood
+京,きょう,Capital
+国,こく,Country
+夜,や,"Night, Evening"
+妹,まい,"Younger Sister, Little Sister"
+姉,し,"Older Sister, Big Sister, Elder Sister"
+店,てん,"Shop, Store"
+明,めい,Bright
+東,とう,East
+歩,ほ,Walk
+画,が,"Drawing, Picture, Painting"
+直,ちょく,"Fix, Direct"
+知,ち,Know
+長,ちょう,"Long, Leader"
+前,ぜん,"Front, Before"
+南,なん,South
+室,しつ,Room
+後,ご,"Behind, After, Back, Later"
+思,おも,"Think, Thought"
+星,せい,Star
+活,かつ,Lively
+海,かい,"Sea, Ocean"
+点,てん,Point
+科,か,"Science, Course, Department"
+茶,ちゃ,Tea
+食,しょく,"Eat, Meal"
+首,くび,Neck
+欠,けつ,Lack
+氏,し,"Family Name, Last Name, Surname"
+由,ゆう,Reason
+札,さつ,"Bill, Tag, Label, Note"
+民,みん,"Peoples, People, Nation"
+辺,へん,"Area, Side"
+付,つ,Attach
+以,い,"From, Since, Compared With, With, By Means Of"
+失,しつ,Fault
+必,ひつ,Certain
+未,み,Not Yet
+末,まつ,End
+校,こう,School
+夏,なつ,Summer
+家,か,"House, Home"
+弱,じゃく,Weak
+時,じ,"Time, O'clock, Hour"
+紙,かみ,Paper
+記,き,"Write Down, Record"
+通,つう,Pass Through
+高,こう,"Tall, Expensive, High"
+強,きょう,"Strong, Strength"
+教,きょう,Teach
+理,り,Reason
+組,そ,"Group, Association, Team"
+船,せん,"Boat, Ship, Vessel"
+週,しゅう,Week
+雪,ゆき,Snow
+魚,ぎょ,Fish
+鳥,ちょう,Bird
+黄,き,Yellow
+黒,こく,Black
+支,し,"Support, Branch"
+住,じゅう,"Dwell, Reside, Dwelling"
+助,じょ,Help
+医,い,Medicine
+君,くん,Buddy
+対,たい,"Versus, Opposite"
+局,きょく,"Bureau, Department"
+役,やく,"Service, Duty"
+投,とう,Throw
+決,けつ,"Decide, Decision"
+究,きゅう,Research
+身,しん,"Somebody, Someone, Body"
+者,しゃ,"Someone, Somebody"
+研,けん,Sharpen
+馬,ば,Horse
+森,もり,"Forest, Woods"
+場,じょう,"Location, Place"
+朝,あさ,Morning
+番,ばん,"Number In A Series, Turn, Ordinal Number"
+答,こた,"Answer, Response, Reply"
+絵,え,"Drawing, Painting"
+買,か,Buy
+道,どう,"Road, Street, Path, Way"
+間,かん,"Interval, Interval of Time, Interval of Space"
+雲,くも,Cloud
+数,すう,"Count, Number, Amount"
+楽,らく,"Comfort, Ease, Pleasure"
+話,わ,"Talk, Speak"
+電,でん,Electricity
+所,しょ,Place
+事,じ,"Action, Matter, Thing"
+使,し,Use
+具,ぐ,Tool
+受,じゅ,"Accept, Receive"
+和,わ,"Peace, Japanese Style"
+始,し,"Begin, Start"
+定,てい,Determine
+実,じつ,"Truth, Reality"
+服,ふく,"Clothes, Clothing"
+泳,およ,Swim
+物,ぶつ,Thing
+苦,く,Suffering
+表,ひょう,Express
+部,ぶ,"Part, Department, Club"
+乗,の,Ride
+客,きゃく,"Guest, Customer"
+屋,や,"Roof, Shop, Store"
+度,ど,"Degree, Occurrence"
+待,たい,Wait
+持,じ,Hold
+界,かい,World
+発,はつ,Departure
+相,そう,"Mutual, Minister"
+県,けん,Prefecture
+美,び,"Beauty, Beautiful"
+負,ふ,Lose
+送,そう,Send
+重,じゅう,Heavy
+談,だん,Talk
+要,よう,Need
+勝,しょう,"Win, Victory"
+仮,か,Temporary
+起,お,Wake Up
+速,そく,Fast
+配,はい,Distribute
+酒,しゅ,Alcohol
+院,いん,Institution
+終,しゅう,"End, Finish"
+習,しゅう,Learn
+転,てん,Revolve
+進,しん,Advance
+落,らく,Fall
+葉,は,"Leaf, Leaves"
+軽,かる,"Lightweight, Light, Light Weight"
+運,うん,"Carry, Luck"
+開,かい,Open
+集,しゅう,"Collect, Gather"
+飲,の,Drink
+業,ぎょう,Business
+漢,かん,"Chinese, China"
+路,ろ,Road
+農,のう,"Farming, Agriculture"
+鉄,てつ,Iron
+歌,か,"Song, Sing"
+算,さん,"Calculate, Calculation"
+聞,ぶん,Hear
+語,ご,Language
+読,よ,Read
+鳴,な,Chirp
+線,せん,Line
+横,よこ,"Side, Horizontal"
+調,ちょう,"Investigate, Tone"
+親,しん,"Parent, Intimacy"
+頭,あたま,Head
+顔,かお,Face
+病,びょう,"Sick, Sickness, Ill, Illness"
+最,さい,Most
+争,そう,Conflict
+仲,なか,Relationship
+伝,でん,"Transmit, Tell"
+共,きょう,Together
+好,こう,Like
+成,せい,Become
+老,ろう,Elderly
+位,い,Rank
+低,てい,Low
+初,しょ,First
+別,べつ,Separate
+利,り,"Profit, Benefit, Advantage"
+努,ど,Toil
+労,ろう,Labor
+命,めい,"Fate, Life"
+岸,がん,"Coast, Shore"
+放,ほう,Release
+昔,むかし,"Long Ago, Long Time Ago"
+波,は,Wave
+注,ちゅう,Pour
+育,いく,"Nurture, Raise"
+拾,ひろ,Pick Up
+指,し,Finger
+洋,よう,"Western Style, Ocean"
+神,しん,God
+秒,びょう,Second
+級,きゅう,"Level, Grade, Rank"
+追,お,"Follow, Chase"
+戦,せん,"War, Battle"
+競,きょう,Compete
+良,りょう,Good
+功,こう,"Achievement, Accomplishment"
+特,とく,Special
+便,べん,"Convenience, Convenient"
+働,どう,Work
+令,れい,Orders
+意,い,Idea
+味,み,"Flavor, Taste"
+勉,べん,Exertion
+庭,てい,Garden
+息,そく,Breath
+旅,りょ,"Trip, Travel"
+根,こん,Root
+流,りゅう,Stream
+消,しょう,Extinguish
+倍,ばい,"Double, Times, Multiply"
+員,いん,Member
+島,しま,Island
+祭,さい,Festival
+章,しょう,Chapter
+第,だい,"Ordinal Number Prefix, Ordinal Prefix, Number"
+都,と,Metropolis
+動,どう,Move
+商,しょう,Merchandise
+悪,あく,"Bad, Evil"
+族,ぞく,"Tribe, Family"
+深,しん,Deep
+球,きゅう,"Sphere, Ball"
+童,どう,Juvenile
+陽,よう,"Sunshine, Sunlight"
+階,かい,"Floor, Story"
+寒,さむ,Cold
+悲,ひ,Sad
+暑,あつ,"Hot, Hot Weather"
+期,き,"Period Of Time, Time Period"
+植,しょく,Plant
+歯,は,"Tooth, Teeth"
+温,おん,Warm
+港,こう,"Harbor, Port, Harbour"
+湯,ゆ,Hot Water
+登,とう,Climb
+着,ちゃく,"Wear, Arrive"
+短,たん,Short
+野,や,Field
+泉,せん,"Spring, Fountain"
+生,せい,Life
+亡,ぼう,"Death, Deceased"
+合,ごう,"Suit, Fit, Join"
+風,ふう,"Wind, Style"
+予,よ,Beforehand
+反,はん,Anti
+々,のま,"Repeater, Repetition, Reduplication, Iteration Mark"
+新,しん,New
+返,へん,Return
+問,もん,"Problem, Question"
+宿,しゅく,Lodge
+想,そう,"Imagine, Contemplate"
+感,かん,Feeling
+整,せい,"Arrange, Organize"
+暗,あん,Dark
+様,さま,"Formal Name Title, Formal Name Ender, Manner"
+橋,はし,Bridge
+福,ふく,"Luck, Fortune"
+緑,みどり,Green
+練,れん,Practice
+詩,し,Poem
+銀,ぎん,Silver
+題,だい,Topic
+館,かん,Public Building
+駅,えき,"Station, Train Station"
+億,おく,Hundred Million
+器,き,"Container, Vessel, Tool"
+士,し,Samurai
+料,りょう,"Fee, Material"
+標,ひょう,Signpost
+殺,さつ,Kill
+然,ぜん,Nature
+熱,ねつ,"Heat, Fever"
+課,か,Section
+賞,しょう,Prize
+輪,りん,"Wheel, Ring, Loop, Circle"
+選,せん,Choose
+鏡,かがみ,Mirror
+願,がん,Request
+養,よう,Foster
+像,ぞう,"Statue, Image"
+情,じょう,"Feeling, Emotion"
+謝,しゃ,Apologize
+映,えい,"Reflect, Reflection"
+疑,ぎ,Doubt
+皆,みな,"All, Everyone, Everything, Everybody"
+例,れい,Example
+卒,そつ,Graduate
+協,きょう,Cooperation
+参,さん,Participate
+周,しゅう,Circumference
+囲,い,Surround
+固,こ,Hard
+季,き,Seasons
+完,かん,Perfect
+希,き,Wish
+念,ねん,Thought
+折,せつ,"Fold, Bend, Break"
+望,ぼう,Hope
+材,ざい,"Lumber, Material, Timber"
+束,そく,Bundle
+松,まつ,"Pine, Pine Tree"
+残,ざん,Remainder
+求,きゅう,Request
+的,てき,"Target, -al"
+約,やく,Promise
+芸,げい,"Art, Performance"
+基,き,Foundation
+性,せい,"Gender, Nature, Sex"
+技,ぎ,"Skill, Technique"
+格,かく,Status
+能,のう,Ability
+術,じゅつ,"Technique, Art"
+私,し,"I, Private"
+骨,こつ,Bone
+妥,だ,Gentle
+雰,ふん,Atmosphere
+頑,がん,Stubborn
+寺,てら,Temple
+岩,いわ,Boulder
+帰,かえ,"Return, Return Home"
+春,はる,Spring
+昼,ひる,Noon
+晴,は,Clear Up
+秋,あき,"Autumn, Fall"
+計,けい,"Measure, Measurement"
+列,れつ,Row
+区,く,"District, Ward"
+坂,さか,Slope
+式,しき,"Ritual, Ceremony, Equation"
+信,しん,"Believe, Trust"
+勇,ゆう,"Courage, Bravery, Valor, Valour"
+単,たん,Simple
+司,し,Director
+変,へん,"Change, Strange"
+夫,ふう,Husband
+建,けん,"Build, Construct"
+昨,さく,"Previous, Yesterday"
+毒,どく,Poison
+法,ほう,"Method, Law"
+泣,な,Cry
+浅,あさ,Shallow
+紀,き,"Account, Narrative"
+英,えい,"England, English"
+軍,ぐん,Army
+飯,はん,"Meal, Food"
+仏,ぶつ,Buddha
+築,ちく,"Construct, Build"
+晩,ばん,"Night, Evening"
+猫,ねこ,Cat
+園,えん,"Garden, Park"
+曜,よう,"Weekday, Day Of The Week"
+書,しょ,"Write, Writing"
+遠,えん,Far
+門,もん,"Gates, Gate"
+係,けい,Connection
+取,と,Take
+品,ひん,"Product, Article, Goods, Products"
+守,す,Protect
+幸,こう,Happiness
+急,きゅう,"Hurry, Sudden"
+真,しん,Reality
+箱,はこ,Box
+荷,に,Luggage
+面,めん,"Face, Surface"
+典,てん,Rule
+喜,き,"Rejoice, Delighted, Pleased"
+府,ふ,Government
+治,じ,"Cure, Heal, Reign, Rule"
+浴,よく,Bathe
+笑,わら,Laugh
+辞,じ,"Quit, Word"
+関,かん,"Related, Connected"
+保,ほ,"Preserve, Guarantee"
+弁,べん,"Dialect, Speech"
+政,せい,"Politics, Government"
+留,る,Detain
+証,しょう,"Evidence, Proof"
+険,けん,"Risky, Steep"
+危,き,Dangerous
+存,そん,"Exist, Suppose"
+専,せん,Specialty
+冒,ぼう,Dare
+冗,じょう,"Superfluous, Unnecessary, Uselessness"
+阪,はん,"Heights, Slope"
+原,げん,"Original, Fundamental, Field"
+細,さい,"Thin, Detailed"
+薬,やく,"Medicine, Drug, Drugs"
+鼻,はな,Nose
+側,がわ,Side
+兵,へい,Soldier
+堂,どう,"Hall, Public Chamber"
+塩,しお,Salt
+席,せき,Seat
+敗,はい,"Failure, Defeat"
+果,か,Fruit
+栄,えい,"Prosper, Flourish"
+梅,うめ,"Ume, Japanese Plum"
+無,む,Nothing
+結,けつ,"Bind, Tie"
+因,いん,Cause
+常,じょう,"Normal, Ordinary, Usual"
+識,しき,"Discerning, Discriminating, Know"
+非,ひ,"Injustice, Negative, Mistake"
+干,かん,Dry
+是,ぜ,Absolutely
+渉,しょう,"Ford, Wade"
+虚,きょ,Void
+官,かん,Government
+察,さつ,Guess
+底,そこ,Bottom
+愛,あい,Love
+署,しょ,"Government Office, Political Office, Office"
+警,けい,"Warn, Admonish"
+恋,れん,"Romance, Love"
+覚,かく,"Memorize, Awake"
+説,せつ,Theory
+幻,げん,Illusion
+訓,くん,Instruction
+試,し,"Try, Attempt"
+弓,きゅう,Bow
+告,こく,Announce
+種,しゅ,"Kind, Type, Seed"
+達,たつ,"Attain, Plural"
+類,るい,"Type, Category, Kind"
+報,ほう,"News, Report"
+祈,き,Pray
+等,とう,Equal
+汽,き,Steam
+借,しゃく,Borrow
+焼,や,"Bake, Cook, Burn"
+座,ざ,"Sit, Seat"
+忘,ぼう,Forget
+洗,せん,Wash
+胸,むね,"Chest, Breast"
+脳,のう,Brain
+僧,そう,"Priest, Monk"
+禅,ぜん,"Zen, Zen Buddhism"
+験,けん,Test
+可,か,"Possible, Passable"
+許,きょ,"Permit, Allow"
+枚,まい,"Flat Object Counter, Counter For Flat Objects"
+静,せい,Quiet
+句,く,Paragraph
+禁,きん,"Prohibit, Prohibition"
+喫,きつ,Consume
+煙,えん,Smoke
+加,か,Add
+節,せつ,"Season, Joint"
+減,げん,Decrease
+順,じゅん,"Order, Sequence"
+容,よう,"Form, Appearance"
+布,ふ,Cloth
+易,い,Easy
+財,さい,Wealth
+若,わか,Young
+詞,し,"Part Of Speech, Speech Particle, Particle Of Speech, Grammar Particle"
+昆,こん,Insect
+閥,ばつ,"Clique, Clan"
+歴,れき,Continuation
+舌,した,Tongue
+冊,さつ,"Book Counter, Counter For Books"
+宇,う,Outer Space
+宙,ちゅう,Midair
+忙,ぼう,Busy
+履,り,Boots
+団,だん,Group
+暴,ぼう,Violence
+混,こん,Mix
+乱,らん,"Riot, Disorder"
+徒,と,"Junior, Follower"
+得,とく,Acquire
+改,かい,Renew
+続,ぞく,Continue
+連,れん,"Take Along, Connect"
+善,ぜん,"Morally Good, Good"
+困,こん,"Distressed, Troubled"
+絡,らく,"Entangle, Coil Around, Entwine"
+比,ひ,Compare
+災,さい,Disaster
+機,き,Machine
+率,りつ,"Percent, Percentage"
+飛,ひ,Fly
+害,がい,"Damage, Injury, Harm"
+余,よ,"Surplus, Excess"
+難,なん,Difficult
+妨,ぼう,"Obstruct, Impede"
+被,ひ,Incur
+裕,ゆう,"Abundant, Wealthy"
+震,しん,"Earthquake, Quake, Shake"
+尻,しり,"Butt, Buttocks"
+尾,び,Tail
+械,かい,Contraption
+確,かく,Certain
+嫌,けん,Dislike
+個,こ,Individual
+圧,あつ,Pressure
+在,ざい,Exist
+夢,む,Dream
+産,さん,"Give Birth, Property"
+倒,とう,"Overthrow, Collapse"
+臭,くさ,"Stinking, Stinky, Smelly"
+厚,あつ,Thick
+妻,さい,Wife
+議,ぎ,"Deliberation, Discussion"
+犯,はん,Crime
+罪,ざい,Guilt
+防,ぼう,"Prevent, Prevention"
+穴,あな,"Hole, Cave"
+論,ろん,Theory
+経,けい,"Passage of Time, Pass Through, Manage"
+笛,てき,Flute
+史,し,History
+敵,てき,Enemy
+済,さい,Come To An End
+委,い,Committee
+挙,きょ,Raise
+判,はん,Judge
+制,せい,"Control, System"
+務,む,Task
+査,さ,"Inspect, Investigate"
+総,そう,Whole
+設,せつ,Establish
+資,し,Resources
+権,けん,Rights
+件,けん,"Matter, Affair"
+派,は,"Sect, Faction"
+岡,おか,Hill
+素,そ,Element
+断,だん,Cut Off
+評,ひょう,Evaluate
+批,ひ,Criticism
+任,にん,Duty
+検,けん,Examine
+審,しん,Judge
+条,じょう,Clause
+責,せき,Blame
+省,しょう,Conserve
+増,ぞう,Increase
+税,ぜい,Tax
+解,かい,"Untie, Solve"
+際,さい,Occasion
+認,にん,"Recognize, Acknowledge"
+企,き,Plan
+義,ぎ,Righteousness
+罰,ばつ,"Penalty, Punishment"
+誕,たん,Birth
+脱,だつ,"Undress, Escape"
+過,か,Surpass
+坊,ぼう,Monk
+寝,ね,"Lie Down, Sleep"
+宮,みや,"Shinto Shrine, Shrine, Palace"
+各,かく,Each
+案,あん,Plan
+置,ち,Put
+費,ひ,"Expense, Cost"
+価,か,Value
+勢,せい,Force
+営,えい,Manage
+示,じ,"Indicate, Show"
+統,とう,"Unite, Rule, Govern"
+領,りょう,Territory
+策,さく,Plan
+藤,ふじ,Wisteria
+副,ふく,"Vice, Side"
+観,かん,View
+値,ち,"Value, Price"
+吸,きゅう,"Suck, Inhale"
+域,いき,"Region, Boundary"
+姿,し,"Figure, Shape, Form"
+応,おう,Respond
+提,てい,"Present, Submit"
+援,えん,"Aid, Assist"
+状,じょう,Condition
+態,たい,"Appearance, State, Shape"
+賀,が,Congratulations
+収,しゅう,Obtain
+停,てい,Halt
+革,かく,Leather
+職,しょく,Employment
+鬼,き,Demon
+規,き,Standard
+護,ご,Defend
+割,わり,Divide
+裁,さい,Judge
+崎,さき,Cape
+演,えん,"Acting, Perform"
+律,りつ,Law
+師,し,"Teacher, Expert, Master"
+看,かん,Watch Over
+準,じゅん,Standard
+則,そく,Rule
+備,び,"Provide, Equip"
+導,どう,Lead
+幹,かん,"Tree Trunk, Ability"
+張,ちょう,Stretch
+優,ゆう,"Superior, Gentle"
+宅,たく,"House, Home"
+沢,たく,Swamp
+贅,ぜい,Extravagant
+施,し,Carry Out
+現,げん,"Present Time, Appear"
+乳,にゅう,Milk
+呼,よ,Call
+城,しろ,Castle
+俳,はい,Haiku
+秀,しゅう,Excel
+担,たん,"Carry, Bear"
+額,がく,"Amount, Framed Picture"
+製,せい,Manufacture
+違,ちが,Different
+輸,ゆ,Transport
+燃,ねん,Burn
+祝,しゅく,Celebrate
+届,とど,Deliver
+狭,せま,Narrow
+肩,かた,Shoulder
+腕,うで,Arm
+腰,こし,Waist
+触,しょく,Touch
+載,さい,"Place On, Put On"
+層,そう,Layer
+型,けい,"Model, Type"
+庁,ちょう,"Agency, Government Office"
+視,し,Look At
+差,さ,Distinction
+管,かん,Pipe
+象,ぞう,"Elephant, Phenomenon"
+量,りょう,"Quantity, Amount"
+境,きょう,Boundary
+環,かん,Loop
+武,ぶ,Military
+質,しつ,Quality
+述,じゅつ,Mention
+供,きょう,"Servant, Companion"
+展,てん,Expand
+販,はん,Sell
+株,かぶ,"Stock, Share"
+限,げん,Limit
+与,よ,Give
+含,がん,Include
+影,えい,Shadow
+況,きょう,Condition
+渡,わた,Transit
+響,きょう,"Echo, Reverberation, Resound"
+票,ひょう,Ballot
+景,けい,Scene
+抜,ぬ,Extract
+訴,そ,Sue
+訟,しょう,Lawsuit
+逮,たい,Apprehend
+補,ほ,Supplement
+候,こう,"Climate, Weather, Candidate"
+構,こう,"Set Up, Care"
+模,も,Imitation
+捕,ほ,Catch
+鮮,せん,Fresh
+効,こう,Effective
+属,ぞく,Belong
+慣,かん,Accustomed
+豊,ほう,"Plentiful, Abundant"
+満,まん,Full
+肥,ひ,Obese
+巻,かん,Scroll
+捜,そう,Search
+絞,こう,Strangle
+輩,はい,Comrade
+隠,いん,Hide
+掛,か,Hang
+替,か,"Replace, Exchange"
+居,きょ,Alive
+造,ぞう,Create
+授,じゅ,Instruct
+印,いん,"Seal, Mark"
+創,そう,Create
+復,ふく,Restore
+往,おう,"Journey, Depart"
+較,かく,"Contrast, Compare"
+筆,ひつ,Writing Brush
+鉛,えん,Lead
+貯,ちょ,Savings
+故,こ,"Circumstance, Reason"
+障,しょう,Hinder
+従,じゅう,"Obey, Accompany, Follow"
+我,が,"I, Me"
+激,げき,"Fierce, Violent"
+刺,し,Stab
+励,れい,Encourage
+討,とう,Chastise
+郵,ゆう,"Mail, Post"
+針,しん,Needle
+徴,ちょう,"Indication, Sign"
+怪,かい,Suspicious
+獣,じゅう,"Beast, Animal"
+突,とつ,"Stab, Thrust, Sudden"
+菓,か,Cake
+河,か,River
+振,しん,"Shake, Wave"
+汗,あせ,Sweat
+豚,ぶた,"Pork, Pig"
+再,さ,Again
+接,せつ,Adjoin
+独,どく,Alone
+占,せん,"Fortune, Occupy"
+招,しょう,Beckon
+段,だん,"Steps, Stairs"
+胃,い,Stomach
+腹,ふく,"Belly, Abdomen, Stomach"
+痛,つう,Pain
+退,たい,"Retreat, Reject"
+屈,くつ,Yield
+悩,なや,Worry
+暇,か,"Spare Time, Free Time"
+織,しき,Weave
+貸,か,Lend
+迷,めい,"Astray, Lost"
+惑,わく,Misguided
+誘,ゆう,Invite
+就,しゅう,Get A Position
+訪,ほう,Visit
+怒,ど,"Angry, Anger"
+昇,しょう,Ascend
+眠,みん,Sleep
+睡,すい,Drowsy
+症,しょう,Symptom
+締,てい,Tighten
+迫,はく,"Urge, Compel, Coerce"
+靴,くつ,Shoes
+濃,のう,"Dense, Thick"
+端,たん,Edge
+極,きょく,Extreme
+途,と,Route
+健,けん,Healthy
+康,こう,"Ease, Peace"
+郎,ろう,Guy
+給,きゅう,Salary
+逆,ぎゃく,"Reverse, Opposite"
+巨,きょ,Giant
+庫,こ,"Storage, Warehouse"
+児,じ,Child
+冷,れい,"Cool, Cold"
+凍,とう,"Frozen, Freeze"
+幼,よう,"Infancy, Childhood"
+稚,ち,Immature
+処,しょ,Deal With
+博,はく,"Exhibition, Gambling"
+清,せい,Pure
+潔,けつ,"Pure, Clean"
+録,ろく,Record
+隊,たい,Squad
+修,しゅう,Discipline
+券,けん,Ticket
+婦,ふ,Wife
+奇,き,"Odd, Strange"
+妙,みょう,Strange
+麗,れい,Lovely
+微,び,Delicate
+益,えき,Benefit
+移,い,Shift
+程,てい,Extent
+精,せい,"Spirit, Pure"
+絶,ぜつ,"Extinction, Die Out"
+並,へい,Line Up
+憲,けん,Constitution
+衆,しゅう,Populace
+傘,かさ,Umbrella
+浜,はま,Beach
+撃,げき,Attack
+攻,こう,Aggression
+監,かん,"Oversee, Surveillance"
+杯,はい,"Cup Of Liquid, Counter For Cups"
+乾,かん,Dry
+催,さい,Sponsor
+促,そく,Urge
+欧,おう,Europe
+江,え,"Inlet, Bay"
+請,せい,Request
+雄,ゆう,"Male, Brave"
+韓,かん,Korea
+壊,かい,Break
+診,しん,Diagnose
+閣,かく,"The Cabinet, Cabinet"
+僚,りょう,Colleague
+積,せき,Accumulate
+督,とく,"Director, Supervise"
+臣,しん,"Servant, Retainer"
+略,りゃく,"Abbreviation, Abbreviate"
+航,こう,Navigation
+寄,き,Approach
+板,ばん,Board
+街,がい,Street
+宗,しゅう,Religion
+緊,きん,Tense
+娘,むすめ,Daughter
+宴,えん,Banquet
+怖,ふ,Scary
+恐,きょう,Fear
+添,てん,Append
+猛,もう,Fierce
+烈,れつ,"Violent, Intense"
+索,さく,Search
+詰,つ,Stuffed
+詳,しょう,Detailed
+魅,み,Alluring
+渇,かわ,"Dry Up, Thirst"
+系,けい,Lineage
+婚,こん,Marriage
+遊,ゆう,Play
+旗,き,Flag
+照,しょう,Illuminate
+快,かい,Pleasant
+版,はん,Edition
+貧,びん,Poor
+乏,ぼう,Scarce
+適,てき,Suitable
+預,よ,Deposit
+延,えん,Prolong
+翌,よく,"The Next, The Following"
+覧,らん,Look At
+懐,なつ,Nostalgia
+押,お,Push
+更,こう,Renew
+枕,まくら,Pillow
+浮,う,Float
+漏,ろう,Leak
+符,ふ,Token
+購,こう,Subscription
+越,えつ,Go Beyond
+飾,しょく,Decorate
+騒,そう,Boisterous
+背,はい,"Back, Height"
+撮,さつ,"Photograph, Photo"
+盗,とう,Steal
+離,り,Detach
+融,ゆう,Dissolve
+編,へん,Knit
+華,か,"Showy, Flower, Gorgeous"
+既,き,Previously
+普,ふ,Normal
+豪,ごう,"Exceptional, Luxurious"
+鑑,かん,Model
+除,じょ,"Exclude, Remove"
+尋,じん,Inquire
+幾,いく,"How Many, How Much"
+廊,ろう,Corridor
+掃,そう,Sweep
+泥,でい,Mud
+棒,ぼう,"Pole, Rod, Wooden Pole"
+驚,きょう,Surprised
+嘆,たん,Sigh
+倉,そう,Warehouse
+孫,そん,Grandchild
+巣,す,Nest
+帯,たい,Belt
+径,けい,Diameter
+救,きゅう,Rescue
+散,さん,Scatter
+粉,ふん,Powder
+脈,みゃく,Vein
+菜,さい,Vegetable
+貨,か,Freight
+陸,りく,Land
+似,に,Resemble
+均,きん,Equal
+墓,ぼ,Grave
+富,ふ,Rich
+徳,とく,Virtue
+探,たん,"Look For, Search For"
+偵,てい,Spy
+綺,き,Beautiful
+序,じょ,Preface
+迎,げい,Welcome
+志,し,"Intention, Ambition"
+恩,おん,Kindness
+採,さい,Gather
+桜,さくら,"Sakura, Cherry Tree, Cherry Blossom"
+永,えい,Eternity
+液,えき,"Fluid, Liquid"
+眼,がん,Eyeball
+祖,そ,Ancestor
+績,せき,Exploits
+興,きょう,Interest
+衛,えい,Defense
+複,ふく,Duplicate
+雑,ざつ,"Random, Miscellaneous"
+賛,さん,Agree
+酸,さん,Acid
+銭,せん,Coin
+飼,か,Domesticate
+傷,しょう,Wound
+党,とう,"Party, Group"
+卵,たまご,Egg
+厳,げん,Strict
+捨,す,Throw Away
+込,こ,"Into, Included"
+密,みつ,Secrecy
+汚,お,Dirty
+欲,よく,Want
+暖,だん,Warm
+机,つくえ,Desk
+秘,ひ,Secret
+訳,やく,"Translation, Reason"
+染,せん,Dye
+簡,かん,Simplicity
+閉,へい,"Closed, Close, Closure"
+誌,し,Magazine
+窓,まど,Window
+否,ひ,No
+筋,きん,"Muscle, Tendon"
+垂,すい,"Dangle, Drip"
+宝,ほう,Treasure
+宣,せん,Proclaim
+尊,そん,Revered
+忠,ちゅう,Loyalty
+拡,かく,Extend
+操,そう,"Manipulate, Chastity"
+敬,けい,Respect
+暮,ぼ,Livelihood
+灰,はい,"Ash, Ashes"
+熟,じゅく,Ripen
+異,い,Differ
+皇,こう,Emperor
+盛,せい,"Pile, Prosperous, Heap"
+砂,さ,Sand
+漠,ばく,"Desert, Vague"
+糖,とう,Sugar
+納,のう,Supply
+肺,はい,Lung
+著,ちょ,Author
+蒸,じょう,Steam
+蔵,ぞう,Storehouse
+装,そう,Attire
+裏,うら,"Backside, Underside, Reverse"
+諸,しょ,Various
+賃,ちん,Rent
+誤,ご,Mistake
+臓,ぞう,Internal Organs
+貴,き,Valuable
+降,こう,Descend
+丼,どん,Rice Bowl
+吐,は,"Throw Up, Spit, Vomit"
+奴,ど,Dude
+隷,れい,Slave
+芋,いも,Potato
+縮,しゅく,Shrink
+純,じゅん,Pure
+縦,たて,Vertical
+粋,すい,Stylish
+聖,せい,Holy
+磁,じ,Magnet
+紅,こう,"Deep Red, Crimson"
+射,しゃ,Shoot
+幕,まく,Curtain
+拝,はい,Worship
+薦,せん,Recommend
+推,すい,Infer
+揮,き,Brandish
+沿,えん,Run Alongside
+源,げん,Origin
+劇,げき,Drama
+勤,きん,Work
+歓,かん,Delight
+承,しょう,Consent
+損,そん,"Loss, Hurt"
+枝,えだ,Branch
+爪,つめ,Claw
+豆,とう,Beans
+刻,こく,Carve
+腐,ふ,Rot
+遅,ち,"Slow, Late"
+彫,ちょう,Carve
+測,そく,Measure
+破,は,Tear
+舎,しゃ,Cottage
+講,こう,Lecture
+滞,たい,Stagnate
+紹,しょう,Introduce
+介,かい,Jammed In
+己,こ,"Oneself, Self"
+厄,やく,Unlucky
+亀,かめ,Turtle
+互,ご,Mutual
+剣,けん,Sword
+寿,じゅ,"Lifespan, Longevity"
+彼,かれ,He
+恥,は,Shame
+杉,すぎ,Cedar
+汁,じゅう,Soup
+噌,そ,Boisterous
+炎,えん,"Flame, Blaze"
+為,い,Sake
+熊,くま,Bear
+獄,ごく,Prison
+酔,すい,Drunk
+酢,す,Vinegar
+鍋,なべ,Pot
+湖,こ,Lake
+銅,どう,Copper
+払,はら,Pay
+油,ゆ,Oil
+醤,しょう,Soy Sauce
+旧,きゅう,Former
+姓,せい,"Family Name, Surname"
+貿,ぼう,Trade
+将,しょう,Commander
+盟,めい,Alliance
+遺,い,Leave Behind
+伸,の,Stretch
+債,さい,Debt
+及,きゅう,Reach
+奈,な,Nara
+幅,はば,Width
+廃,はい,Obsolete
+甘,あま,Sweet
+換,かん,Exchange
+摘,てき,Pluck
+核,かく,Nucleus
+沖,おき,Open Sea
+縄,じょう,Rope
+津,つ,Harbor
+献,けん,Offer
+療,りょう,Heal
+継,けい,Inherit
+維,い,Maintain
+舞,ぶ,Dance
+伎,き,Deed
+踏,とう,Step
+般,はん,"Generally, General"
+頼,らい,Trust
+依,い,"Reliant, Dependent"
+鹿,か,Deer
+諾,だく,Agreement
+牙,げ,"Fang, Tusk"
+跳,ちょう,Hop
+昭,しょう,Shining
+漁,ぎょ,Fishing
+償,しょう,Reparation
+刑,けい,Punish
+募,ぼ,Recruit
+執,しゅう,Tenacious
+塁,るい,"Base, Baseball Base"
+崩,ほう,Crumble
+患,かん,Afflicted
+戻,もど,Return
+抗,こう,Confront
+抵,てい,Resist
+旬,しゅん,"In Season, Time Of Month, Season"
+湾,わん,Gulf
+爆,ばく,Explode
+弾,だん,Bullet
+聴,ちょう,Listen
+跡,せき,Traces
+遣,けん,Dispatch
+闘,とう,Struggle
+陣,じん,Army Base
+香,こう,Fragrance
+兆,ちょう,"Omen, Trillion"
+臨,りん,Look To
+削,さく,Whittle Down
+契,けい,Pledge
+恵,え,Favor
+抱,だ,Hug
+掲,けい,Display
+狙,そ,Aim
+葬,そう,Burial
+需,じゅ,Demand
+齢,れい,Age
+宜,よろ,Best Regards
+繰,く,Spin
+避,ひ,"Dodge, Avoid"
+妊,にん,Pregnant
+娠,しん,Pregnant
+致,ち,Do
+刊,かん,Edition
+奏,そう,Play Music
+伴,はん,Accompany
+併,へい,Join
+傾,けい,Lean
+却,きゃく,Contrary
+奥,おく,Interior
+慮,りょ,Consider
+懸,けん,Suspend
+房,ぼう,Cluster
+扱,あつか,Handle
+抑,よく,Suppress
+択,たく,Select
+描,びょう,Draw
+盤,ばん,"Tray, Platter, Board"
+称,しょう,Title
+緒,しょ,Together
+緩,ゆる,Loose
+託,たく,Consign
+賄,わい,Bribe
+賂,ろ,Bribe
+贈,ぞう,Presents
+逃,とう,Escape
+還,かん,Send Back
+超,ちょう,"Ultra, Super"
+邦,ほう,Home Country
+鈴,りん,"Buzzer, Small Bell"
+阜,ふ,Mound
+岐,き,Branch Off
+隆,りゅう,Prosperity
+雇,こ,Employ
+控,ひか,Abstain
+壁,かべ,Wall
+棋,き,Chess Piece
+渋,じゅう,"Bitter, Astringent, Reluctant"
+片,かた,"One Sided, Fragment"
+群,ぐん,Flock
+仙,せん,Hermit
+充,じゅう,Allocate
+免,めん,Excuse
+勧,かん,Recommend
+圏,けん,"Range, Sphere"
+埋,う,Bury
+埼,さい,Cape
+奪,うば,Rob
+御,ご,Honorable
+慎,しん,Humility
+拒,きょ,"Refuse, Refusal"
+枠,わく,Frame
+甲,こう,"Turtle Shell, A"
+斐,い,Patterned
+祉,し,Welfare
+稲,いね,Rice Plant
+譲,じょう,Defer
+謙,けん,Modesty
+躍,やく,Leap
+銃,じゅう,Gun
+項,こう,Paragraph
+鋼,こう,Steel
+顧,こ,Review
+駐,ちゅう,Resident
+駆,か,Gallop
+柱,ちゅう,Pillar
+唱,しょう,Chant
+孝,こう,Filial Piety
+俊,しゅん,Genius
+兼,けん,Concurrently
+剤,ざい,Dose
+吹,ふ,Blow
+堀,ほり,Ditch
+巡,じゅん,Patrol
+戒,かい,Commandment
+排,はい,"Reject, Refuse"
+携,けい,Portable
+敏,びん,Alert
+鋭,えい,Sharp
+敷,しき,Spread
+殿,でん,"Milord, Lord"
+犠,ぎ,Sacrifice
+獲,かく,Seize
+茂,も,Luxuriant
+繁,はん,Overgrown
+頻,ひん,Frequent
+殖,しょく,Multiply
+薄,はく,Dilute
+衝,しょう,Collide
+誉,よ,Honor
+褒,ほう,Praise
+透,とう,Transparent
+隣,りん,"Neighbor, Neighbour"
+雅,が,Elegant
+遜,そん,Humble
+伺,うかが,Pay Respects
+徹,てつ,"Penetrate, Clear"
+瀬,せ,"Rapids, Shallows"
+撤,てつ,Withdrawal
+措,そ,Set Aside
+拠,きょ,Based On
+儀,ぎ,Ceremony
+樹,じゅ,Wood
+棄,き,Abandon
+虎,とら,Tiger
+蛍,ほたる,Firefly
+蜂,はち,Bee
+酎,ちゅう,Hard Liquor
+蜜,みつ,"Honey, Nectar"
+墟,きょ,Ruins
+艦,かん,Warship
+潜,せん,Conceal
+拳,けん,Fist
+炭,たん,Charcoal
+畑,はたけ,Field
+包,ほう,Wrap
+衣,い,Clothes
+仁,じん,Humanity
+鉱,こう,Mineral
+至,し,Attain
+誠,せい,Sincerity
+郷,きょう,Hometown
+侵,しん,Invade
+偽,ぎ,Fake
+克,こく,Overcome
+到,とう,Arrival
+双,そう,Pair
+哲,てつ,Philosophy
+喪,そう,Mourning
+堅,かた,Solid
+床,しょう,"Floor, Bed"
+括,かつ,Fasten
+弧,こ,Arc
+挑,ちょう,Challenge
+掘,くつ,Dig
+揚,あ,Hoist
+握,あく,Grip
+揺,よう,Shake
+斎,さい,Purification
+暫,ざん,Temporarily
+析,せき,Analysis
+枢,すう,Hinge
+軸,じく,"Axis, Axle"
+柄,がら,Pattern
+泊,はく,Overnight
+滑,かつ,Slippery
+潟,かた,Lagoon
+焦,しょう,Char
+範,はん,Example
+紛,ふん,Distract
+糾,きゅう,Twist
+綱,つな,Rope
+網,もう,Netting
+肝,かん,Liver
+芝,しば,Lawn
+荒,あ,Wild
+袋,ふくろ,Sack
+誰,だれ,Who
+珍,ちん,Rare
+裂,れつ,"Split, Tear"
+襲,しゅう,Attack
+貢,こう,Tribute
+趣,しゅ,Charm
+距,きょ,Distance
+籍,せき,Enroll
+露,ろ,"Expose, Dew"
+牧,ぼく,Pasture
+刷,さつ,Printing
+朗,ろう,Bright
+潮,ちょう,Tide
+即,そく,Instant
+垣,かき,"Hedge, Fence"
+威,い,"Dignity, Might"
+封,ふう,"Seal, Seal In, Closing"
+筒,とう,"Cylinder, Tube, Pipe"
+岳,がく,Peak
+慰,い,Consolation
+懇,こん,Courteous
+懲,ちょう,Chastise
+摩,ま,Chafe
+擦,さつ,Rub
+撲,ぼく,Slap
+斉,せい,Simultaneous
+旨,し,"Point, Delicious"
+柔,じゅう,Gentle
+沈,ちん,Sink
+沼,ぬま,Bog
+泰,たい,Peace
+滅,めつ,Destroy
+滋,じ,Nourishing
+炉,ろ,Furnace
+琴,こと,"Harp, Zither, Koto"
+寸,すん,Measurement
+竜,りゅう,Dragon
+縁,えん,Edge
+翼,よく,Wing
+吉,きつ,Good Luck
+刃,は,Blade
+忍,にん,Endure
+桃,もも,Peach
+辛,から,Spicy
+謎,なぞ,Riddle
+侍,さむらい,Samurai
+俺,おれ,"I, Me"
+叱,しか,Scold
+娯,ご,Recreation
+斗,と,"Ladle, Dipper, Volume"
+朱,しゅ,Vermilion
+丘,きゅう,Hill
+梨,なし,Pear
+僕,ぼく,"I, Me"
+匹,ひき,"Small Animal, Small Animal Counter"
+叫,きょう,Shout
+釣,つ,Fishing
+髪,かみ,Hair
+嵐,あらし,Storm
+笠,かさ,Conical Hat
+涙,るい,Teardrop
+缶,かん,"Can, Tin Can"
+姫,ひめ,Princess
+棚,たな,Shelf
+粒,りゅう,Grains
+砲,ほう,Cannon
+雷,らい,Thunder
+芽,め,Sprout
+塔,とう,Tower
+澄,す,Lucidity
+矛,む,Spear
+肌,はだ,Skin
+舟,ふね,Boat
+鐘,しょう,Bell
+凶,きょう,Villain
+塊,かたまり,Lump
+狩,か,Hunt
+頃,ころ,Approximate
+魂,こん,"Soul, Spirit"
+脚,きゃく,Leg
+也,なり,Considerably
+井,い,Well
+呪,のろ,Curse
+嬢,じょう,Miss
+暦,れき,Calendar
+曇,くも,Cloudy
+眺,ちょう,Stare
+裸,ら,"Naked, Nude"
+賭,か,Gamble
+疲,ひ,Exhausted
+塾,じゅく,Cram School
+卓,たく,Table
+磨,みが,Polish
+菌,きん,Bacteria
+陰,いん,Shade
+霊,れい,Ghost
+湿,しつ,Damp
+硬,こう,Stiff
+稼,か,Earnings
+嫁,よめ,Bride
+溝,こう,Gutter
+滝,たき,Waterfall
+狂,きょう,"Lunatic, Crazy"
+翔,かけ,Fly
+墨,すみ,"Black Ink, Ink"
+鳩,はと,"Dove, Pigeon"
+穏,おん,Calm
+鈍,どん,Dull
+魔,ま,Devil
+寮,りょう,Dormitory
+盆,ぼん,"Lantern Festival, Tray"
+棟,とう,Pillar
+吾,わが,"I, Me"
+斬,ざん,Slice
+寧,ねい,Rather
+椅,い,Chair
+歳,さい,Years Old
+涼,すず,Cool
+猿,さる,Monkey
+瞳,どう,Pupil
+鍵,かぎ,Key
+零,れい,"Zero, Spill"
+碁,ご,Go
+租,そ,Tariff
+幽,ゆう,Secluded
+泡,ほう,Bubbles
+癖,くせ,Habit
+鍛,たん,Forge
+錬,れん,Tempering
+穂,ほ,"Head of Plant, Ear Of Plant"
+帝,てい,Sovereign
+瞬,しゅん,Blink
+菊,きく,Chrysanthemum
+誇,こ,Pride
+庄,しょう,Manor
+阻,そ,Thwart
+黙,もく,Shut Up
+俵,ひょう,Sack
+綿,めん,Cotton
+架,か,Shelf
+砕,さい,Smash
+粘,ねん,Sticky
+粧,しょう,Cosmetics
+欺,ぎ,Deceit
+詐,さ,Lie
+霧,きり,Fog
+柳,りゅう,Willow
+伊,い,Italy
+佐,さ,Help
+尺,しゃく,"Shaku, Japanese Foot"
+哀,あい,Pathetic
+唇,くちびる,Lips
+塀,へい,Fence
+墜,つい,Crash
+如,じょ,Likeness
+婆,ば,Old Woman
+崖,がけ,Cliff
+帽,ぼう,Hat
+幣,へい,Cash
+恨,こん,Grudge
+憎,ぞう,Hate
+憩,けい,Rest
+扇,せん,Folding Fan
+扉,ひ,Front Door
+挿,そう,Insert
+掌,しょう,Manipulate
+滴,てき,Drip
+炊,すい,Cook
+爽,さわ,Refreshing
+畳,じょう,Tatami Mat
+瞭,りょう,Clear
+箸,はし,Chopsticks
+胴,どう,Torso
+芯,しん,Wick
+虹,にじ,Rainbow
+帳,ちょう,Notebook
+蚊,か,Mosquito
+蛇,へび,Snake
+貼,は,Paste
+辱,じょく,Humiliate
+鉢,はち,Bowl
+闇,やみ,Darkness
+隙,すき,Crevice
+霜,しも,Frost
+飢,き,Starve
+餓,が,Starve
+畜,ちく,Livestock
+迅,じん,Swift
+騎,き,Horse Riding
+蓄,ちく,Amass
+尽,じん,"Use Up, Exhaust"
+彩,さい,"Coloring, Colouring"
+憶,おく,Recollection
+溶,よう,Melt
+耐,たい,Resistant
+踊,おど,Dance
+賢,けん,Clever
+輝,き,Radiance
+脅,きょう,Threaten
+麻,ま,Hemp
+灯,とう,Lamp
+咲,さ,"Blossom, Bloom"
+培,ばい,Cultivate
+悔,かい,Regret
+脇,わき,Armpit
+遂,すい,Accomplish
+班,はん,Squad
+塗,と,Paint
+斜,しゃ,Diagonal
+殴,おう,Assault
+盾,じゅん,Shield
+穫,かく,Harvest
+巾,きん,Towel
+駒,こま,Chess Piece
+紫,し,Purple
+抽,ちゅう,Pluck
+誓,せい,Vow
+悟,ご,Comprehension
+拓,たく,Cultivation
+拘,こう,Arrest
+礎,そ,"Foundation, Cornerstone"
+鶴,つる,Crane
+刈,か,Prune
+剛,ごう,Sturdy
+唯,ゆい,Solely
+壇,だん,Podium
+尼,に,Nun
+概,がい,Approximation
+浸,しん,Immersed
+淡,たん,Faint
+煮,に,Boil
+覆,ふく,"Capsize, Cover"
+謀,ぼう,Conspire
+陶,とう,Pottery
+隔,かく,Isolate
+征,せい,Subjugate
+陛,へい,Highness
+俗,ぞく,Vulgar
+桑,くわ,Mulberry
+潤,じゅん,Watered
+珠,しゅ,Pearl
+衰,すい,Decline
+奨,しょう,Encourage
+劣,れつ,Inferiority
+勘,かん,Intuition
+妃,ひ,"Princess, Queen"
+丈,じょう,"Height, Ten Feet"
+峰,ほう,Summit
+巧,こう,Adept
+邪,じゃ,Wicked
+駄,だ,Burdensome
+唐,とう,"China, Sudden"
+廷,てい,Courts
+鬱,うつ,Gloom
+鰐,わに,"Alligator, Crocodile"
+蟹,かに,Crab
+簿,ぼ,Record Book
+彰,しょう,Clear
+漫,まん,Manga
+訂,てい,Revise
+諮,し,Consult
+銘,めい,Inscription
+堰,せき,Dam
+堤,てい,Embankment
+漂,ひょう,Drift
+翻,ほん,Flip
+軌,き,Rut
+后,こう,Empress
+奮,ふん,Stirred Up
+亭,てい,"Restaurant, Inn, Pavilion"
+仰,ぎょう,Look Up To
+伯,はく,Chief
+偶,ぐう,Accidentally
+淀,よど,Eddy
+墳,ふん,Tomb
+壮,そう,Robust
+把,は,"Bundle, Grasp"
+搬,はん,Transport
+晶,しょう,Crystal
+洞,どう,Cave
+涯,がい,Horizon
+疫,えき,Epidemic
+孔,こう,"Cavity, Hole"
+偉,い,Greatness
+頂,ちょう,"Summit, Humbly"
+召,しょう,"Call, Eat"
+挟,はさ,Between
+枯,こ,Wither
+沸,ふつ,Boil
+濯,たく,Wash
+燥,そう,Dry Up
+瓶,びん,"Bottle, Jar"
+耕,こう,Plow
+肯,こう,"Agreement, Consent"
+脂,し,Fat
+膚,ふ,Skin
+軒,けん,"House Counter, Eaves"
+軟,なん,Soft
+郊,こう,Suburbs
+隅,すみ,Corner
+隻,せき,Ship Counter
+邸,てい,Residence
+郡,ぐん,"County, District"
+釈,しゃく,Explanation
+肪,ぼう,"Obese, Fat"
+喚,かん,"Scream, Yell"
+媛,ひめ,"Princess, Beautiful Woman"
+貞,てい,Chastity
+玄,げん,Mysterious
+苗,みょう,"Seedling, Sapling"
+渦,か,Whirlpool
+慈,じ,Mercy
+襟,えり,Collar
+蓮,れん,Lotus
+亮,りょう,Clear
+聡,そう,Wise
+浦,うら,Bay
+塚,つか,Mound
+陥,かん,Cave In
+貫,かん,"Pierce, Sushi Counter"
+覇,は,Leadership
+呂,ろ,Bath
+茨,いばら,"Briar, Thorn"
+擁,よう,Embrace
+孤,こ,"Orphan, Alone"
+賠,ばい,"Compensation, Compensate"
+鎖,さ,Chain
+噴,ふん,Erupt
+祥,しょう,Auspicious
+牲,せい,"Offering, Sacrifice"
+秩,ちつ,"Order, Regularity"
+唆,さ,Instigate
+膨,ぼう,Swell
+芳,ほう,Perfume
+恒,こう,"Constant, Always"
+倫,りん,Ethics
+陳,ちん,Exhibit
+須,す,Necessary
+偏,へん,Biased
+遇,ぐう,Treatment
+糧,りょう,Provisions
+殊,しゅ,Especially
+慢,まん,"Ridicule, Laziness"
+没,ぼつ,Die
+怠,たい,"Lazy, Neglect"
+遭,そう,"Encounter, Meet"
+惰,だ,Lazy
+猟,りょう,Hunting
+乃,の,From
+綾,あや,Design
+颯,さつ,"Quick, Sudden"
+隼,はやぶさ,Falcon
+輔,すけ,Help
+寛,かん,Tolerance
+胞,ほう,"Cell, Placenta"
+浄,じょう,"Cleanse, Purify"
+随,ずい,All
+稿,こう,Draft
+丹,たん,"Rust Colored, Red, Sincerity "
+壌,じょう,"Soil, Earth"
+舗,ほ,"Shop, Store"
+騰,とう,Inflation
+緯,い,Latitude
+艇,てい,Rowboat
+披,ひ,Expose
+錦,にしき,Brocade
+准,じゅん,"Semi, Ratify"
+剰,じょう,Surplus
+繊,せん,"Fiber, Slender"
+諭,ゆ,Admonish
+惨,さん,Disaster
+虐,ぎゃく,Oppress
+据,す,Install
+徐,じょ,"Gently, Gentle"
+搭,とう,"Board, Embark"
+蒙,もう,Darkness
+鯉,こい,"Carp, Koi"
+戴,たい,Receive
+緋,ひ,Scarlet
+曙,あけぼの,Dawn
+胡,こ,Barbarian
+瓜,か,Melon
+帥,すい,Commander
+啓,けい,Enlighten
+葵,あおい,Hollyhock
+駿,しゅん,Speed
+諒,りょう,"Comprehend, Reality"
+莉,り,Jasmine
+鯨,げい,Whale
+荘,そう,Villa
+栽,さい,Planting
+拐,かい,Kidnap
+冠,かん,"Crown, Cap"
+勲,くん,Merit
+酬,しゅう,Repay
+紋,もん,Family Crest
+卸,おろし,Wholesale
+欄,らん,"Column, Space"
+逸,いつ,"Deviate, Elude"
+尚,しょう,"Furthermore, Esteem"
+顕,けん,"Appear, Exist"
+粛,しゅく,Solemn
+愚,ぐ,Foolish
+庶,しょ,"All, Bastard"
+践,せん,"Practice, Trample"
+呈,てい,"Present, Display"
+疎,そ,"Neglect, Sparse"
+疾,しつ,"Rapidly, Rapid"
+謡,よう,"Noh Chanting, Noh Chant"
+鎌,かま,"Sickle, Scythe"
+酷,こく,"Cruel, Unjust"
+叙,じょ,Describe
+且,か,Also
+痴,ち,Stupid
+呆,ほう,Shock
+哺,ほ,"Suckle, Nurse"
+傲,ごう,Proud
+茎,くき,Stem
+阿,あ,Flatter
+悠,ゆう,Leisure
+杏,あんず,Apricot
+茜,あかね,"Red Dye, Madder"
+栞,しおり,Bookmark
+伏,ふく,"Bow, Lay"
+鎮,ちん,Tranquilize
+奉,ほう,Dedicate
+憂,ゆう,Grief
+朴,ぼく,"Simple, Crude"
+栃,とち,Horse Chestnut
+惜,せき,Frugal
+佳,か,"Excellent, Skilled"
+悼,とう,"Grieve, Mourn"
+該,がい,"The Above, That Specifically"
+赴,ふ,"Proceed, Move On"
+髄,ずい,"Marrow, Bone Marrow"
+傍,ぼう,"Nearby, Side"
+累,るい,Accumulate
+癒,ゆ,"Healing, Cure"
+郭,かく,Enclosure
+尿,にょう,"Urine, Pee"
+賓,ひん,"VIP, Guest"
+虜,りょ,Captive
+憾,かん,"Remorse, Regret"
+弥,や,Increasing
+粗,そ,"Coarse, Rough"
+循,じゅん,"Circulation, Sequential"
+凝,ぎょう,"Congeal, Freeze, Absorbed In"
+脊,せき,"Stature, Height"
+昌,しょう,"Prosperous, Prosperity"
+旦,たん,Dawn
+愉,ゆ,Pleasant
+抹,まつ,Erase
+栓,せん,"Cork, Plug"
+之,これ,"This, This One"
+龍,りゅう,"Imperial, Dragon"
+遼,りょう,Distant
+瑛,えい,Crystal
+那,な,What
+拍,はく,Beat
+猶,ゆう,"Still, Yet"
+宰,さい,Manager
+寂,じゃく,Lonely
+縫,ほう,Sew
+呉,ご,Give
+凡,ぼん,Mediocre
+恭,うやうや,Respect
+錯,さく,"Confused, Mixed"
+穀,こく,Grain
+陵,りょう,"Mausoleum, Tomb"
+弊,へい,Evil
+舶,はく,Ship
+窮,きゅう,Destitute
+悦,えつ,"Delight, Joy"
+縛,ばく,"Bind, Restrain"
+轄,かつ,Control
+弦,げん,"Chord, Bowstring"
+窒,ちつ,Suffocate
+洪,こう,Flood
+摂,せつ,In Addition
+飽,ほう,"Bored, Sated"
+紳,しん,Gentleman
+庸,よう,Common
+靖,やす,Peaceful
+嘉,か,"Esteem, Praise"
+搾,さく,Squeeze
+蝶,ちょう,Butterfly
+碑,ひ,Tombstone
+尉,い,"Military Officer, Military Rank"
+凛,りん,Cold
+匠,しょう,Artisan
+遥,はる,"Far Off, Far Away"
+智,ち,Wisdom
+柴,しば,"Brushwood, Firewood"
+賊,ぞく,Robber
+鼓,こ,"Drum, Beat"
+旋,せん,"Rotation, Revolution"
+腸,ちょう,Intestines
+槽,そう,"Tank, Vat"
+伐,ばつ,"Fell, Attack"
+漬,つ,Pickle
+坪,つぼ,"Two Mat Area, Tsubo"
+紺,こん,"Navy Blue, Dark Blue"
+羅,ら,"Spread Out, Arrange"
+峡,きょう,Ravine
+俸,ほう,Salary
+醸,じょう,Brew
+弔,ちょう,Condolence
+乙,おつ,"Latter, B"
+遍,へん,Universal
+衡,こう,Equilibrium
+款,かん,"Article, Sincerity"
+閲,えつ,Inspection
+喝,かつ,Scold
+敢,かん,Daring
+膜,まく,Membrane
+盲,もう,Blind
+胎,たい,"Womb, Uterus"
+酵,こう,"Fermentation, Ferment"
+堕,だ,Degenerate
+遮,しゃ,Intercept
+烏,からす,Crow
+凸,とつ,"Convex, Uneven"
+凹,おう,"Concave, Hollow"
+楓,かえで,Maple
+哉,や,"Question Mark, ?"
+蒼,そう,"Pale, Blue"
+瑠,る,Lapis Lazuli
+萌,ほう,Sprout
+硫,りゅう,"Sulfur, Sulphur"
+赦,しゃ,Pardon
+窃,せつ,Steal
+慨,がい,Sigh
+扶,ふ,Aid
+戯,ぎ,Play
+忌,き,Mourning
+濁,だく,"Muddy, Impure"
+奔,ほん,"Run, Bustle"
+肖,しょう,Resemblance
+朽,きゅう,"Rot, Decay"
+殻,かく,"Husk, Shell"
+享,きょう,Receive
+藩,はん,Fiefdom
+媒,ばい,Mediator
+鶏,けい,Chicken
+嘱,しょく,"Request, Entrust"
+迭,てつ,Alternate
+椎,つい,"Spine, Evergreen Beech"
+絹,けん,Silk
+陪,ばい,Accompany
+剖,ぼう,Divide
+譜,ふ,"Genealogy, Score"
+淑,しゅく,Graceful
+帆,はん,Sail
+憤,ふん,Resent
+酌,しゃく,"Serve, Scoop"
+暁,あかつき,Dawn
+傑,けつ,"Greatness, Excellence"
+錠,じょう,Lock
+凌,しの,Endure
+瑞,みず,Congratulations
+菅,すが,Sedge
+漣,れん,Ripples
+璃,り,Glassy
+遷,せん,Transition
+拙,せつ,"Clumsy, Unskillful"
+峠,とうげ,"Mountain Pass, The Worst"
+篤,とく,Deliberate
+叔,お,"Uncle, Aunt"
+雌,めす,Female
+堪,こら,Endure
+吟,ぎん,Recital
+甚,じん,"Very, Great"
+崇,すう,"Worship, Revere"
+漆,しつ,"Lacquer, Varnish"
+岬,みさき,Cape
+紡,ぼう,"Spinning, Spin"
+礁,しょう,Reef
+屯,とん,Barracks
+姻,いん,Marry
+擬,ぎ,Imitate
+睦,ぼく,Friendly
+閑,かん,Leisure
+曹,そう,Official
+詠,えい,"Compose, Recite"
+卑,ひ,"Lowly, Base"
+侮,ぶ,Despise
+鋳,ちゅう,"Cast, Casting"
+蔑,べつ,"Scorn, Neglect"
+胆,たん,Guts
+浪,ろう,Wander
+禍,か,"Evil, Misfortune"
+酪,らく,Dairy
+憧,あこが,"Long For, Yearn"
+慶,けい,Congratulate
+亜,あ,Asia
+汰,た,Select
+梓,あずさ,"Japanese Birch, Birch"
+沙,さ,Sand
+逝,せい,Die
+匿,とく,Hide
+寡,か,Widow
+痢,り,"Diarrhea, Diarrhoea"
+坑,こう,"Pit, Hole"
+藍,あい,Indigo
+畔,はん,Shore
+唄,うた,Shamisen Song
+拷,ごう,Torture
+渓,けい,Valley
+廉,れん,Bargain
+謹,きん,"Humble, Discreet"
+湧,ゆう,Well Up
+醜,しゅう,Ugly
+升,ます,"Grid, Measure"
+殉,じゅん,Martyr
+煩,はん,"Annoy, Annoying"
+劾,がい,Censure
+桟,さん,"Jetty, Pier"
+婿,むこ,Groom
+慕,ぼ,"Yearn For, Adore"
+罷,ひ,"Quit, Leave"
+矯,きょう,"Correct, Straighten"
+某,ぼう,"Certain, One, That Person"
+囚,しゅう,Criminal
+泌,ひ,Secrete
+漸,ようや,"Gradually, Steadily"
+藻,そう,Seaweed
+妄,もう,Reckless
+蛮,ばん,Barbarian
+倹,けん,"Thrifty, Frugal"
+狐,きつね,Fox
+匂,にお,"Smell, Scent"
+嬉,き,"Glad, Happy"
+嘘,うそ,Lie
+串,くし,"Skewer, Spit"
+喉,こう,Throat
+叩,こう,"Tap, Strike, Slap"
+飴,あめ,Candy
+噂,うわさ,"Rumor, Gossip"
+諦,あきら,"Give Up, Abandon"
+捉,とら,Catch
+膝,ひざ,Knee
+眉,み,Eyebrows
+濡,ぬ,"Wet, Damp"
+痩,そう,Thin
+羨,せん,"Envy, Jealousy"
+慌,こう,"Confused, Bewildered"
+挨,あい,Push Open
+拶,さつ,"Draw Close, Be Imminent"
+斤,きん,"Axe, Bread Loaf Counter"
+袖,そで,Sleeve
+凄,せい,"Amazing, Wonderful, Terrible, Awful"
+妖,よう,"Supernatural, Enchanting"
+喋,しゃべ,"Chat, Talk"
+鮭,さけ,Salmon
+宛,あて,Address
+蹴,け,Kick
+喧,けん,"Noisy, Picky"
+嘩,か,Rowdy
+麺,めん,Noodles
+苺,いちご,Strawberry
+股,こ,"Crotch, Groin, Fork"
+柵,さく,Fence
+噛,か,"Bite, Chew"
+狼,おおかみ,Wolf
+咳,せき,Cough
+拉,ら,"Abduct, Pull"
+苛,いじ,Frustration
+煎,せん,Roast
+戚,せき,Relatives
+餅,もち,"Mochi, Sticky Rice Cake"
+屁,へ,"Flatulence, Gas"
+璧,へき,"Disc, Jade Disc"
+痒,かゆ,Itchy
+冥,めい,Underworld
+莫,ばく,Endless
+頁,ページ,Page
+勿,もち,Must Not
+繋,つな,Connect
+揃,そろ,Complete
+炒,いた,Fry
+肢,し,Limb
+蘇,そ,Revive
