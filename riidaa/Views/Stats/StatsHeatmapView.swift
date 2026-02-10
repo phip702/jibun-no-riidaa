@@ -3,10 +3,10 @@ import Charts
 
 struct StatsHeatmapView: View {
     let contributions: [Contribution]
-    let graphLabels: Color
     @State private var selectedContribution: Contribution?
     
-    // 1. FIXED: Define monthStarts so the ForEach has a scope
+    let graphLabels: Color = .primary
+    
     var monthStarts: [Contribution] {
         contributions.filter { isFirstOfMonth($0.date) }
     }
@@ -18,9 +18,8 @@ struct StatsHeatmapView: View {
     }
     let today = Date()
     
-    init(contributions: [Contribution] = Contribution.generate(), graphLabels: Color = .primary) {
+    init(contributions: [Contribution] = Contribution.generate()) {
         self.contributions = contributions
-        self.graphLabels = graphLabels
     }
     
     var body: some View {
@@ -32,7 +31,7 @@ struct StatsHeatmapView: View {
                 
                 HStack(alignment: .center, spacing: 12) {
                     Chart {
-                        // Activity Squares
+                        // 1. Activity Squares
                         ForEach(contributions) { contribution in
                             if contribution.date <= today {
                                 let isSelected = selectedContribution?.id == contribution.id
@@ -40,7 +39,7 @@ struct StatsHeatmapView: View {
                                 RectangleMark(
                                     x: .value("Weekday", weekday(contribution.date)),
                                     y: .value("Weeks Ago", weeksAgo(from: contribution.date)),
-                                    width: 15, // Using 15 to match previous width request
+                                    width: 15,
                                     height: 10
                                 )
                                 .foregroundStyle(heatmapColor(for: contribution.count))
@@ -55,16 +54,15 @@ struct StatsHeatmapView: View {
                             }
                         }
                         
-                        // 2. FIXED: Correct RuleMark logic
+                        // 2. Month Divider Labels (Uses graphLabels)
                         ForEach(monthStarts) { ms in
-                            // We use Double subtraction to position the line between the rows
                             RuleMark(y: .value("MonthStart", Double(weeksAgo(from: ms.date)) - 0.5))
-                                .foregroundStyle(graphLabels.opacity(0.3))
+                                .foregroundStyle(graphLabels.opacity(0.2)) // Line matches label family
                                 .lineStyle(StrokeStyle(lineWidth: 1.0))
                                 .annotation(position: .trailing, alignment: .leading, spacing: 10) {
                                     Text(formatMonth(ms.date))
                                         .font(.system(size: 11, weight: .bold, design: .rounded))
-                                        .foregroundColor(graphLabels)
+                                        .foregroundColor(graphLabels) // <--- GLOBAL VAR
                                         .fixedSize()
                                 }
                         }
@@ -78,13 +76,13 @@ struct StatsHeatmapView: View {
                                 if let int = value.as(Int.self) {
                                     Text(formatWeekday(int))
                                         .font(.system(size: 12, weight: .bold, design: .rounded))
-                                        .foregroundColor(graphLabels)
+                                        .foregroundColor(graphLabels) // <--- GLOBAL VAR
                                 }
                             }
                         }
                     }
                     .frame(width: 7 * 20)
-                    .padding(.trailing, 45) // Space for month labels
+                    .padding(.trailing, 45)
                     .chartOverlay { proxy in
                         GeometryReader { geometry in
                             Rectangle().fill(.clear).contentShape(Rectangle())
@@ -94,7 +92,7 @@ struct StatsHeatmapView: View {
                         }
                     }
 
-                    legendView
+                    legendView // Also uses graphLabels inside
                 }
                 
                 Spacer()
@@ -106,13 +104,14 @@ struct StatsHeatmapView: View {
         }
     }
     
-    // MARK: - Subviews & Helpers
+    // MARK: - Subviews
 
     var legendView: some View {
         VStack(spacing: 6) {
+            // High end label
             Text("10+")
                 .font(.system(size: 9, weight: .bold, design: .rounded))
-                .foregroundColor(graphLabels)
+                .foregroundColor(graphLabels) // <--- GLOBAL VAR
             
             VStack(spacing: 4) {
                 ForEach([10, 7, 5, 3, 1], id: \.self) { count in
@@ -125,10 +124,18 @@ struct StatsHeatmapView: View {
                     .frame(width: 14, height: 14)
             }
             
+            // Low end label
             Text("0")
                 .font(.system(size: 9, weight: .bold, design: .rounded))
-                .foregroundColor(graphLabels)
+                .foregroundColor(graphLabels) // <--- GLOBAL VAR
         }
+    }
+
+    // MARK: - Logic Helpers
+    
+    func heatmapColor(for count: Int) -> Color {
+        if count == 0 { return Color(.systemGray6) }
+        return Color.green.opacity(min(Double(count) / 10.0 + 0.1, 1.0))
     }
 
     func isFirstOfMonth(_ date: Date) -> Bool {
@@ -158,11 +165,6 @@ struct StatsHeatmapView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM"
         return formatter.string(from: date)
-    }
-
-    func heatmapColor(for count: Int) -> Color {
-        if count == 0 { return Color(.systemGray6) }
-        return Color.green.opacity(min(Double(count) / 10.0 + 0.1, 1.0))
     }
 
     private func handleTap(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
