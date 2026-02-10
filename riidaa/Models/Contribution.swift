@@ -7,7 +7,7 @@ struct Contribution: Identifiable {
 }
 
 extension Contribution {
-    static func generate(lastNDays: Int = 64) -> [Contribution] {
+    static func generate(lastNDays: Int = 364) -> [Contribution] {
         var contributions = [Contribution]()
         let toDate = Date.now
         let fromDate = Calendar.current.date(byAdding: .day, value: -lastNDays, to: toDate)!
