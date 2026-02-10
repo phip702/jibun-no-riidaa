@@ -29,7 +29,7 @@ struct StatsHeatmapView: View {
                         RectangleMark(
                             x: .value("Weekday", weekday(contribution.date)),
                             y: .value("Weeks Ago", weeksAgo(from: contribution.date)),
-                            width: 12,
+                            width: 15,
                             height: 10
                         )
                         .foregroundStyle(heatmapColor(for: contribution.count))
@@ -49,13 +49,13 @@ struct StatsHeatmapView: View {
                             RuleMark(
                                 y: .value("Weeks Ago", Double(weeksAgo(from: contribution.date)) - 0.5)
                             )
-                            // Hairline width with very low opacity
-                            .lineStyle(StrokeStyle(lineWidth: 0.5))
-                            .foregroundStyle(.secondary.opacity(0.2))
-                            .annotation(position: .trailing, alignment: .leading, spacing: 8) {
+                            // Increased thickness to 1.0 and opacity to 0.5 for better visibility
+                            .lineStyle(StrokeStyle(lineWidth: 1.0))
+                            .foregroundStyle(Color.primary.opacity(0.3)) // Uses adaptive color (white in dark mode, black in light mode)
+                            .annotation(position: .trailing, alignment: .leading, spacing: 10) {
                                 Text(formatMonth(contribution.date))
-                                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .foregroundColor(.primary.opacity(0.8))
                             }
                         }
                     }
@@ -67,10 +67,10 @@ struct StatsHeatmapView: View {
             .chartXAxis {
                 AxisMarks(preset: .aligned, values: [1, 2, 3, 4, 5, 6, 7]) { value in
                     AxisValueLabel(formatWeekday(value.as(Int.self)!))
-                        .font(.system(size: 10))
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
                 }
             }
-            .frame(width: 7 * 25) // Adjusted width for better spacing
+            .frame(width: 7 * 20) // Adjusted width for better spacing
             .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle().fill(.clear).contentShape(Rectangle())
