@@ -20,73 +20,82 @@ struct StatsHeatmapView: View {
         VStack(alignment: .leading, spacing: 16) {
             headerView
             
-            Chart {
-                ForEach(contributions) { contribution in
-                    if contribution.date <= today {
-                        let isSelected = selectedContribution?.id == contribution.id
-                        
-                        // 1. The Activity Squares
-                        RectangleMark(
-                            x: .value("Weekday", weekday(contribution.date)),
-                            y: .value("Weeks Ago", weeksAgo(from: contribution.date)),
-                            width: 15,
-                            height: 10
-                        )
-                        .foregroundStyle(heatmapColor(for: contribution.count))
-                        .cornerRadius(2) // Slightly rounded like GitHub
-//                        .opacity(selectedContribution?.id == contribution.id ? 0.5 : 1.0)
-                        // --- ADD THE PINK BORDER HERE ---
-                        .annotation(position: .overlay) {
-                            if isSelected {
-                                RoundedRectangle(cornerRadius: 2)
-                                    .strokeBorder(Color.pink, lineWidth: 2) // strokeBorder keeps the border inside the square
-                                    .frame(width: 12, height: 10)
-                            }
-                        }
-                        
-                        // 2. Subtle Month Divider
-                        if isFirstOfMonth(contribution.date) {
-                            RuleMark(
-                                y: .value("Weeks Ago", Double(weeksAgo(from: contribution.date)) - 0.5)
-                            )
-                            // Increased thickness to 1.0 and opacity to 0.5 for better visibility
-                            .lineStyle(StrokeStyle(lineWidth: 1.0))
-                            .foregroundStyle(Color.primary.opacity(0.3)) // Uses adaptive color (white in dark mode, black in light mode)
-                            .annotation(position: .trailing, alignment: .leading, spacing: 10) {
-                                Text(formatMonth(contribution.date))
-                                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                                    .foregroundColor(.primary.opacity(0.8))
+            // Center the entire Graph + Legend group
+            HStack {
+                Spacer()
+                
+                HStack(alignment: .center, spacing: 10) {
+                    Chart {
+                        ForEach(contributions) { contribution in
+                            if contribution.date <= today {
+                                let isSelected = selectedContribution?.id == contribution.id
+                                
+                                RectangleMark(
+                                    x: .value("Weekday", weekday(contribution.date)),
+                                    y: .value("Weeks Ago", weeksAgo(from: contribution.date)),
+                                    width: 15,
+                                    height: 10
+                                )
+                                .foregroundStyle(heatmapColor(for: contribution.count))
+                                .cornerRadius(2)
+                                .annotation(position: .overlay) {
+                                    if isSelected {
+                                        RoundedRectangle(cornerRadius: 2)
+                                            .strokeBorder(Color.pink, lineWidth: 2)
+                                            .frame(width: 15, height: 10)
+                                    }
+                                }
+                                
+                                if isFirstOfMonth(contribution.date) {
+                                    RuleMark(
+                                        y: .value("Weeks Ago", Double(weeksAgo(from: contribution.date)) - 0.5)
+                                    )
+                                    .lineStyle(StrokeStyle(lineWidth: 1.0))
+                                    .foregroundStyle(Color.primary.opacity(0.3))
+                                    .annotation(position: .trailing, alignment: .leading, spacing: 10) {
+                                        Text(formatMonth(contribution.date))
+                                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                                            .foregroundColor(.primary.opacity(0.8))
+                                            .fixedSize() // Prevents the text from wrapping or shrinking
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
-            .chartYAxis(.hidden)
-            .chartYScale(domain: .automatic(includesZero: true, reversed: true))
-            .chartXScale(domain: 0.5...7.5)
-            .chartXAxis {
-                AxisMarks(preset: .aligned, values: [1, 2, 3, 4, 5, 6, 7]) { value in
-                    AxisValueLabel(formatWeekday(value.as(Int.self)!))
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                }
-            }
-            .frame(width: 7 * 20) // Adjusted width for better spacing
-            .chartOverlay { proxy in
-                GeometryReader { geometry in
-                    Rectangle().fill(.clear).contentShape(Rectangle())
-                        .onTapGesture { location in
-                            handleTap(at: location, proxy: proxy, geometry: geometry)
+                    .chartYAxis(.hidden)
+                    .chartYScale(domain: .automatic(includesZero: true, reversed: true))
+                    .chartXScale(domain: 0.5...7.5)
+                    .chartXAxis {
+                        AxisMarks(preset: .aligned, values: [1, 2, 3, 4, 5, 6, 7]) { value in
+                            AxisValueLabel(formatWeekday(value.as(Int.self)!))
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
                         }
+                    }
+                    .frame(width: 7 * 20)
+                    // --- THE CRITICAL FIX ---
+                    // This creates clear space for the month labels so they don't hit the legend
+                    .padding(.trailing, 45)
+                    .chartOverlay { proxy in
+                        GeometryReader { geometry in
+                            Rectangle().fill(.clear).contentShape(Rectangle())
+                                .onTapGesture { location in
+                                    handleTap(at: location, proxy: proxy, geometry: geometry)
+                                }
+                        }
+                    }
+
+                    // The Legend
+                    legendView
                 }
+                
+                Spacer()
             }
         }
         .padding()
-        
-        // Force Portrait when this view appears
         .onAppear {
             setOrientation(.portrait)
         }
-}
+    }
     
     // MARK: - Logic Helpers
     // Helper function to set orientation
@@ -161,7 +170,38 @@ struct StatsHeatmapView: View {
         .foregroundColor(.primary)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    var legendView: some View {
+        VStack(spacing: 6) {
+            // High end label
+            Text("10+")
+                .font(.system(size: 9, weight: .bold, design: .rounded))
+                .foregroundColor(.secondary)
+            
+            // Vertical stack of values
+            VStack(spacing: 4) {
+                // We pass actual counts to the heatmapColor function for accuracy
+                ForEach([10, 7, 5, 3, 1], id: \.self) { count in
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(heatmapColor(for: count))
+                        .frame(width: 14, height: 14)
+                }
+                
+                // The zero value
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(heatmapColor(for: 0))
+                    .frame(width: 14, height: 14)
+            }
+            
+            // Low end label
+            Text("0")
+                .font(.system(size: 9, weight: .bold, design: .rounded))
+                .foregroundColor(.secondary)
+        }
+    }
 }
+
+
 
 // MARK: - Preview
 
