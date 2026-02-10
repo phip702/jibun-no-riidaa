@@ -23,7 +23,6 @@ struct StatsHeatmapView: View {
             
             Chart {
                 ForEach(contributions) { contribution in
-                    // Only draw if the date is NOT in the future
                     if contribution.date <= today {
                         RectangleMark(
                             x: .value("Weekday", weekday(contribution.date)),
@@ -37,14 +36,16 @@ struct StatsHeatmapView: View {
                 }
             }
             .chartYAxis(.hidden)
-            // Reverse so week 0 is top
             .chartYScale(domain: .automatic(includesZero: true, reversed: true))
+            // --- ADD THIS TO FORCE ROOM FOR DAY 7 ---
+            .chartXScale(domain: 0.5...7.5)
             .chartXAxis {
-                AxisMarks(values: Array(1...7)) { value in
-                    AxisValueLabel(formatWeekday(value.as(Int.self) ?? 0))
+                // --- USE THE ALIGNED PRESET HERE ---
+                AxisMarks(preset: .aligned, values: [1, 2, 3, 4, 5, 6, 7]) { value in
+                    AxisValueLabel(formatWeekday(value.as(Int.self)!))
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(width: 7 * 30, height: .infinity) // Ensure enough height for the weeks
             .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle().fill(.clear).contentShape(Rectangle())
@@ -91,7 +92,7 @@ struct StatsHeatmapView: View {
     }
     
     func formatWeekday(_ day: Int) -> String {
-        let labels = ["M", "T", "W", "T", "F", "S", "S"]
+        let labels = ["月", "火", "水", "木", "金", "土", "日"]
         return labels[day - 1]
     }
     
