@@ -7,14 +7,17 @@ struct Contribution: Identifiable {
 }
 
 extension Contribution {
-    // Generates mock data for the last 365 days
-    static func generateMockData(days: Int = 365) -> [Contribution] {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        return (0..<days).map { offset in
-            let date = calendar.date(byAdding: .day, value: -offset, to: today)!
-            let count = Int.random(in: 0...10) // Replace with real data later
-            return Contribution(date: date, count: count)
-        }.reversed()
+    static func generate(lastNDays: Int = 64) -> [Contribution] {
+        var contributions = [Contribution]()
+        let toDate = Date.now
+        let fromDate = Calendar.current.date(byAdding: .day, value: -lastNDays, to: toDate)!
+
+        var currentDate = toDate
+        while currentDate >= fromDate { // decrementing from newest date until we pass the fromDate
+            contributions.append(Contribution(date: currentDate, count: Int.random(in: 0...10)))
+            currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
+        }
+
+        return contributions
     }
 }
