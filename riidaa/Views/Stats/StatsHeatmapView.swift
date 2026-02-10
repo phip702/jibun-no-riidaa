@@ -5,10 +5,9 @@ struct StatsHeatmapView: View {
     let contributions: [Contribution]
     @State private var selectedContribution: Contribution?
     
-    // Use a Monday-start calendar
     var calendar: Calendar {
         var cal = Calendar.current
-        cal.firstWeekday = 2 // Monday
+        cal.firstWeekday = 2 // Monday start
         return cal
     }
     let today = Date()
@@ -18,34 +17,60 @@ struct StatsHeatmapView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
             headerView
             
             Chart {
                 ForEach(contributions) { contribution in
                     if contribution.date <= today {
+                        let isSelected = selectedContribution?.id == contribution.id
+                        
+                        // 1. The Activity Squares
                         RectangleMark(
                             x: .value("Weekday", weekday(contribution.date)),
                             y: .value("Weeks Ago", weeksAgo(from: contribution.date)),
-                            width: 10,
-                            height: 8
+                            width: 12,
+                            height: 10
                         )
                         .foregroundStyle(heatmapColor(for: contribution.count))
-                        .opacity(selectedContribution?.id == contribution.id ? 0.5 : 1.0)
+                        .cornerRadius(2) // Slightly rounded like GitHub
+//                        .opacity(selectedContribution?.id == contribution.id ? 0.5 : 1.0)
+                        // --- ADD THE PINK BORDER HERE ---
+                        .annotation(position: .overlay) {
+                            if isSelected {
+                                RoundedRectangle(cornerRadius: 2)
+                                    .strokeBorder(Color.pink, lineWidth: 2) // strokeBorder keeps the border inside the square
+                                    .frame(width: 12, height: 10)
+                            }
+                        }
+                        
+                        // 2. Subtle Month Divider
+                        if isFirstOfMonth(contribution.date) {
+                            RuleMark(
+                                y: .value("Weeks Ago", Double(weeksAgo(from: contribution.date)) - 0.5)
+                            )
+                            // Hairline width with very low opacity
+                            .lineStyle(StrokeStyle(lineWidth: 0.5))
+                            .foregroundStyle(.secondary.opacity(0.2))
+                            .annotation(position: .trailing, alignment: .leading, spacing: 8) {
+                                Text(formatMonth(contribution.date))
+                                    .font(.system(size: 10, weight: .medium, design: .rounded))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
                 }
             }
             .chartYAxis(.hidden)
             .chartYScale(domain: .automatic(includesZero: true, reversed: true))
-            // --- ADD THIS TO FORCE ROOM FOR DAY 7 ---
             .chartXScale(domain: 0.5...7.5)
             .chartXAxis {
-                // --- USE THE ALIGNED PRESET HERE ---
                 AxisMarks(preset: .aligned, values: [1, 2, 3, 4, 5, 6, 7]) { value in
                     AxisValueLabel(formatWeekday(value.as(Int.self)!))
+                        .font(.system(size: 10))
                 }
             }
-            .frame(width: 7 * 30, height: .infinity) // Ensure enough height for the weeks
+            .frame(width: 7 * 25) // Adjusted width for better spacing
             .chartOverlay { proxy in
                 GeometryReader { geometry in
                     Rectangle().fill(.clear).contentShape(Rectangle())
@@ -56,15 +81,30 @@ struct StatsHeatmapView: View {
             }
         }
         .padding()
+        
+        // Force Portrait when this view appears
+        .onAppear {
+            setOrientation(.portrait)
+        }
+}
+    
+    // MARK: - Logic Helpers
+    // Helper function to set orientation
+    func setOrientation(_ orientation: UIInterfaceOrientationMask) {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let geometryPreferences = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: orientation)
+            windowScene.requestGeometryUpdate(geometryPreferences)
+        }
     }
     
-    // MARK: - The Logic Fix
+    func isFirstOfMonth(_ date: Date) -> Bool {
+        calendar.component(.day, from: date) == 1
+    }
     
     func weeksAgo(from date: Date) -> Int {
         let startOfToday = calendar.startOfDay(for: today)
         let startOfDate = calendar.startOfDay(for: date)
         
-        // Find the Monday of the week for both dates
         let mondayOfToday = calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: startOfToday).date!
         let mondayOfDate = calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: startOfDate).date!
         
@@ -74,11 +114,25 @@ struct StatsHeatmapView: View {
     
     func weekday(_ date: Date) -> Int {
         let w = calendar.component(.weekday, from: date)
-        // Adjusting so Monday is 1, Sunday is 7 based on a Monday-start calendar
         return (w == 1 ? 7 : w - 1)
     }
     
-    // MARK: - Handlers & Helpers
+    func formatWeekday(_ day: Int) -> String {
+        let labels = ["月", "火", "水", "木", "金", "土", "日"]
+        return labels[day - 1]
+    }
+        
+    func formatMonth(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter.string(from: date)
+    }
+    
+    func heatmapColor(for count: Int) -> Color {
+        if count == 0 { return Color(.systemGray6) }
+        // Using a cleaner green scale
+        return Color.green.opacity(min(Double(count) / 10.0 + 0.1, 1.0))
+    }
     
     private func handleTap(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
         let origin = geometry[proxy.plotAreaFrame].origin
@@ -91,21 +145,11 @@ struct StatsHeatmapView: View {
         }
     }
     
-    func formatWeekday(_ day: Int) -> String {
-        let labels = ["月", "火", "水", "木", "金", "土", "日"]
-        return labels[day - 1]
-    }
-    
-    func heatmapColor(for count: Int) -> Color {
-        if count == 0 { return Color(.systemGray5) }
-        return Color.green.opacity(Double(count) / 10.0)
-    }
-    
     var headerView: some View {
-        HStack(spacing: 8) { // Adjust spacing to your liking
+        HStack(spacing: 8) {
             if let selected = selectedContribution {
                 Text(selected.date.formatted(date: .abbreviated, time: .omitted))
-                Text("•") // Optional separator
+                Text("•")
                 Text("\(selected.count) Pages")
             } else {
                 Text("Activity")
@@ -113,10 +157,9 @@ struct StatsHeatmapView: View {
                 Text("Last 52 Weeks")
             }
         }
-        .font(.title2.bold()) // Applies to all Text inside the HStack
+        .font(.headline)
         .foregroundColor(.primary)
-        .frame(maxWidth: .infinity, alignment: .leading) // Keeps everything left-aligned
-        .padding(.bottom, 1)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
