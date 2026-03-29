@@ -125,6 +125,32 @@ struct MangaReaderParserView: View {
                                                 }
                                             }
                                     }
+
+                                    Button("Copy") {
+                                        let textBox = line.isEmpty ? parsedText.map(\.original).joined() : line
+                                        #if canImport(UIKit)
+                                        UIPasteboard.general.string = textBox
+                                        #else
+                                        let pb = NSPasteboard.general
+                                        pb.clearContents()
+                                        pb.setString(textBox, forType: .string)
+                                        #endif
+                                        copiedText = "Text Box"
+                                        withAnimation {
+                                            showCopied = true
+                                        }
+                                        Task {
+                                            try? await Task.sleep(nanoseconds: 1_600_000_000)
+                                            withAnimation {
+                                                showCopied = false
+                                            }
+                                        }
+                                    }
+                                    .padding(.vertical, 7)
+                                    .padding(.horizontal, 10)
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(7)
                                 }
                             }
                             if let selectedElement = selectedElement {
