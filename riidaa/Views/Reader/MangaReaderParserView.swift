@@ -16,6 +16,8 @@ struct MangaReaderParserView: View {
     @State var loading = false
     
     @State private var inflectionDescription: InflectionDescription? //= InflectionRule.continuative.description
+    @State private var showCopied: Bool = false
+    @State private var copiedText: String = ""
     
     
     @EnvironmentObject var settings: SettingsModel
@@ -38,89 +40,130 @@ struct MangaReaderParserView: View {
                 }
                 .transition(.move(edge: .trailing))
             } else {
-                VStack(alignment: .leading, spacing: 10) {
-                    if loading {
-                        ProgressView()
-                    } else if line == "" && self.parsedText.isEmpty {
-                        Spacer()
-                        Text("Select a text box")
-                            .font(.title2)
-                            .italic()
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                    } else {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 0) {
-                                ForEach(Array(parsedText.enumerated()), id: \.offset) { index, element in
-                                    ParserText(text: element.original)
-                                        .font(.largeTitle)
-                                        .padding([.horizontal], 4)
-                                        .padding([.vertical], 7)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .background(selectedElement == index ? Color.blue.opacity(0.3) : Color.clear)
-                                        .cornerRadius(10)
-                                        .onTapGesture {
-                                            selectedElement = index
-                                            onWordSelected?()
-                                            print("User clicked parsed text: \(element.original)")
-                                            // Show dictionary form if available and print what we'd store in the DB
-                                            if let firstResult = element.results.first {
-                                                let dictForm = firstResult.term.term
-                                                let reading = firstResult.term.reading
-                                                let now = Date()
-                                                let iso = ISO8601DateFormatter().string(from: now)
-                                                let isSingleKanji: Bool = {
-                                                    guard dictForm.count == 1, let scalar = dictForm.unicodeScalars.first else { return false }
-                                                    let val = scalar.value
-                                                    return (0x4E00...0x9FFF).contains(val) || (0x3400...0x4DBF).contains(val) || (0x20000...0x2A6DF).contains(val)
-                                                }()
-
-                                                // Debug: object to be inserted into `lookup_events`
-                                                let readingDesc = reading.isEmpty ? "nil" : reading
-                                                print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\"}")
-
-                                                // Persist lookup event and kanji lookups atomically using one timestamp
-                                                if let db = SQLiteManager.shared.getDatabase() {
-                                                    do {
-                                                        try db.transaction {
-                                                            try SQLiteManager.shared.insertLookupEventThrowing(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, dateISO: iso)
-                                                            try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
+                ZStack(alignment: .bottom) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        if loading {
+                            ProgressView()
+                        } else if line == "" && self.parsedText.isEmpty {
+                            Spacer()
+                            Text("Select a text box")
+                                .font(.title2)
+                                .italic()
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                        } else {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 0) {
+                                    ForEach(Array(parsedText.enumerated()), id: \.offset) { index, element in
+                                        ParserText(text: element.original)
+                                            .font(.largeTitle)
+                                            .padding([.horizontal], 4)
+                                            .padding([.vertical], 7)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .background(selectedElement == index ? Color.blue.opacity(0.3) : Color.clear)
+                                            .cornerRadius(10)
+                                            .onTapGesture {
+                                                if selectedElement == index {
+                                                    let toCopy = element.original
+                                                    #if canImport(UIKit)
+                                                    UIPasteboard.general.string = toCopy
+                                                    #else
+                                                    let pb = NSPasteboard.general
+                                                    pb.clearContents()
+                                                    pb.setString(toCopy, forType: .string)
+                                                    #endif
+                                                    copiedText = toCopy
+                                                    withAnimation {
+                                                        showCopied = true
+                                                    }
+                                                    Task {
+                                                        try? await Task.sleep(nanoseconds: 1_600_000_000)
+                                                        withAnimation {
+                                                            showCopied = false
                                                         }
-                                                    } catch {
-                                                        print("Lookup transaction error: \(error)")
                                                     }
                                                 } else {
-                                                    // Fallback: non-transactional insert
-                                                    SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
-                                                    do {
-                                                        try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
-                                                    } catch {
-                                                        print("Kanji insert error: \(error)")
+                                                    selectedElement = index
+                                                    onWordSelected?()
+                                                    print("User clicked parsed text: \(element.original)")
+                                                    // Show dictionary form if available and print what we'd store in the DB
+                                                    if let firstResult = element.results.first {
+                                                        let dictForm = firstResult.term.term
+                                                        let reading = firstResult.term.reading
+                                                        let now = Date()
+                                                        let iso = ISO8601DateFormatter().string(from: now)
+                                                        let isSingleKanji: Bool = {
+                                                            guard dictForm.count == 1, let scalar = dictForm.unicodeScalars.first else { return false }
+                                                            let val = scalar.value
+                                                            return (0x4E00...0x9FFF).contains(val) || (0x3400...0x4DBF).contains(val) || (0x20000...0x2A6DF).contains(val)
+                                                        }()
+
+                                                        // Debug: object to be inserted into `lookup_events`
+                                                        let readingDesc = reading.isEmpty ? "nil" : reading
+                                                        print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\"}")
+
+                                                        // Persist lookup event and kanji lookups atomically using one timestamp
+                                                        if let db = SQLiteManager.shared.getDatabase() {
+                                                            do {
+                                                                try db.transaction {
+                                                                    try SQLiteManager.shared.insertLookupEventThrowing(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, dateISO: iso)
+                                                                    try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
+                                                                }
+                                                            } catch {
+                                                                print("Lookup transaction error: \(error)")
+                                                            }
+                                                        } else {
+                                                            // Fallback: non-transactional insert
+                                                            SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
+                                                            do {
+                                                                try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
+                                                            } catch {
+                                                                print("Kanji insert error: \(error)")
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                }
-                            }
-                        }
-                        if let selectedElement = selectedElement {
-                            ScrollView(showsIndicators: false) {
-                                LazyVStack(alignment: .leading) {
-                                    ForEach(parsedText[selectedElement].results, id: \.self) { result in
-                                        ResultView(result: result, fullSentence: line, definition: $inflectionDescription)
                                     }
                                 }
                             }
-                            .padding([.horizontal])
-                            .frame(
-                                minWidth: 0,
-                                maxWidth: .infinity,
-                                minHeight: 0,
-                                maxHeight: .infinity,
-                                alignment: .leading
-                            )
+                            if let selectedElement = selectedElement {
+                                ScrollView(showsIndicators: false) {
+                                    LazyVStack(alignment: .leading) {
+                                        ForEach(parsedText[selectedElement].results, id: \.self) { result in
+                                            ResultView(result: result, fullSentence: line, definition: $inflectionDescription)
+                                        }
+                                    }
+                                }
+                                .padding([.horizontal])
+                                .frame(
+                                    minWidth: 0,
+                                    maxWidth: .infinity,
+                                    minHeight: 0,
+                                    maxHeight: .infinity,
+                                    alignment: .leading
+                                )
+                            }
+                            Spacer()
                         }
-                        Spacer()
+                    }
+
+                    if showCopied {
+                        HStack(spacing: 12) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.white)
+                            Text("Copied \(copiedText)")
+                                .foregroundColor(.white)
+                                .lineLimit(1)
+                                .bold()
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Color.black.opacity(0.8))
+                        .cornerRadius(12)
+                        .padding(.bottom, 24)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .zIndex(1)
                     }
                 }
                 .padding([.leading, .trailing])
