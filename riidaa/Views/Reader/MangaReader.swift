@@ -7,7 +7,7 @@
 
 import SwiftUI
 import LazyPager
-//import Zoomable
+import Translation
 
 public struct MangaReader: View {
     
@@ -21,6 +21,11 @@ public struct MangaReader: View {
     @State private var pages: [MangaPageModel] = []
     @State private var currentLine: String? = nil
     
+    @State private var translationTrigger: UUID? = nil
+    @State private var translationText = ""
+    @State private var translatedText = ""
+    @State private var showTranslationPopup = false
+
     @State private var parserOffset: CGFloat = 0
     @GestureState private var dragOffset: CGFloat = 0
     @State private var pageHeight = 0.0
@@ -51,7 +56,6 @@ public struct MangaReader: View {
     func parserHeight(minHeight: CGFloat, maxHeight: CGFloat) -> CGFloat {
         max(min(minHeight + parserOffset-dragOffset, maxHeight), minHeight)
     }
-    
     
     public var body: some View {
         ZStack {
@@ -155,7 +159,7 @@ public struct MangaReader: View {
                                     pageDisplay(index: index)
                                 }
                             }
-                            .zoomable()
+                            .zoomable(onInteraction: { if showTranslationPopup { showTranslationPopup = false } })
                             .tag(Int(displayedPages[index].number) - (settings.isLTR ? 1 : 2))
                             .frame(maxHeight: max(100, mainGeom.size.height - minHeight))
                             .offset(y: -minHeight/2)
@@ -168,7 +172,7 @@ public struct MangaReader: View {
                             VStack {
                                 pageDisplay(index: index)
                             }
-                            .zoomable()
+                            .zoomable(onInteraction: { if showTranslationPopup { showTranslationPopup = false } })
                             .tag(Int(displayedPages[index].number) - 1)
                             .frame(maxHeight: max(100, mainGeom.size.height - minHeight))
                             .offset(y: -minHeight/2)
@@ -180,11 +184,17 @@ public struct MangaReader: View {
                     txn.disablesAnimations = true
                 }
                 .onTapGesture {
+                    if showTranslationPopup {
+                        showTranslationPopup = false
+                    }
                     if parserOffset > 0 {
                         parserOffset = 0
                     }
                 }
                 .onChange(of: currentPage) { newPage in
+                    if showTranslationPopup {
+                        showTranslationPopup = false
+                    }
                     self.currentLine = nil
                     if pages[currentPage].read_at == nil {
                         pages[currentPage].read_at = NSDate()
@@ -192,6 +202,11 @@ public struct MangaReader: View {
                     volume.lastReadPage = Int64(newPage)
                     DispatchQueue.main.async {
                         CoreDataManager.shared.saveContext()
+                    }
+                }
+                .onChange(of: currentLine) { _ in
+                    if showTranslationPopup {
+                        showTranslationPopup = false
                     }
                 }
                 
@@ -232,6 +247,20 @@ public struct MangaReader: View {
         }
         .navigationTitle("\(currentPage + 1)/\(volume.pages.count)")
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(alignment: .top) {
+            TranslationPopupView(
+                text: translatedText,
+                isVisible: showTranslationPopup,
+                maxWidth: UIScreen.main.bounds.width,
+                onDismiss: { showTranslationPopup = false }
+            )
+        }
+        .modifier(TranslationTaskModifier(
+            trigger: $translationTrigger,
+            sourceText: $translationText,
+            translatedText: $translatedText,
+            showPopup: $showTranslationPopup
+        ))
     }
     
     
@@ -264,7 +293,10 @@ public struct MangaReader: View {
                         .resizable()
                         .scaledToFit()
                 }
-                MangaReaderBoxes(boxes: page.getBoxes(), scale: scale, offsetX: offsetX, offsetY: offsetY, currentLine: $currentLine)
+                MangaReaderBoxes(boxes: page.getBoxes(), scale: scale, offsetX: offsetX, offsetY: offsetY, currentLine: $currentLine, onLongPress: { text in
+                    translationText = text
+                    translationTrigger = UUID()
+                })
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .onAppear {
@@ -324,10 +356,16 @@ public struct MangaReader: View {
                         .resizable()
                         .scaledToFit()
                 }
-                MangaReaderBoxes(boxes: page1.getBoxes(), scale: scale1, offsetX: offsetX1, offsetY: offsetY1, currentLine: $currentLine)
+                MangaReaderBoxes(boxes: page1.getBoxes(), scale: scale1, offsetX: offsetX1, offsetY: offsetY1, currentLine: $currentLine, onLongPress: { text in
+                    translationText = text
+                    translationTrigger = UUID()
+                })
                     .frame(width: halfWidth)
                     .offset(x: -offsetX1)
-                MangaReaderBoxes(boxes: page2.getBoxes(), scale: scale2, offsetX: offsetX2, offsetY: offsetY2, currentLine: $currentLine)
+                MangaReaderBoxes(boxes: page2.getBoxes(), scale: scale2, offsetX: offsetX2, offsetY: offsetY2, currentLine: $currentLine, onLongPress: { text in
+                    translationText = text
+                    translationTrigger = UUID()
+                })
                     .offset(x: offsetX2)
             }
             .frame(maxWidth: .infinity, alignment: .top)
@@ -339,6 +377,56 @@ public struct MangaReader: View {
     
 }
 
+
+private struct TranslationTaskModifier: ViewModifier {
+    @Binding var trigger: UUID?
+    @Binding var sourceText: String
+    @Binding var translatedText: String
+    @Binding var showPopup: Bool
+
+    func body(content: Content) -> some View {
+        if #available(iOS 18.0, *) {
+            content.modifier(TranslationTaskModifierAvailable(
+                trigger: $trigger,
+                sourceText: $sourceText,
+                translatedText: $translatedText,
+                showPopup: $showPopup
+            ))
+        } else {
+            content
+        }
+    }
+}
+
+@available(iOS 18.0, *)
+private struct TranslationTaskModifierAvailable: ViewModifier {
+    @Binding var trigger: UUID?
+    @Binding var sourceText: String
+    @Binding var translatedText: String
+    @Binding var showPopup: Bool
+    @State private var config = TranslationSession.Configuration(
+        source: Locale.Language(identifier: "ja"),
+        target: Locale.Language(identifier: "en")
+    )
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: trigger) { _, _ in
+                guard !sourceText.isEmpty else { return }
+                config.invalidate()
+            }
+            .translationTask(config) { session in
+                guard !sourceText.isEmpty else { return }
+                do {
+                    let response = try await session.translate(sourceText)
+                    translatedText = response.targetText
+                    showPopup = true
+                } catch {
+                    print("Translation error: \(error)")
+                }
+            }
+    }
+}
 
 #Preview {
     MangaReader(volume: .init(get: {

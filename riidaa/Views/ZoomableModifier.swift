@@ -13,6 +13,7 @@ import SwiftUI
 struct ZoomableModifier: ViewModifier {
     let minZoomScale: CGFloat
     let doubleTapZoomScale: CGFloat
+    var onInteraction: (() -> Void)?
 
     @State private var lastTransform: CGAffineTransform = .identity
     @State private var transform: CGAffineTransform = .identity
@@ -44,6 +45,7 @@ struct ZoomableModifier: ViewModifier {
     private var oldMagnificationGesture: some Gesture {
         MagnificationGesture()
             .onChanged { value in
+                onInteraction?()
                 let zoomFactor = 0.5
                 let scale = value * zoomFactor
                 transform = lastTransform.scaledBy(x: scale, y: scale)
@@ -57,6 +59,7 @@ struct ZoomableModifier: ViewModifier {
     private var magnificationGesture: some Gesture {
         MagnifyGesture(minimumScaleDelta: 0)
             .onChanged { value in
+                onInteraction?()
                 let newTransform = CGAffineTransform.anchoredScale(
                     scale: value.magnification,
                     anchor: value.startAnchor.scaledBy(contentSize)
@@ -74,6 +77,7 @@ struct ZoomableModifier: ViewModifier {
     private var doubleTapGesture: some Gesture {
         SpatialTapGesture(count: 2)
             .onEnded { value in
+                onInteraction?()
                 let newTransform: CGAffineTransform =
                     if transform.isIdentity {
                         .anchoredScale(scale: doubleTapZoomScale, anchor: value.location)
@@ -91,6 +95,7 @@ struct ZoomableModifier: ViewModifier {
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
+                onInteraction?()
                 withAnimation(.interactiveSpring) {
                     transform = lastTransform.translatedBy(
                         x: value.translation.width / transform.scaleX,
@@ -146,11 +151,13 @@ public extension View {
     @ViewBuilder
     func zoomable(
         minZoomScale: CGFloat = 1,
-        doubleTapZoomScale: CGFloat = 2
+        doubleTapZoomScale: CGFloat = 2,
+        onInteraction: (() -> Void)? = nil
     ) -> some View {
         modifier(ZoomableModifier(
             minZoomScale: minZoomScale,
-            doubleTapZoomScale: doubleTapZoomScale
+            doubleTapZoomScale: doubleTapZoomScale,
+            onInteraction: onInteraction
         ))
     }
 

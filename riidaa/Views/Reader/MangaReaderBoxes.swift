@@ -17,6 +17,7 @@ struct MangaReaderBoxes: View {
     var offsetY: Double
     
     @Binding var currentLine: String?
+    var onLongPress: ((String) -> Void)? = nil
     
     var body: some View {
         ForEach(boxes, id: \.self) { box in
@@ -39,6 +40,9 @@ struct MangaReaderBoxes: View {
                 y: Double(box.y + box.height / 2) * scale - offsetY
             )
             .rotationEffect(Angle(degrees: box.rotation))
+            .onLongPressGesture {
+                onLongPress?(box.text)
+            }
             .highPriorityGesture(SpatialTapGesture(count: 1).onEnded { _ in
                     currentLine = box.text
             })
