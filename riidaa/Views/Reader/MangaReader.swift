@@ -32,10 +32,9 @@ public struct MangaReader: View {
     @State private var ready = false
     
     @State private var orientation = UIDeviceOrientation.landscapeLeft// UIDevice.current.orientation
+    @State private var saveWorkItem: DispatchWorkItem? = nil
     
-    private var displayedPages: [MangaPageModel] {
-        settings.isLTR ? pages : pages.reversed()
-    }
+    @State private var displayedPages: [MangaPageModel] = []
     
     
     var isDualPage: Bool {
@@ -51,6 +50,10 @@ public struct MangaReader: View {
         } else {
             self._pages = State(initialValue: [])
         }
+    }
+    
+    private func updateDisplayedPages() {
+        displayedPages = settings.isLTR ? pages : pages.reversed()
     }
     
     func parserHeight(minHeight: CGFloat, maxHeight: CGFloat) -> CGFloat {
@@ -124,6 +127,9 @@ public struct MangaReader: View {
                 currentPage -= (currentPage%2)
             }
         }
+        .onAppear { updateDisplayedPages() }
+        .onChange(of: pages) { _ in updateDisplayedPages() }
+        .onChange(of: settings.isLTR) { _ in updateDisplayedPages() }
         
         GeometryReader { mainGeom in
             let minHeight = CGFloat(100)//min(mainGeom.size.height * 0.2, max(mainGeom.size.height * 0.1, mainGeom.size.height - pageHeight))
@@ -200,9 +206,12 @@ public struct MangaReader: View {
                         pages[currentPage].read_at = NSDate()
                     }
                     volume.lastReadPage = Int64(newPage)
-                    DispatchQueue.main.async {
+                    saveWorkItem?.cancel()
+                    let workItem = DispatchWorkItem {
                         CoreDataManager.shared.saveContext()
                     }
+                    saveWorkItem = workItem
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
                 }
                 .onChange(of: currentLine) { _ in
                     if showTranslationPopup {
