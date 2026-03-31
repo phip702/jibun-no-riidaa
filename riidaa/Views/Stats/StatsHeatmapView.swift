@@ -10,6 +10,21 @@ struct StatsHeatmapView: View {
     var monthStarts: [Contribution] {
         contributions.filter { isFirstOfMonth($0.date) }
     }
+
+    var monthPageCounts: [Date: Int] {
+        var counts: [Date: Int] = [:]
+        for ms in monthStarts {
+            let year = calendar.component(.year, from: ms.date)
+            let month = calendar.component(.month, from: ms.date)
+            let total = contributions.filter { c in
+                let y = calendar.component(.year, from: c.date)
+                let m = calendar.component(.month, from: c.date)
+                return y == year && m == month
+            }.reduce(0) { $0 + $1.count }
+            counts[ms.date] = total
+        }
+        return counts
+    }
     
     var calendar: Calendar {
         var cal = Calendar.current
@@ -66,6 +81,19 @@ struct StatsHeatmapView: View {
                                         .fixedSize()
                                 }
                         }
+
+                        // 3. Month Page Count Labels (left side)
+                        ForEach(monthStarts) { ms in
+                            RuleMark(y: .value("MonthStart", Double(weeksAgo(from: ms.date)) - 0.5))
+                                .foregroundStyle(.clear)
+                                .annotation(position: .leading, alignment: .trailing, spacing: 10) {
+                                    let count = monthPageCounts[ms.date] ?? 0
+                                    Text("\(count)")
+                                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                                        .foregroundColor(graphLabels)
+                                        .fixedSize()
+                                }
+                        }
                     }
                     .chartYAxis(.hidden)
                     .chartYScale(domain: .automatic(includesZero: true, reversed: true))
@@ -82,6 +110,7 @@ struct StatsHeatmapView: View {
                         }
                     }
                     .frame(width: 7 * 20)
+                    .padding(.leading, 45)
                     .padding(.trailing, 45)
                     .chartOverlay { proxy in
                         GeometryReader { geometry in
@@ -102,6 +131,7 @@ struct StatsHeatmapView: View {
         .onAppear {
             setOrientation(.portrait)
         }
+        .navigationTitle("Stats")
     }
     
     // MARK: - Subviews
@@ -197,7 +227,7 @@ struct StatsHeatmapView: View {
                 Text("Last 52 Weeks")
             }
         }
-        .font(.headline)
+        .font(.title2.bold())
         .foregroundColor(.primary)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
