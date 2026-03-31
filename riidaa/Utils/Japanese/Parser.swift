@@ -71,8 +71,27 @@ public struct Parser {
                                 return true
                             } else if $0.term.reading != cut && $1.term.reading == cut {
                                 return false
-                            } else {
+                            } else if $0.term.score != $1.term.score {
                                 return $0.term.score > $1.term.score
+                            } else {
+                                // When scores are tied, prefer entries with Japanese readings
+                                // over entries with non-Japanese readings (e.g. WaniKani English meanings)
+                                let lhsJapanese = $0.term.reading.allSatisfy { c in
+                                    let v = c.unicodeScalars.first?.value ?? 0
+                                    return (0x3040...0x309F).contains(v) || // Hiragana
+                                           (0x30A0...0x30FF).contains(v) || // Katakana
+                                           (0x4E00...0x9FFF).contains(v)    // CJK
+                                }
+                                let rhsJapanese = $1.term.reading.allSatisfy { c in
+                                    let v = c.unicodeScalars.first?.value ?? 0
+                                    return (0x3040...0x309F).contains(v) || // Hiragana
+                                           (0x30A0...0x30FF).contains(v) || // Katakana
+                                           (0x4E00...0x9FFF).contains(v)    // CJK
+                                }
+                                if lhsJapanese != rhsJapanese {
+                                    return lhsJapanese
+                                }
+                                return false
                             }
                         }
                     ))

@@ -424,8 +424,14 @@ struct LookupsView: View {
                 SELECT dictionaryForm, reading, COUNT(date) as lookupCount
                 FROM lookup_events
                 """
+                var conditions: [String] = []
                 if let cutoffISO = cutoffISO {
-                    sql += " WHERE date >= '\(cutoffISO)'"
+                    conditions.append("date >= '\(cutoffISO)'")
+                }
+                // Exclude rows where the reading contains latin characters (e.g. WaniKani English meanings)
+                conditions.append("(reading IS NULL OR reading NOT GLOB '*[a-zA-Z]*')")
+                if !conditions.isEmpty {
+                    sql += " WHERE " + conditions.joined(separator: " AND ")
                 }
                 sql += " GROUP BY dictionaryForm, reading ORDER BY lookupCount DESC;"
 

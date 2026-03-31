@@ -124,15 +124,24 @@ struct MangaReaderParserView: View {
                                                             return (0x4E00...0x9FFF).contains(val) || (0x3400...0x4DBF).contains(val) || (0x20000...0x2A6DF).contains(val)
                                                         }()
 
+                                                        // Single kanji that aren't standalone words should only be tracked
+                                                        // as kanji lookups, not word lookups. A standalone word is one that
+                                                        // has a non-WaniKani dictionary entry with a positive score.
+                                                        let isStandaloneWord: Bool = !isSingleKanji || element.results.contains { r in
+                                                            !r.term.dictionary.title.lowercased().contains("wanikani") && r.term.score > 0
+                                                        }
+
                                                         // Debug: object to be inserted into `lookup_events`
                                                         let readingDesc = reading.isEmpty ? "nil" : reading
-                                                        print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\"}")
+                                                        print("lookupEvent DB ENTRY: {dictionaryForm: \"\(dictForm)\", reading: \"\(readingDesc)\", date: \"\(iso)\", isStandaloneWord: \(isStandaloneWord)}")
 
                                                         // Persist lookup event and kanji lookups atomically using one timestamp
                                                         if let db = SQLiteManager.shared.getDatabase() {
                                                             do {
                                                                 try db.transaction {
-                                                                    try SQLiteManager.shared.insertLookupEventThrowing(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, dateISO: iso)
+                                                                    if isStandaloneWord {
+                                                                        try SQLiteManager.shared.insertLookupEventThrowing(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading, dateISO: iso)
+                                                                    }
                                                                     try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
                                                                 }
                                                             } catch {
@@ -140,7 +149,9 @@ struct MangaReaderParserView: View {
                                                             }
                                                         } else {
                                                             // Fallback: non-transactional insert
-                                                            SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
+                                                            if isStandaloneWord {
+                                                                SQLiteManager.shared.insertLookupEvent(dictionaryForm: dictForm, reading: reading.isEmpty ? nil : reading)
+                                                            }
                                                             do {
                                                                 try SQLiteManager.shared.insertKanjiLookupIfKanji(dictForm, date: now)
                                                             } catch {
