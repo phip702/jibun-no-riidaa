@@ -124,6 +124,7 @@ public struct MangaReader: View {
         GeometryReader { mainGeom in
             let minHeight = CGFloat(100)//min(mainGeom.size.height * 0.2, max(mainGeom.size.height * 0.1, mainGeom.size.height - pageHeight))
             let maxHeight = mainGeom.size.height * 0.8
+            let defaultExpandedOffset = (mainGeom.size.height / 2) - minHeight
             let tHeight1 = (maxHeight + minHeight)/3
             let tHeight2 = 2 * tHeight1
             
@@ -202,7 +203,9 @@ public struct MangaReader: View {
                         .padding(.bottom, 5)
                     
                     MangaReaderParserView(line: currentLine ?? "", onWordSelected: {
-                        parserOffset = (mainGeom.size.height / 2) - minHeight
+                        if parserOffset < defaultExpandedOffset {
+                            parserOffset = defaultExpandedOffset
+                        }
                     })
                         .frame(maxWidth: .infinity)
                 }
