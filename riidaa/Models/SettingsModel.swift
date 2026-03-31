@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class SettingsModel: ObservableObject {
+    private var isInitializing = true
     
     @AppStorage("backgroundColorEnabled") var backgroundColorEnabled = false
     @AppStorage("backgroundColorRed") private var backgroundColorRed = 1.0
@@ -52,7 +53,11 @@ class SettingsModel: ObservableObject {
     }
     
     @Published var wanikaniInfo: WaniKaniInfo? {
-        didSet { save(wanikaniInfo, forKey: "wanikaniInfo") }
+        didSet {
+            if !isInitializing {
+                save(wanikaniInfo, forKey: "wanikaniInfo")
+            }
+        }
     }
     @AppStorage("wanikaniUnderlineEnabled") var wanikaniUnderlineEnabled = false
     
@@ -105,7 +110,7 @@ class SettingsModel: ObservableObject {
         self.ankiFieldReading = load(forKey: "ankiFieldReading")
         self.ankiFieldMeaning = load(forKey: "ankiFieldMeaning")
         self.ankiFieldExample = load(forKey: "ankiFieldExample")
-        self.wanikaniInfo = load(forKey: "wanikaniInfo")
+        self._wanikaniInfo = Published(wrappedValue: load(forKey: "wanikaniInfo"))
         
         print("🚀 SettingsModel initialized")
         print("  WaniKani loaded: \(self.wanikaniInfo != nil)")
@@ -114,6 +119,8 @@ class SettingsModel: ObservableObject {
             print("  WaniKani kanji count: \(wk.kanjiBySrsStage.count)")
         }
         print("  WaniKani color enabled: \(self.wanikaniUnderlineEnabled)")
+        // initialization complete — allow didSet saves now
+        isInitializing = false
     }
     
     func syncWaniKaniInBackground() async {

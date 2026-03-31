@@ -74,6 +74,7 @@ struct LookupsView: View {
     @EnvironmentObject var settings: SettingsModel
     @State private var showCopied: Bool = false
     @State private var copiedText: String = ""
+    @State private var selectedRow: LookupRow?
     @AppStorage("lookups_date_range") private var lookupsDateRangeRaw: String = DateRangeOption.last30d.rawValue
     @AppStorage("lookups_mode") private var lookupsModeRaw: String = LookupMode.word.rawValue
     private var selectedRange: DateRangeOption {
@@ -256,12 +257,11 @@ struct LookupsView: View {
                                 } else {
                                     VStack(alignment: .leading) {
                                         Text(row.dictionaryForm)
-                                            .font(.system(size: baseRowSize))
-                                            .bold()
+                                            .font(.system(size: baseRowSize * 1.6, weight: .bold))
                                     }
                                     Spacer()
                                     Text(row.reading ?? "")
-                                        .font(.system(size: baseRowSize))
+                                        .font(.system(size: baseRowSize * 1.6))
                                         .frame(width: 120, alignment: .leading)
                                         .foregroundColor(.secondary)
                                         .bold()
@@ -294,6 +294,9 @@ struct LookupsView: View {
                                     withAnimation {
                                         showCopied = false
                                     }
+                                }
+                                if selectedMode == .word {
+                                    selectedRow = row
                                 }
                             }
                             .accessibilityAddTraits(.isButton)
@@ -329,6 +332,10 @@ struct LookupsView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .zIndex(1)
                 }
+            }
+            .sheet(item: $selectedRow) { row in
+                SelectedLookupView(dictionaryForm: row.dictionaryForm, reading: row.reading)
+                    .environmentObject(settings)
             }
         }
     }
