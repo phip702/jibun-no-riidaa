@@ -276,7 +276,13 @@ struct LookupsView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                // Copy dictionary form to clipboard
+                                // Tap opens the selected lookup view (word mode only)
+                                if selectedMode == .word {
+                                    selectedRow = row
+                                }
+                            }
+                            .onLongPressGesture(minimumDuration: 0.25) {
+                                // Long press copies the dictionary form to clipboard
                                 let toCopy = row.dictionaryForm
                                 #if canImport(UIKit)
                                 UIPasteboard.general.string = toCopy
@@ -294,9 +300,6 @@ struct LookupsView: View {
                                     withAnimation {
                                         showCopied = false
                                     }
-                                }
-                                if selectedMode == .word {
-                                    selectedRow = row
                                 }
                             }
                             .accessibilityAddTraits(.isButton)
