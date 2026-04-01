@@ -26,6 +26,11 @@ public struct MangaReader: View {
     @State private var translatedText = ""
     @State private var showTranslationPopup = false
 
+    @State private var pretranslationSources: [String] = []
+    /// Set to true right before showCachedTranslation changes currentLine so the
+    /// onChange(of: currentLine) handler doesn't immediately dismiss the popup.
+    @State private var suppressPopupDismiss = false
+
     @State private var parserOffset: CGFloat = 0
     @GestureState private var dragOffset: CGFloat = 0
     @State private var pageHeight = 0.0
@@ -55,6 +60,22 @@ public struct MangaReader: View {
     
     func parserHeight(minHeight: CGFloat, maxHeight: CGFloat) -> CGFloat {
         max(min(minHeight + parserOffset-dragOffset, maxHeight), minHeight)
+    }
+    
+    func showCachedTranslation(_ text: String) {
+        // Suppress the onChange(of: currentLine) popup-dismiss logic for this
+        // update — we're about to show the popup, not hide it.
+        suppressPopupDismiss = true
+        currentLine = text
+
+        if let cached = TranslationCache.shared.get(text) {
+            translatedText = cached
+            print("Translation cache hit for:\n\(text)")
+        } else {
+            translatedText = "Translation not available (cache miss)"
+            print("Translation cache miss for:\n\(text)")
+        }
+        showTranslationPopup = true
     }
     
     public var body: some View {
@@ -171,6 +192,12 @@ public struct MangaReader: View {
                         if parserOffset > 0 { parserOffset = 0 }
                     }
                     .onChange(of: currentPage) { newPage in
+                        if newPage < pages.count {
+                            TranslationCache.shared.clear()
+                            pretranslationSources = pages[newPage].getBoxes()
+                                .map { $0.text }
+                                .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                        }
                         if showTranslationPopup { showTranslationPopup = false }
                         self.currentLine = nil
                         if pages[currentPage].read_at == nil { pages[currentPage].read_at = NSDate() }
@@ -178,20 +205,24 @@ public struct MangaReader: View {
                         DispatchQueue.main.async { CoreDataManager.shared.saveContext() }
                     }
                     .onChange(of: currentLine) { _ in
-                        if showTranslationPopup { showTranslationPopup = false }
+                        if suppressPopupDismiss {
+                            suppressPopupDismiss = false
+                        } else if showTranslationPopup {
+                            showTranslationPopup = false
+                        }
                     }
                 } else {
                     // Single-page layout — UIKit-backed interaction layer.
                     // Fills the full ZStack (same as the old TabView did).
                     // bottomInset tells UIKit to keep the image above the parser sheet.
                     MangaReaderContainerView(
-                        pages: displayedPages,
+                        pages: pages,
                         currentPage: $currentPage,
                         isLTR: settings.isLTR,
                         onLineTapped: { line in currentLine = line },
                         onLineTranslate: { text in
-                            translationText = text
-                            translationTrigger = UUID()
+                            // Long-press: show cached translation in the popup.
+                            showCachedTranslation(text)
                         },
                         onInteraction: { if showTranslationPopup { showTranslationPopup = false } },
                         onBackgroundTap: {
@@ -207,6 +238,12 @@ public struct MangaReader: View {
                         bottomInset: minHeight
                     )
                     .onChange(of: currentPage) { newPage in
+                        if newPage < pages.count {
+                            TranslationCache.shared.clear()
+                            pretranslationSources = pages[newPage].getBoxes()
+                                .map { $0.text }
+                                .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                        }
                         if showTranslationPopup { showTranslationPopup = false }
                         self.currentLine = nil
                         if pages[currentPage].read_at == nil { pages[currentPage].read_at = NSDate() }
@@ -214,7 +251,11 @@ public struct MangaReader: View {
                         DispatchQueue.main.async { CoreDataManager.shared.saveContext() }
                     }
                     .onChange(of: currentLine) { _ in
-                        if showTranslationPopup { showTranslationPopup = false }
+                        if suppressPopupDismiss {
+                            suppressPopupDismiss = false
+                        } else if showTranslationPopup {
+                            showTranslationPopup = false
+                        }
                     }
                 }
                 
@@ -269,11 +310,28 @@ public struct MangaReader: View {
             translatedText: $translatedText,
             showPopup: $showTranslationPopup
         ))
+        .modifier(PretranslationModifier(sources: $pretranslationSources))
         .onAppear {
             AppDelegate.orientationLock = .portrait
             if #available(iOS 16.0, *) {
                 if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                     scene.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+                }
+            }
+            // Kick off pretranslation for the initial page on first open.
+            // Do the assignment async so SwiftUI observes the change and
+            // the PretranslationModifier's onChange handler fires.
+            if currentPage < pages.count {
+                // Only populate on first appear if we don't already have sources
+                // queued. This prevents triggering the same pretranslation
+                // twice when the view appears and a page-change also assigns
+                // `pretranslationSources`.
+                if pretranslationSources.isEmpty {
+                    DispatchQueue.main.async {
+                        pretranslationSources = pages[currentPage].getBoxes()
+                            .map { $0.text }
+                            .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                    }
                 }
             }
         }
@@ -318,8 +376,7 @@ public struct MangaReader: View {
                         .scaledToFit()
                 }
                 MangaReaderBoxes(boxes: page.getBoxes(), scale: scale, offsetX: offsetX, offsetY: offsetY, currentLine: $currentLine, onLongPress: { text in
-                    translationText = text
-                    translationTrigger = UUID()
+                    showCachedTranslation(text)
                 })
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -381,14 +438,12 @@ public struct MangaReader: View {
                         .scaledToFit()
                 }
                 MangaReaderBoxes(boxes: page1.getBoxes(), scale: scale1, offsetX: offsetX1, offsetY: offsetY1, currentLine: $currentLine, onLongPress: { text in
-                    translationText = text
-                    translationTrigger = UUID()
+                    showCachedTranslation(text)
                 })
                     .frame(width: halfWidth)
                     .offset(x: -offsetX1)
                 MangaReaderBoxes(boxes: page2.getBoxes(), scale: scale2, offsetX: offsetX2, offsetY: offsetY2, currentLine: $currentLine, onLongPress: { text in
-                    translationText = text
-                    translationTrigger = UUID()
+                    showCachedTranslation(text)
                 })
                     .offset(x: offsetX2)
             }
@@ -398,6 +453,7 @@ public struct MangaReader: View {
             }
         }
     }
+
     
 }
 
@@ -449,6 +505,99 @@ private struct TranslationTaskModifierAvailable: ViewModifier {
                     print("Translation error: \(error)")
                 }
             }
+    }
+}
+
+// MARK: - Pretranslation
+
+private struct PretranslationModifier: ViewModifier {
+    @Binding var sources: [String]
+
+    func body(content: Content) -> some View {
+        if #available(iOS 18.0, *) {
+            content.modifier(PretranslationModifierAvailable(sources: $sources))
+        } else {
+            content
+        }
+    }
+}
+
+@available(iOS 18.0, *)
+private struct PretranslationModifierAvailable: ViewModifier {
+    @Binding var sources: [String]
+    @State private var config = TranslationSession.Configuration(
+        source: Locale.Language(identifier: "ja"),
+        target: Locale.Language(identifier: "en")
+    )
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: sources) { _, _ in
+                config.invalidate()
+            }
+            .translationTask(config) { session in
+                // Snapshot the binding synchronously before any suspension point.
+                // At this point the binding value is guaranteed to be the one that
+                // triggered the invalidation — no race with later page turns.
+                let toTranslate = sources
+
+                let start = Date()
+                // If there are no boxes to translate, still emit a diagnostic
+                // line so the console shows "0 text boxes translated".
+                if toTranslate.isEmpty {
+                    let elapsed: TimeInterval = 0
+                    print("=== 0 text boxes translated in \(String(format: "%.2f", elapsed))s")
+                    TranslationCache.shared.printDump(orderedBy: toTranslate)
+                    return
+                }
+
+                do {
+                    let requests = toTranslate.map { TranslationSession.Request(sourceText: $0) }
+                    let responses = try await session.translate(batch: requests)
+                    for try await resp in responses {
+                        TranslationCache.shared.set(resp.targetText, for: resp.sourceText)
+                    }
+                } catch {
+                    print("Pretranslation error: \(error)")
+                    return
+                }
+
+                let elapsed = Date().timeIntervalSince(start)
+                print("=== \(toTranslate.count) text boxes translated in \(String(format: "%.2f", elapsed))s")
+                TranslationCache.shared.printDump(orderedBy: toTranslate)
+            }
+    }
+}
+
+// MARK: - Translation Cache
+
+final class TranslationCache {
+
+    static let shared = TranslationCache()
+
+    private var store: [String: String] = [:]
+    private let lock = NSLock()
+
+    private init() {}
+
+    func get(_ source: String) -> String? {
+        lock.lock(); defer { lock.unlock() }
+        return store[source]
+    }
+
+    func set(_ translation: String, for source: String) {
+        lock.lock(); defer { lock.unlock() }
+        store[source] = translation
+    }
+
+    func clear() {
+        lock.lock(); defer { lock.unlock() }
+        store.removeAll()
+    }
+
+    func printDump(orderedBy sources: [String]) {
+        let lines = sources.enumerated().map { i, src in "\(i + 1)) \(src)" }
+        print(lines.joined(separator: "\n")) //* shows the list of translated texts in the console, useful for debugging and seeing what got translated in batch pretranslation
     }
 }
 

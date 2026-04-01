@@ -717,11 +717,12 @@ final class MangaReaderContainerViewController: UIViewController,
     /// Jump to a page index. `animated` should be false for picker-driven changes.
     func setPage(_ index: Int, animated: Bool) {
         guard pages.indices.contains(index) else { return }
-        let direction: UIPageViewController.NavigationDirection =
-            index >= currentIndex ? .forward : .reverse
+        let direction: UIPageViewController.NavigationDirection = index >= currentIndex ? .forward : .reverse
+        // Flip navigation direction in RTL so visual swipe direction matches user expectation.
+        let effectiveDirection: UIPageViewController.NavigationDirection = isLTR ? direction : (direction == .forward ? .reverse : .forward)
         currentIndex = index
         let vc = makePageVC(for: index)
-        pageVC.setViewControllers([vc], direction: direction, animated: animated)
+        pageVC.setViewControllers([vc], direction: effectiveDirection, animated: animated)
         // UIPageViewController creates its internal UIScrollView lazily on the first
         // setViewControllers call — clear backgrounds now that the scroll view exists.
         clearBackgrounds(pageVC.view)
@@ -777,6 +778,7 @@ final class MangaReaderContainerViewController: UIViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
         guard let current = viewController as? MangaPageViewController else { return nil }
+        // For RTL reading the logical "before" page is the higher index.
         let prevIndex = isLTR ? current.pageIndex - 1 : current.pageIndex + 1
         guard pages.indices.contains(prevIndex) else { return nil }
         return makePageVC(for: prevIndex)
@@ -787,6 +789,7 @@ final class MangaReaderContainerViewController: UIViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
         guard let current = viewController as? MangaPageViewController else { return nil }
+        // For RTL reading the logical "after" page is the lower index.
         let nextIndex = isLTR ? current.pageIndex + 1 : current.pageIndex - 1
         guard pages.indices.contains(nextIndex) else { return nil }
         return makePageVC(for: nextIndex)
