@@ -269,6 +269,22 @@ public struct MangaReader: View {
             translatedText: $translatedText,
             showPopup: $showTranslationPopup
         ))
+        .onAppear {
+            AppDelegate.orientationLock = .portrait
+            if #available(iOS 16.0, *) {
+                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    scene.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+                }
+            }
+        }
+        .onDisappear {
+            AppDelegate.orientationLock = .all
+            if #available(iOS 16.0, *) {
+                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    scene.requestGeometryUpdate(.iOS(interfaceOrientations: .all))
+                }
+            }
+        }
     }
     
     

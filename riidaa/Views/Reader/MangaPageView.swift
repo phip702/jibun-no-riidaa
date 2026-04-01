@@ -43,7 +43,8 @@ enum TransformClamping {
     static func clamp(
         _ state: PageTransformState,
         contentSize: CGSize,
-        viewSize: CGSize
+        viewSize: CGSize,
+        bottomInset: CGFloat = 0
     ) -> PageTransformState {
         let s = min(max(state.scale, PageTransformState.minScale), PageTransformState.maxScale)
 
@@ -58,7 +59,11 @@ enum TransformClamping {
         let slackY = max(0, (contentSize.height * s - viewSize.height) / 2)
 
         let tx = min(max(state.translation.x, -slackX), slackX)
-        let ty = min(max(state.translation.y, -slackY), slackY)
+        // The image is laid out centered within (viewSize.height - bottomInset), so its
+        // visual center sits s * bottomInset/2 above view.bounds.midY when scaled.
+        // Allow extra positive-ty travel so the user can scroll the image top to y=0.
+        let tyMax = slackY + s * bottomInset / 2
+        let ty = min(max(state.translation.y, -slackY), tyMax)
 
         return PageTransformState(scale: s, translation: CGPoint(x: tx, y: ty))
     }
@@ -77,7 +82,8 @@ enum TransformClamping {
         viewCenter: CGPoint,
         currentState: PageTransformState,
         contentSize: CGSize,
-        viewSize: CGSize
+        viewSize: CGSize,
+        bottomInset: CGFloat = 0
     ) -> PageTransformState {
         let s_old = currentState.scale
         guard s_old > 0 else { return currentState }
@@ -93,7 +99,7 @@ enum TransformClamping {
         let ty = fy - (fy - currentState.translation.y) * ratio
 
         let proposed = PageTransformState(scale: s_new, translation: CGPoint(x: tx, y: ty))
-        return clamp(proposed, contentSize: contentSize, viewSize: viewSize)
+        return clamp(proposed, contentSize: contentSize, viewSize: viewSize, bottomInset: bottomInset)
     }
 }
 
@@ -198,6 +204,11 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
     /// makes simultaneous pinch + pan compose correctly (pinch moves the base state
     /// that panStartState captured, so absolute deltas invert the direction).
     private var lastPanTranslation: CGPoint = .zero
+
+    /// Centroid of the two fingers at the moment the pinch gesture began.
+    /// Used as the fixed scale anchor so that finger translation adds directly
+    /// to the content offset in the same direction as a single-finger pan.
+    private var pinchStartCentroid: CGPoint = .zero
 
     /// Whether we have already fired onZoomChanged(true) for the current zoom session.
     private var reportedZoomed = false
@@ -314,6 +325,13 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
         switch gr.state {
         case .began:
             pinchStartState = transformState
+            // Capture the two-finger centroid so .changed can use it as a fixed
+            // scale anchor and compute pan translation from it.
+            if gr.numberOfTouches >= 2 {
+                let t0 = gr.location(ofTouch: 0, in: view)
+                let t1 = gr.location(ofTouch: 1, in: view)
+                pinchStartCentroid = CGPoint(x: (t0.x + t1.x) / 2, y: (t0.y + t1.y) / 2)
+            }
             onInteraction?()
             // If already zoomed, disable page turns at the START of the gesture.
             // Never do this inside .changed — mutating dataSource mid-gesture causes
@@ -326,15 +344,35 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
             let t1 = gr.location(ofTouch: 1, in: view)
             let centroid = CGPoint(x: (t0.x + t1.x) / 2, y: (t0.y + t1.y) / 2)
 
-            let newState = TransformClamping.applyScale(
+            // Anchor the scale at the INITIAL centroid so that moving both fingers
+            // together does not invert the pan direction.  The formula
+            //   T_new = curr_centroid - (start_centroid - T_start) * ratio
+            // ensures the content point under the start centroid ends up under the
+            // current centroid — identical semantics to single-finger dragging.
+            let scaleState = TransformClamping.applyScale(
                 newScale: pinchStartState.scale * gr.scale,
-                focalPoint: centroid,
+                focalPoint: pinchStartCentroid,
                 viewCenter: CGPoint(x: view.bounds.midX, y: view.bounds.midY),
                 currentState: pinchStartState,
                 contentSize: contentSize,
-                viewSize: view.bounds.size
+                viewSize: view.bounds.size,
+                bottomInset: bottomInset
             )
-            transformState = newState
+            let dx = centroid.x - pinchStartCentroid.x
+            let dy = centroid.y - pinchStartCentroid.y
+            let proposed = PageTransformState(
+                scale: scaleState.scale,
+                translation: CGPoint(
+                    x: scaleState.translation.x + dx,
+                    y: scaleState.translation.y + dy
+                )
+            )
+            transformState = TransformClamping.clamp(
+                proposed,
+                contentSize: contentSize,
+                viewSize: view.bounds.size,
+                bottomInset: bottomInset
+            )
             applyTransform()
             // Do NOT call setZoomed here — see .began comment above.
 
@@ -362,6 +400,9 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
         case .changed:
             // Only pan when zoomed; at scale 1 UIPageViewController handles the swipe.
             guard transformState.scale > 1.01 else { return }
+            // When pinch is active it owns all two-finger movement (scale + pan).
+            // Letting panGR also fire would double-apply the centroid delta.
+            guard pinchGR.state != .began && pinchGR.state != .changed else { return }
             // Incremental delta: add only what moved since the last .changed event.
             // Using absolute-from-start deltas breaks when pinch simultaneously
             // modifies transformState, making panStartState stale → wrong direction.
@@ -379,7 +420,8 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
             transformState = TransformClamping.clamp(
                 proposed,
                 contentSize: contentSize,
-                viewSize: view.bounds.size
+                viewSize: view.bounds.size,
+                bottomInset: bottomInset
             )
             applyTransform()
 
@@ -397,13 +439,24 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
             animateToIdentity()
         } else {
             let tapPoint = gr.location(in: view)
-            let newState = TransformClamping.applyScale(
-                newScale: PageTransformState.doubleTapScale,
-                focalPoint: tapPoint,
-                viewCenter: CGPoint(x: view.bounds.midX, y: view.bounds.midY),
-                currentState: transformState,
+            let viewCenter = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+            let tapOffset = CGPoint(x: tapPoint.x - viewCenter.x, y: tapPoint.y - viewCenter.y)
+            let newScale = PageTransformState.doubleTapScale
+            let ratio = newScale / max(transformState.scale, 0.0001)
+
+            // Recenter the double-tapped content point to the screen center.
+            let proposed = PageTransformState(
+                scale: newScale,
+                translation: CGPoint(
+                    x: (transformState.translation.x - tapOffset.x) * ratio,
+                    y: (transformState.translation.y - tapOffset.y) * ratio
+                )
+            )
+            let newState = TransformClamping.clamp(
+                proposed,
                 contentSize: contentSize,
-                viewSize: view.bounds.size
+                viewSize: view.bounds.size,
+                bottomInset: bottomInset
             )
             animateTo(newState)
             setZoomed(true)
@@ -493,7 +546,8 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
         transformState = TransformClamping.clamp(
             transformState,
             contentSize: contentSize,
-            viewSize: view.bounds.size
+            viewSize: view.bounds.size,
+            bottomInset: bottomInset
         )
         applyTransform()
 

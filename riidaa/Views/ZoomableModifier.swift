@@ -78,16 +78,31 @@ struct ZoomableModifier: ViewModifier {
         SpatialTapGesture(count: 2)
             .onEnded { value in
                 onInteraction?()
-                let newTransform: CGAffineTransform =
-                    if transform.isIdentity {
-                        .anchoredScale(scale: doubleTapZoomScale, anchor: value.location)
-                    } else {
-                        .identity
-                    }
+                guard contentSize.width > 0, contentSize.height > 0 else { return }
 
-                withAnimation(.linear(duration: 0.15)) {
-                    transform = newTransform
-                    lastTransform = newTransform
+                if transform.isIdentity {
+                    let anchor = value.location
+                    let scale = doubleTapZoomScale
+                    let viewportCenter = CGPoint(x: contentSize.width / 2, y: contentSize.height / 2)
+
+                    // Scale, then translate so the double-tapped point lands at screen center.
+                    var newTransform = CGAffineTransform(
+                        a: scale, b: 0,
+                        c: 0, d: scale,
+                        tx: viewportCenter.x - anchor.x * scale,
+                        ty: viewportCenter.y - anchor.y * scale
+                    )
+                    newTransform = limitTransform(newTransform)
+
+                    withAnimation(.linear(duration: 0.15)) {
+                        transform = newTransform
+                        lastTransform = newTransform
+                    }
+                } else {
+                    withAnimation(.linear(duration: 0.15)) {
+                        transform = .identity
+                        lastTransform = .identity
+                    }
                 }
             }
     }
