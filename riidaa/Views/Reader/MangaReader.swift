@@ -32,9 +32,10 @@ public struct MangaReader: View {
     @State private var ready = false
     
     @State private var orientation = UIDeviceOrientation.landscapeLeft// UIDevice.current.orientation
-    @State private var saveWorkItem: DispatchWorkItem? = nil
     
-    @State private var displayedPages: [MangaPageModel] = []
+    private var displayedPages: [MangaPageModel] {
+        settings.isLTR ? pages : pages.reversed()
+    }
     
     
     var isDualPage: Bool {
@@ -50,10 +51,6 @@ public struct MangaReader: View {
         } else {
             self._pages = State(initialValue: [])
         }
-    }
-    
-    private func updateDisplayedPages() {
-        displayedPages = settings.isLTR ? pages : pages.reversed()
     }
     
     func parserHeight(minHeight: CGFloat, maxHeight: CGFloat) -> CGFloat {
@@ -127,9 +124,6 @@ public struct MangaReader: View {
                 currentPage -= (currentPage%2)
             }
         }
-        .onAppear { updateDisplayedPages() }
-        .onChange(of: pages) { _ in updateDisplayedPages() }
-        .onChange(of: settings.isLTR) { _ in updateDisplayedPages() }
         
         GeometryReader { mainGeom in
             let minHeight = CGFloat(100)//min(mainGeom.size.height * 0.2, max(mainGeom.size.height * 0.1, mainGeom.size.height - pageHeight))
@@ -139,22 +133,16 @@ public struct MangaReader: View {
             let tHeight2 = 2 * tHeight1
             
             ZStack(alignment: .bottom) {
-                TabView(selection: .init(get: {
-                    if isDualPage {
+                Color(UIColor.systemBackground).ignoresSafeArea()
+                if isDualPage {
+                    // Dual-page iPad layout — unchanged.
+                    TabView(selection: .init(get: {
                         currentPage - (currentPage%2)
-                    } else {
-                        currentPage
-                    }
-                }, set: {v in
-                    if isDualPage {
+                    }, set: { v in
                         if ready {
                             currentPage = v - (v%2)
                         }
-                    } else {
-                        currentPage = v
-                    }
-                })) {
-                    if isDualPage {
+                    })) {
                         let start = settings.isLTR ? 0 : displayedPages.count % 2
                         ForEach(Array(stride(from: start, to: displayedPages.count, by: 2)), id: \.self) { index in
                             VStack(spacing: 0) {
@@ -173,49 +161,60 @@ public struct MangaReader: View {
                                 ready = true
                             }
                         }
-                    } else {
-                        ForEach(displayedPages.indices, id: \.self) { index in
-                            VStack {
-                                pageDisplay(index: index)
-                            }
-                            .zoomable(onInteraction: { if showTranslationPopup { showTranslationPopup = false } })
-                            .tag(Int(displayedPages[index].number) - 1)
-                            .frame(maxHeight: max(100, mainGeom.size.height - minHeight))
-                            .offset(y: -minHeight/2)
-                        }
                     }
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .transaction { txn in
-                    txn.disablesAnimations = true
-                }
-                .onTapGesture {
-                    if showTranslationPopup {
-                        showTranslationPopup = false
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .transaction { txn in
+                        txn.disablesAnimations = true
                     }
-                    if parserOffset > 0 {
-                        parserOffset = 0
+                    .onTapGesture {
+                        if showTranslationPopup { showTranslationPopup = false }
+                        if parserOffset > 0 { parserOffset = 0 }
                     }
-                }
-                .onChange(of: currentPage) { newPage in
-                    if showTranslationPopup {
-                        showTranslationPopup = false
+                    .onChange(of: currentPage) { newPage in
+                        if showTranslationPopup { showTranslationPopup = false }
+                        self.currentLine = nil
+                        if pages[currentPage].read_at == nil { pages[currentPage].read_at = NSDate() }
+                        volume.lastReadPage = Int64(newPage)
+                        DispatchQueue.main.async { CoreDataManager.shared.saveContext() }
                     }
-                    self.currentLine = nil
-                    if pages[currentPage].read_at == nil {
-                        pages[currentPage].read_at = NSDate()
+                    .onChange(of: currentLine) { _ in
+                        if showTranslationPopup { showTranslationPopup = false }
                     }
-                    volume.lastReadPage = Int64(newPage)
-                    saveWorkItem?.cancel()
-                    let workItem = DispatchWorkItem {
-                        CoreDataManager.shared.saveContext()
+                } else {
+                    // Single-page layout — UIKit-backed interaction layer.
+                    // Fills the full ZStack (same as the old TabView did).
+                    // bottomInset tells UIKit to keep the image above the parser sheet.
+                    MangaReaderContainerView(
+                        pages: displayedPages,
+                        currentPage: $currentPage,
+                        isLTR: settings.isLTR,
+                        onLineTapped: { line in currentLine = line },
+                        onLineTranslate: { text in
+                            translationText = text
+                            translationTrigger = UUID()
+                        },
+                        onInteraction: { if showTranslationPopup { showTranslationPopup = false } },
+                        onBackgroundTap: {
+                            if showTranslationPopup { showTranslationPopup = false }
+                            if parserOffset > 0 { parserOffset = 0 }
+                        },
+                        showBoxBackground: settings.backgroundColorEnabled,
+                        boxBackgroundColor: UIColor(settings.backgroundColor.wrappedValue),
+                        showBoxBorder: settings.borderColorEnabled,
+                        boxBorderColor: UIColor(settings.borderColor.wrappedValue),
+                        boxBorderWidth: CGFloat(settings.borderSize),
+                        boxPadding: CGFloat(settings.padding),
+                        bottomInset: minHeight
+                    )
+                    .onChange(of: currentPage) { newPage in
+                        if showTranslationPopup { showTranslationPopup = false }
+                        self.currentLine = nil
+                        if pages[currentPage].read_at == nil { pages[currentPage].read_at = NSDate() }
+                        volume.lastReadPage = Int64(newPage)
+                        DispatchQueue.main.async { CoreDataManager.shared.saveContext() }
                     }
-                    saveWorkItem = workItem
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
-                }
-                .onChange(of: currentLine) { _ in
-                    if showTranslationPopup {
-                        showTranslationPopup = false
+                    .onChange(of: currentLine) { _ in
+                        if showTranslationPopup { showTranslationPopup = false }
                     }
                 }
                 

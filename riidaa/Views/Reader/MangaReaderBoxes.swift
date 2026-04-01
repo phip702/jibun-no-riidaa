@@ -40,7 +40,7 @@ struct MangaReaderBoxes: View {
                 y: Double(box.y + box.height / 2) * scale - offsetY
             )
             .rotationEffect(Angle(degrees: box.rotation))
-            .onLongPressGesture {
+            .onLongPressGesture(minimumDuration: 0.25) {
                 onLongPress?(box.text)
             }
             .highPriorityGesture(SpatialTapGesture(count: 1).onEnded { _ in

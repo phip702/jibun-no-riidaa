@@ -54,9 +54,7 @@ public class MangaPageModel: NSManagedObject {
             }
 
             if let data = data {
-                let image = UIImage(data: data)
-                self.uiImage = image
-                return image
+                return UIImage(data: data)
             } else {
                 return nil
             }
