@@ -70,10 +70,8 @@ public struct MangaReader: View {
 
         if let cached = TranslationCache.shared.get(text) {
             translatedText = cached
-            print("Translation cache hit for:\n\(text)")
         } else {
             translatedText = "Translation not available (cache miss)"
-            print("Translation cache miss for:\n\(text)")
         }
         showTranslationPopup = true
     }
@@ -216,8 +214,12 @@ public struct MangaReader: View {
                     // Fills the full ZStack (same as the old TabView did).
                     // bottomInset tells UIKit to keep the image above the parser sheet.
                     MangaReaderContainerView(
-                        pages: pages,
-                        currentPage: $currentPage,
+                        pages: displayedPages,
+                        currentPage: Binding(get: {
+                            settings.isLTR ? currentPage : (pages.count - 1 - currentPage)
+                        }, set: { v in
+                            currentPage = settings.isLTR ? v : (pages.count - 1 - v)
+                        }),
                         isLTR: settings.isLTR,
                         onLineTapped: { line in currentLine = line },
                         onLineTranslate: { text in
