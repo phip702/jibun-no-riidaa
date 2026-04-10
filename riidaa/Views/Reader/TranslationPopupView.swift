@@ -34,34 +34,43 @@ struct TranslationPopupView: View {
         HStack(alignment: .top, spacing: 4) {
             Group {
                 if exceedsMaxLines {
-                    ScrollView(.vertical) {
-                        Text(text)
-                            .font(.body)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(
-                                GeometryReader { geo in
-                                    Color.clear.preference(
-                                        key: ScrollOffsetKey.self,
-                                        value: geo.frame(in: .named("translationScroll")).minY
-                                    )
-                                }
-                            )
-                    }
-                    .coordinateSpace(name: "translationScroll")
-                    .onPreferenceChange(ScrollOffsetKey.self) { offset in
-                        isAtScrollBottom = (-offset + maxLinesHeight) >= fullTextHeight - 1
-                    }
-                    .scrollIndicators(.visible)
-                    .frame(height: maxLinesHeight)
-                    .overlay(alignment: .bottom) {
-                        if !isAtScrollBottom {
-                            LinearGradient(
-                                colors: [.clear, Color(.systemGray6)],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                            .frame(height: 20)
-                            .allowsHitTesting(false)
+                    ScrollViewReader { proxy in
+                        ScrollView(.vertical) {
+                            Text(text)
+                                .font(.body)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .id("top")
+                                .background(
+                                    GeometryReader { geo in
+                                        Color.clear.preference(
+                                            key: ScrollOffsetKey.self,
+                                            value: geo.frame(in: .named("translationScroll")).minY
+                                        )
+                                    }
+                                )
+                        }
+                        .coordinateSpace(name: "translationScroll")
+                        .onPreferenceChange(ScrollOffsetKey.self) { offset in
+                            isAtScrollBottom = (-offset + maxLinesHeight) >= fullTextHeight - 1
+                        }
+                        .onChange(of: text) { _ in
+                            DispatchQueue.main.async { proxy.scrollTo("top", anchor: .top) }
+                        }
+                        .onChange(of: isVisible) { newVal in
+                            if newVal { DispatchQueue.main.async { proxy.scrollTo("top", anchor: .top) } }
+                        }
+                        .scrollIndicators(.visible)
+                        .frame(height: maxLinesHeight)
+                        .overlay(alignment: .bottom) {
+                            if !isAtScrollBottom {
+                                LinearGradient(
+                                    colors: [.clear, Color(.systemGray6)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .frame(height: 20)
+                                .allowsHitTesting(false)
+                            }
                         }
                     }
                 } else {
