@@ -410,11 +410,23 @@ final class MangaPageViewController: UIViewController, UIGestureRecognizerDelega
             let delta = CGPoint(x: current.x - lastPanTranslation.x,
                                 y: current.y - lastPanTranslation.y)
             lastPanTranslation = current
+            // Pan sensitivity multiplier (1.0 = default). We'll expose this
+            // as a variable so it can be tweaked later. Use a scale-aware
+            // adjustment so drags move less when the content is zoomed in.
+            let panSensitivity: CGFloat = 0.85
+            // Make pan feel faster when zoomed by scaling the finger delta
+            // by the current zoom level. A `panSensitivity` > 1 further
+            // amplifies the movement; keep at 1.0 for a natural mapping.
+            let adjustedDelta = CGPoint(
+                x: delta.x * panSensitivity * transformState.scale,
+                y: delta.y * panSensitivity * transformState.scale
+            )
+
             let proposed = PageTransformState(
                 scale: transformState.scale,  // preserve whatever scale pinch set
                 translation: CGPoint(
-                    x: transformState.translation.x + delta.x,
-                    y: transformState.translation.y + delta.y
+                    x: transformState.translation.x + adjustedDelta.x,
+                    y: transformState.translation.y + adjustedDelta.y
                 )
             )
             transformState = TransformClamping.clamp(
@@ -717,12 +729,11 @@ final class MangaReaderContainerViewController: UIViewController,
     /// Jump to a page index. `animated` should be false for picker-driven changes.
     func setPage(_ index: Int, animated: Bool) {
         guard pages.indices.contains(index) else { return }
-        let direction: UIPageViewController.NavigationDirection = index >= currentIndex ? .forward : .reverse
-        // Flip navigation direction in RTL so visual swipe direction matches user expectation.
-        let effectiveDirection: UIPageViewController.NavigationDirection = isLTR ? direction : (direction == .forward ? .reverse : .forward)
+        let direction: UIPageViewController.NavigationDirection =
+            index >= currentIndex ? .forward : .reverse
         currentIndex = index
         let vc = makePageVC(for: index)
-        pageVC.setViewControllers([vc], direction: effectiveDirection, animated: animated)
+        pageVC.setViewControllers([vc], direction: direction, animated: animated)
         // UIPageViewController creates its internal UIScrollView lazily on the first
         // setViewControllers call — clear backgrounds now that the scroll view exists.
         clearBackgrounds(pageVC.view)
@@ -778,8 +789,7 @@ final class MangaReaderContainerViewController: UIViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
         guard let current = viewController as? MangaPageViewController else { return nil }
-        // For RTL reading the logical "before" page is the higher index.
-        let prevIndex = isLTR ? current.pageIndex - 1 : current.pageIndex + 1
+        let prevIndex = current.pageIndex - 1
         guard pages.indices.contains(prevIndex) else { return nil }
         return makePageVC(for: prevIndex)
     }
@@ -789,8 +799,7 @@ final class MangaReaderContainerViewController: UIViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
         guard let current = viewController as? MangaPageViewController else { return nil }
-        // For RTL reading the logical "after" page is the lower index.
-        let nextIndex = isLTR ? current.pageIndex + 1 : current.pageIndex - 1
+        let nextIndex = current.pageIndex + 1
         guard pages.indices.contains(nextIndex) else { return nil }
         return makePageVC(for: nextIndex)
     }
